@@ -2,33 +2,64 @@ import Image from 'next/image';
 import aboutPc from '../../../../public/image/homePage/index-about.webp';
 import { MiniLog } from '../../../image/logo/svgComponents';
 import { Container } from '@mui/material';
+import styled from '@emotion/styled';
+import {DescriptionServiceSectiom as Description} from './DescriptionServiceSectiom';
 
 const CustArticle = styled.article`
-    margin-top: 100px;
     position: relative;
+    display: flex;
 `
 
 const WrapperImg = styled.div`
     display: block;
     position: relative;
-    min-width: 400px;
-    max-width: 665px;
+    //min-width: 400px;
+    //max-width: 665px;
     height: auto;
+    width: 42%;
 `
 
-export const AboutCompanyMobileVersion = () => {
+const WrapperText = styled.div`
+    background-color: #0C1A36;
+    width: 58%;
+    padding: 80px;
+`
+
+const CustH2 = styled.h2`
+    color: white;
+    position: relative;
+    &::before {
+      content: '';
+      display: block;
+      position: absolute;
+      top: -10px;
+      left: 0;
+      width: 50px;
+      height: 2px;
+      background-color: yellow;
+    }
+`
+const CustSpan = styled.span`
+    display: block;
+    color: white;
+    margin-top: 50px;
+    & + & {
+      margin-top: 50px;
+    }
+`
+
+export const AboutCompanyPcVersion = () => {
   return (
     <Container
       maxWidth={'custXl'}
       sx={{
         display: {xs: 'none', md: 'block'},
-        height: {xs: '600px', md: '810px'}
+        padding: '180px 0px'
       }}
     >
       <CustArticle>
         <WrapperImg>
           <Image
-            ref={widthImage}
             src={aboutPc}
             alt=''
             style={{
@@ -46,7 +77,7 @@ export const AboutCompanyMobileVersion = () => {
             }}
           />
         </WrapperImg>
-        <div></div>
+        <Description/>
       </CustArticle>
     </Container>
   )

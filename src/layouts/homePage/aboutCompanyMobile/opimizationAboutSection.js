@@ -12,7 +12,7 @@ export const OptimizationAboutSection = () => {
   return (
     <Box
       sx={{
-        padding: {xs: '0px', md: '180px 0px'},
+        padding: {xs: '50px 0px 0px 0px', md: '180px 0px'},
         backgroundColor: {xs: '#0C1A36', md: '#D9D9D9'},
         maxWidth: {xs: 'none', md: 'custXl'},
         marginLeft: 'auto',

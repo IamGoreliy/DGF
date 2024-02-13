@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import { Box } from '@mui/material';
-import bgPc from '../../../public/image/homePage/first-bg.webp'
+import bgPc from '../../../../public/image/homePage/first-bg.webp'
 
 export const FirstPcBg = () => {
   return (
