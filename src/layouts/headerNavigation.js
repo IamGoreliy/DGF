@@ -6,15 +6,13 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
 import Container from '@mui/material/Container';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import styled from '@emotion/styled';
 import { Logosvg, LocationSvg, TelegranSvg, ViberSvg, MenuSvg } from 'src/image/logo/svgComponents';
 import { CustSvg } from '../styledComponent/StyledComponent';
 import { mobileNavSwitch } from '../utils/mobileNavSwitch';
 import {useRouter } from 'next/navigation';
+
 
 const pages = ['ГОЛОВНА', 'ПРО КОМПАНІЮ', 'ПОЗИЧАЛЬНИКАМ', 'ІНВЕСТИЦІЇ ТА ПАРТНЕРСТВО', 'СПЕЦІАЛЬНІ ПРОПОЗИЦІЇ'];
 const supportPages = ['Онлайн оплата', 'Написати листа'];
@@ -85,12 +83,11 @@ export function Layout({children}) {
   };
 
   const handleCloseNavMenu = (nameBtn) => {
-    console.log(nameBtn)
     const urlForLink = mobileNavSwitch(nameBtn);
-    console.log(urlForLink)
-    // setIsOpenMobNav(!isOpenMobNav);
-
-    // router.push(`${urlForLink}`);
+    setIsOpenMobNav(!isOpenMobNav);
+    if(urlForLink !== 'нет страницы') {
+      router.push(`${urlForLink}`);
+    }
   };
 
   const handleCloseUserMenu = () => {
@@ -109,7 +106,7 @@ export function Layout({children}) {
           justifyContent: 'space-between',
           height: {xs: 'none', md: '60px'},
           mt: { xs: 'none', md: 2},
-          paddingLeft: {xs: 'none', md: '15px'}
+          paddingLeft: {xs: 'none', md: '0px'}
         }}>
             <Typography
               variant="h6"
@@ -266,9 +263,7 @@ export function Layout({children}) {
 
                   }}
                 >
-                <MenuItem
-
-                >
+                <MenuItem>
                   <Typography>
                     <SpanNewLine>+38 (067) 369-33-37</SpanNewLine>
                     <SpanNewLine>+38 (093) 170-86-47</SpanNewLine>
@@ -369,17 +364,21 @@ export function Layout({children}) {
               }}
               >
               {pages.map((page) => (
-                <Button
+                <Box
                   key={page}
                   onClick={ () => handleCloseNavMenu(page)}
                   sx={{
                     my: 0, color: 'white',
-                    display: 'block',
-                    py: 0
+                    display: 'flex',
+                    alignItems: 'center',
+                    py: 0,
+                    '& + &': {
+                      marginLeft: '30px',
+                    }
                 }}
                 >
                   {page}
-                </Button>
+                </Box>
               ))}
               </Box>
               <Box

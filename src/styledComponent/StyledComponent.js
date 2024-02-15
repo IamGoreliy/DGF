@@ -22,6 +22,7 @@ export const CustH2 = styled(props => {
   topB = '0px',
   leftB = '0px',
   bgcB = 'black',
+
 }) => {
   return {
       color: color,
@@ -89,13 +90,14 @@ export const CustH4 = styled(props => {
 })
 
 export const CustP = styled(props => {
-  const {color,...other} = props;
+  const {fonts, display, color,...other} = props;
   return <p {...other}/>
 })((
   {
     color = 'white',
     display = 'inline',
     width = 'auto',
+    fonts= {},
     // color = 'white',
     // margin = '0px',
     // padding = '0px',
@@ -107,6 +109,7 @@ export const CustP = styled(props => {
     width,
     padding: '0px',
     margin: '0px',
+    ...fonts,
     // display: display,
     // color: color,
     // margin: margin,
@@ -149,48 +152,6 @@ export const CustLi = styled(props => {
   }
 })
 
-
-// 🐼🐼🐼 Пример кастомного поля TextField 🐼🐼🐼
-// <TextField
-//                   fullWidth
-//                   id="standard-number"
-//                   label="Сума (грн)"
-//                   type="number"
-//                   InputLabelProps={{
-//                     shrink: true,
-//                   }}
-//                   sx={{
-//                     '& label': {
-//                       color: 'white',
-//                       fontSize: 18,
-//                     },
-//                     '&:hover label': {
-//                       color: 'yellow',
-//                     },
-//                     '& label.Mui-focused': {
-//                       color: 'lime',
-//                     },
-//                     '& input': {
-//                       color: 'white',
-//                     },
-//                     '.MuiInput-root:before': {
-//                       borderBottom: '2px solid white',
-//                       left: 0,
-//                       bottom: 0,
-//                       content: '""',
-//                       position: 'absolute',
-//                       right: 0,
-//                     },
-//                     '.MuiInput-root:hover:not(.Mui-disabled, .Mui-error):before': {
-//                       borderBottom: '2px solid yellow',
-//                     },
-//                     '& .MuiInput-underline:after': {
-//                       borderBottom: '2px solid lime',
-//                     },
-//
-//                   }}
-//                   variant="standard"
-//                 />
 
 export const CustTextField = styled(props => {
   const {textAlign,...other} = props;
@@ -240,7 +201,7 @@ export const CustTelegram = styled(props => {
 }) => {
   return {
     '&:hover': {
-      fill: hoverFill
+      fill: hoverFill,
     }
   }
 })

@@ -199,6 +199,7 @@ export const SectionLocation = () => {
                       </CustSpan>
                     </CustP>
                     <Box
+                      id={'ContactInfo'}
                       sx={{
                         display: {xs: 'block', md: 'flex'},
                         justifyContent: 'space-between',
