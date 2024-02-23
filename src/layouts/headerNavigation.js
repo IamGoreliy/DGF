@@ -5,14 +5,17 @@ import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
+import {Tooltip } from '@mui/material';
 import Container from '@mui/material/Container';
 import MenuItem from '@mui/material/MenuItem';
 import styled from '@emotion/styled';
-import { Logosvg, LocationSvg, TelegranSvg, ViberSvg, MenuSvg } from 'src/image/logo/svgComponents';
+import { Logosvg, LocationSvg, TelegranSvg, ViberSvg, MenuSvg } from 'src/image/svgComponents';
 import { CustSvg } from '../styledComponent/StyledComponent';
 import { mobileNavSwitch } from '../utils/mobileNavSwitch';
 import {useRouter } from 'next/navigation';
+import { Context, createContext, useState } from 'react';
 
+export const WindowSeizeContext = createContext();
 
 const pages = ['ГОЛОВНА', 'ПРО КОМПАНІЮ', 'ПОЗИЧАЛЬНИКАМ', 'ІНВЕСТИЦІЇ ТА ПАРТНЕРСТВО', 'СПЕЦІАЛЬНІ ПРОПОЗИЦІЇ'];
 const supportPages = ['Онлайн оплата', 'Написати листа'];
@@ -71,10 +74,14 @@ const SpanNewLine = styled.span`
 export function Layout({children}) {
   const [isOpenMobNav, setIsOpenMobNav] = React.useState(false);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [anchorElNav, setAnchorElNav] = useState(null);
   const router = useRouter();
+  const windowSize = window.innerWidth;
+
 
 
   const handleOpenNavMenu = (event) => {
+    setAnchorElNav(event.currentTarget);
     setIsOpenMobNav(!isOpenMobNav);
   };
   const handleOpenUserMenu = (event) => {
@@ -83,6 +90,7 @@ export function Layout({children}) {
   };
 
   const handleCloseNavMenu = (nameBtn) => {
+    setAnchorElNav(null);
     const urlForLink = mobileNavSwitch(nameBtn);
     setIsOpenMobNav(!isOpenMobNav);
     if(urlForLink !== 'нет страницы') {
@@ -95,12 +103,17 @@ export function Layout({children}) {
   };
 
   return (
-    <Box>
+    <Box
+
+    >
       <AppBar
         position="static"
         sx={{backgroundColor: 'black'}}
       >
-        <Container maxWidth="custXl">
+        <Container
+          maxWidth="custXl"
+          disableGutters={windowSize <= 900}
+        >
         <Box sx={{
           display: { xs: 'none', md: 'flex'},
           justifyContent: 'space-between',
@@ -238,7 +251,7 @@ export function Layout({children}) {
               <Menu
                 id="menu-appbar"
                 // 🦄🦄🦄используется ввиде якоря🦄🦄🦄
-                // anchorEl={anchorElNav}
+                anchorEl={anchorElNav}
                 anchorOrigin={{
                   vertical: 'bottom',
                   horizontal: 'left'
@@ -248,7 +261,7 @@ export function Layout({children}) {
                   vertical: 'top',
                   horizontal: 'left'
                 }}
-                open={isOpenMobNav}
+                open={Boolean(anchorElNav)}
                 onClose={handleCloseNavMenu}
                 sx={{
                   display: { xs: 'block', md: 'none' },
@@ -405,40 +418,55 @@ export function Layout({children}) {
 
             {/*🐶🐶🐶КНОПКА МЕНЮ ДЕШБОРДА 🐶🐶🐶*/}
 
-            {/*<Box sx={{ flexGrow: 0 }}>*/}
-            {/*  <Tooltip title="Open settings">*/}
-            {/*    <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>*/}
-            {/*      <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />*/}
-            {/*    </IconButton>*/}
-            {/*  </Tooltip>*/}
-            {/*  <Menu*/}
-            {/*    sx={{ mt: '45px' }}*/}
-            {/*    id="menu-appbar"*/}
-            {/*    anchorEl={anchorElUser}*/}
-            {/*    anchorOrigin={{*/}
-            {/*      vertical: 'top',*/}
-            {/*      horizontal: 'right',*/}
-            {/*    }}*/}
-            {/*    keepMounted*/}
-            {/*    transformOrigin={{*/}
-            {/*      vertical: 'top',*/}
-            {/*      horizontal: 'right',*/}
-            {/*    }}*/}
-            {/*    open={Boolean(anchorElUser)}*/}
-            {/*    onClose={handleCloseUserMenu}*/}
-            {/*  >*/}
-            {/*    {settings.map((setting) => (*/}
-            {/*      <MenuItem key={setting} onClick={handleCloseUserMenu}>*/}
-            {/*        <Typography textAlign="center">{setting}</Typography>*/}
-            {/*      </MenuItem>*/}
-            {/*    ))}*/}
-            {/*  </Menu>*/}
-            {/*</Box>*/}
+            <Box sx={{ flexGrow: 0 }}>
+              <Tooltip title="Open settings">
+                <IconButton
+                  onClick={handleOpenUserMenu}
+                  sx={{ p: 0 }}
+                >
+                  {/*<Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />*/}
+                  x
+                </IconButton>
+              </Tooltip>
+              <Menu
+                sx={{ mt: '45px' }}
+                id="menu-appbar"
+                anchorEl={anchorElUser}
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                open={Boolean(anchorElUser)}
+                onClose={handleCloseUserMenu}
+              >
+                {settings.map(setting => {
+                  return (
+                    <MenuItem
+                      key={setting}
+                      onClick={handleCloseUserMenu}
+                    >
+                      <Typography
+                        textAlign="center"
+                      >
+                        {setting}
+                      </Typography>
+                    </MenuItem>
+                  )
+                })}
+              </Menu>
+            </Box>
           </Toolbar>
         </Container>
       </AppBar>
       <Box>
-        {children}
+        <WindowSeizeContext.Provider value={windowSize}>
+          {children}
+        </WindowSeizeContext.Provider>
       </Box>
     </Box>
   );

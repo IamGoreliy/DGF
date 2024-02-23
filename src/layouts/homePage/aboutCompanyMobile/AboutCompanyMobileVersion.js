@@ -2,7 +2,7 @@ import {Container} from '@mui/material';
 import Image from 'next/image';
 import styled from '@emotion/styled';
 import AboutAsImg from '../../../../public/image/homePage/index-about-mobile.webp'
-import { MiniLog } from '../../../image/logo/svgComponents';
+import { MiniLog } from '../../../image/svgComponents';
 import {Typography} from '@mui/material';
 import {DescriptionServiceSectiom as Description} from './DescriptionServiceSectiom';
 

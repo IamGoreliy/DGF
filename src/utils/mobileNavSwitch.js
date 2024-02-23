@@ -7,9 +7,9 @@ export const mobileNavSwitch = (pageName) => {
     case 'ПОЗИЧАЛЬНИКАМ' === pageName:
       return  '/debtors';
     case 'ІНВЕСТИЦІЇ ТА ПАРТНЕРСТВО' === pageName:
-      return  '/partnership';
+      return  '/InvestmentAndPartnership';
     case 'СПЕЦІАЛЬНІ ПРОПОЗИЦІЇ' === pageName:
-      return '/offers';
+      return '/Offers';
     default:
       return 'нет страницы';
   }

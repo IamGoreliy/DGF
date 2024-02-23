@@ -1,13 +1,13 @@
 import { Box, Container, Grid } from '@mui/material';
 import {useContext} from 'react';
 import {Context} from '../../pages';
-import {Logosvg} from '../../image/logo/svgComponents';
+import {Logosvg} from '../../image/svgComponents';
 import { CustSpan, CustP, CustLi, CustSvg } from '../../styledComponent/StyledComponent';
 import Link from 'next/link';
 import Image from 'next/image';
 import visaIcon from '../../../public/image/homePage/visa.png';
 import masterCardIcon from '../../../public/image/homePage/mastercard.png';
-import {LocationSvg, TelegranSvg, ViberSvg} from '../../image/logo/svgComponents';
+import {LocationSvg, TelegranSvg, ViberSvg} from '../../image/svgComponents';
 import { CustTelegram } from '../../styledComponent/StyledComponent';
 
 

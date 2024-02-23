@@ -1,7 +1,7 @@
 import {useState} from 'react';
 import { Box, Container } from '@mui/material';
 import styled from '@emotion/styled';
-import { ArrowTop } from '../../image/logo/svgComponents';
+import { ArrowTop } from '../../image/svgComponents';
 import {tableСontents} from './sectionService/dataForSectionService';
 import {CustH2} from '../../styledComponent/StyledComponent';
 
@@ -142,6 +142,9 @@ export const ServiceSection = () => {
                 </WrapperSvg>
                 <CustTitle
                   windowSize={windowsSize}
+                  style={{
+                    fontSize: '12px'
+                  }}
                 >
                   {ele?.title}
                 </CustTitle>

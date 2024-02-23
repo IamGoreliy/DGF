@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import aboutPc from '../../../../public/image/homePage/index-about.webp';
-import { MiniLog } from '../../../image/logo/svgComponents';
+import { MiniLog } from '../../../image/svgComponents';
 import { Container } from '@mui/material';
 import styled from '@emotion/styled';
 import {DescriptionServiceSectiom as Description} from './DescriptionServiceSectiom';

@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import aboutPc from '../../../../public/image/homePage/index-about.webp';
 import aboutMobile from '../../../../public/image/homePage/index-about-mobile.webp';
-import { MiniLog } from '../../../image/logo/svgComponents';
+import { MiniLog } from '../../../image/svgComponents';
 import { DescriptionServiceSectiom as Description } from './DescriptionServiceSectiom';
 import { Box, Container } from '@mui/material';
 

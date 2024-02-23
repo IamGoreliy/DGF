@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import {TextField} from '@mui/material';
-import {TelegranSvg} from '../image/logo/svgComponents';
+import {TelegranSvg} from '../image/svgComponents';
 import {createSvgIcon} from '@mui/material';
 
 export const CustDiv = styled(props => {
@@ -217,5 +217,46 @@ export const CustSvg = styled(props => {
     '&:hover': {
       fill: hoverFill
     }
+  }
+})
+
+export const CustPSectionAbout = styled(props => {
+  const {fonts, display, color,...other} = props;
+  return <p {...other}/>
+})((
+  {
+    color = 'black',
+    display = 'block',
+    width = 'auto',
+    fonts= {},
+    // color = 'white',
+    // margin = '0px',
+    // padding = '0px',
+  }
+) => {
+  return {
+    color,
+    display,
+    width,
+    padding: '0px',
+    margin: '0px',
+    ...fonts,
+    // display: display,
+    // color: color,
+    // margin: margin,
+    // padding: padding,
+  }
+})
+
+export const CustSpanSectionAbout = styled(props => {
+  const {fonts, display, color,...other} = props;
+  return <span {...other}/>
+})((
+  {
+
+  }
+) => {
+  return {
+
   }
 })
