@@ -2,10 +2,10 @@ import {Box, Container, Typography, Grid} from '@mui/material';
 import { offersData } from './offersData';
 import Image from 'next/image';
 import { Switch } from '../../image/svgComponents';
-import { useState } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { SubOfferMenu } from './subOfferMenu';
 import { ModalWindowOffer } from './modalWindowOffer';
-
+import {WindowSeizeContext} from '../headerNavigation';
 
 const openSubMenu = (id, menuState, fnChangeMenu) => {
   if (menuState === id) {
@@ -16,8 +16,14 @@ const openSubMenu = (id, menuState, fnChangeMenu) => {
 }
 
 export const SectionSpacialOffer = () => {
+  const {setIsOpenOfferModal: homeNoScrollFn} = useContext(WindowSeizeContext)
   const [whatOfferOpen, setWhatOfferOpen] = useState(null);
   const [isOpenModalWindow, setIsOpenModalWindow] = useState(false);
+
+  useEffect(() => {
+    homeNoScrollFn(isOpenModalWindow);
+  }, [isOpenModalWindow]);
+
   return (
     <>
       <Box

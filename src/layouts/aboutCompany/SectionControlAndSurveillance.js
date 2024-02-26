@@ -15,7 +15,7 @@ import { useContext } from 'react';
 import { WindowSeizeContext } from '../headerNavigation';
 
 export const SectionControlAndSurveillance = () => {
-  const windowSize = useContext(WindowSeizeContext);
+  const { windowSize } = useContext(WindowSeizeContext);
   const isMobileSize = windowSize <= 900;
   return (
     <Box

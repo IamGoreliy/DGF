@@ -17,7 +17,7 @@ const openQuestion = (questId, stateFAQ, setFAQ) => {
 
 export const SectionFAQ = () => {
   const [whatFAQOpen, setWhatFAQOpen] = useState('null');
-  const windowSize = useContext(WindowSeizeContext);
+  const { windowSize } = useContext(WindowSeizeContext);
   const isMobile = windowSize <= 900;
   return (
     <Box>

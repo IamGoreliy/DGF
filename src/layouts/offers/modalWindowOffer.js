@@ -57,10 +57,8 @@ export const ModalWindowOffer = ({switcherModal, idOffer}) => {
             variant={'outlined'}
             onClick={() => switcherModal(false)}
             sx={{
-
               width: '50pt',
               height: '30pt',
-
             }}
           >
             X
@@ -69,7 +67,7 @@ export const ModalWindowOffer = ({switcherModal, idOffer}) => {
         <Box
             sx={{
               display: 'flex',
-              flexDirection: {xs: 'column', md: 'column'},
+              flexDirection: {xs: 'column-reverse', md: 'row'},
               gap: '20px',
               padding: '40px',
             }}
@@ -77,16 +75,25 @@ export const ModalWindowOffer = ({switcherModal, idOffer}) => {
           <Box
             sx={{
               position: 'relative',
-              width: '50%',
+              width: {xs: '100%', md: '50%'},
             }}
           >
-            <Typography>
-              «Дане звернення адресоване кредитору з метою уточнення статусу моєї кредитної справи та можливості скористатися умовами акції.
-            </Typography>
             <Box
               sx={{
                 marginTop: '20px',
                 border: '1px solid #D9D9D9',
+                padding: '20px'
+              }}
+            >
+              <Typography>
+                «Дане звернення адресоване кредитору з метою уточнення статусу моєї кредитної справи та можливості скористатися умовами акції.
+              </Typography>
+            </Box>
+            <Box
+              sx={{
+                marginTop: '20px',
+                border: '1px solid #D9D9D9',
+                padding: '20px'
               }}
             >
               <Typography>
@@ -112,7 +119,7 @@ export const ModalWindowOffer = ({switcherModal, idOffer}) => {
           </Box>
           <Box
             sx={{
-              width: '50%',
+              width: {xs: '100%', md: '50%'},
               display: 'flex',
               flexDirection: 'column',
             }}

@@ -4,6 +4,7 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
+import { Button } from '@mui/material';
 import Menu from '@mui/material/Menu';
 import {Tooltip } from '@mui/material';
 import Container from '@mui/material/Container';
@@ -13,11 +14,29 @@ import { Logosvg, LocationSvg, TelegranSvg, ViberSvg, MenuSvg } from 'src/image/
 import { CustSvg } from '../styledComponent/StyledComponent';
 import { mobileNavSwitch } from '../utils/mobileNavSwitch';
 import {useRouter } from 'next/navigation';
-import { Context, createContext, useState } from 'react';
+import { createContext, useState } from 'react';
+import { lime, yellow } from '@mui/material/colors';
+import {createTheme, ThemeProvider} from '@mui/material';
+import { AuxiliaryHeadersMenus } from '../utils/auxiliaryHeadersMenus';
+
+const colorYellow = yellow[500];
+
+const themaYellow = createTheme({
+  palette: {
+    info: {
+      main: yellow[500],
+      light: lime[500],
+      contrastText: lime[700],
+    }
+  }
+})
+
+
 
 export const WindowSeizeContext = createContext();
 
 const pages = ['ГОЛОВНА', 'ПРО КОМПАНІЮ', 'ПОЗИЧАЛЬНИКАМ', 'ІНВЕСТИЦІЇ ТА ПАРТНЕРСТВО', 'СПЕЦІАЛЬНІ ПРОПОЗИЦІЇ'];
+const subPagesBtn = ['ПИТАННЯ ТА ВІДПОВІДІ', 'НАСЛІДКИ НЕСПЛАТИ БОРГУ', 'ІДЕНТИФІКАЦІЯ БОРГУ'];
 const supportPages = ['Онлайн оплата', 'Написати листа'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
@@ -75,6 +94,7 @@ export function Layout({children}) {
   const [isOpenMobNav, setIsOpenMobNav] = React.useState(false);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const [anchorElNav, setAnchorElNav] = useState(null);
+  const [isOpenOfferModal, setIsOpenOfferModal] = useState(false);
   const router = useRouter();
   const windowSize = window.innerWidth;
 
@@ -104,7 +124,10 @@ export function Layout({children}) {
 
   return (
     <Box
-
+      sx={{
+        position: isOpenOfferModal ? 'fixed' : 'static',
+        overflowY: 'scroll',
+      }}
     >
       <AppBar
         position="static"
@@ -119,7 +142,7 @@ export function Layout({children}) {
           justifyContent: 'space-between',
           height: {xs: 'none', md: '60px'},
           mt: { xs: 'none', md: 2},
-          paddingLeft: {xs: 'none', md: '0px'}
+          paddingLeft: {xs: 'none', md: '0px'},
         }}>
             <Typography
               variant="h6"
@@ -385,8 +408,12 @@ export function Layout({children}) {
                     display: 'flex',
                     alignItems: 'center',
                     py: 0,
+                    cursor: 'pointer',
                     '& + &': {
                       marginLeft: '30px',
+                    },
+                    '&: hover': {
+                      color: 'yellow',
                     }
                 }}
                 >
@@ -397,74 +424,83 @@ export function Layout({children}) {
               <Box
                 sx={{
                   display: { xs: 'none', md: 'flex'},
-                  ml: 2
+                  marginLeft: '100px',
               }}
               >
               {supportPages.map((page) => (
-                <BtnCust
+                <ThemeProvider
+                  theme={themaYellow}
                   key={page}
+                >
+                <Button
+                  variant={'contained'}
                   onClick={handleCloseNavMenu}
+                  color={"info"}
                   sx={{
                     my: 2,
-                    color: 'white',
-                    display: 'block'
+                    color: 'black',
+                    display: 'block',
+                    '& + & ': {
+                      marginLeft: '30px',
+                    }
                 }}
                 >
                   {page}
-                </BtnCust>
+                </Button>
+                </ThemeProvider>
               ))}
               </Box>
             </Box>
 
             {/*🐶🐶🐶КНОПКА МЕНЮ ДЕШБОРДА 🐶🐶🐶*/}
 
-            <Box sx={{ flexGrow: 0 }}>
-              <Tooltip title="Open settings">
-                <IconButton
-                  onClick={handleOpenUserMenu}
-                  sx={{ p: 0 }}
-                >
-                  {/*<Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />*/}
-                  x
-                </IconButton>
-              </Tooltip>
-              <Menu
-                sx={{ mt: '45px' }}
-                id="menu-appbar"
-                anchorEl={anchorElUser}
-                anchorOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                open={Boolean(anchorElUser)}
-                onClose={handleCloseUserMenu}
-              >
-                {settings.map(setting => {
-                  return (
-                    <MenuItem
-                      key={setting}
-                      onClick={handleCloseUserMenu}
-                    >
-                      <Typography
-                        textAlign="center"
-                      >
-                        {setting}
-                      </Typography>
-                    </MenuItem>
-                  )
-                })}
-              </Menu>
-            </Box>
+            {/*<Box sx={{ flexGrow: 0 }}>*/}
+            {/*  <Tooltip title="Open settings">*/}
+            {/*    <IconButton*/}
+            {/*      onClick={handleOpenUserMenu}*/}
+            {/*      sx={{ p: 0 }}*/}
+            {/*    >*/}
+            {/*      /!*<Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />*!/*/}
+            {/*      x*/}
+            {/*    </IconButton>*/}
+            {/*  </Tooltip>*/}
+            {/*  <Menu*/}
+            {/*    sx={{ mt: '45px' }}*/}
+            {/*    id="menu-appbar"*/}
+            {/*    anchorEl={anchorElUser}*/}
+            {/*    anchorOrigin={{*/}
+            {/*      vertical: 'top',*/}
+            {/*      horizontal: 'right',*/}
+            {/*    }}*/}
+            {/*    keepMounted*/}
+            {/*    transformOrigin={{*/}
+            {/*      vertical: 'top',*/}
+            {/*      horizontal: 'right',*/}
+            {/*    }}*/}
+            {/*    open={Boolean(anchorElUser)}*/}
+            {/*    onClose={handleCloseUserMenu}*/}
+            {/*  >*/}
+            {/*    {settings.map(setting => {*/}
+            {/*      return (*/}
+            {/*        <MenuItem*/}
+            {/*          key={setting}*/}
+            {/*          onClick={handleCloseUserMenu}*/}
+            {/*        >*/}
+            {/*          <Typography*/}
+            {/*            textAlign="center"*/}
+            {/*          >*/}
+            {/*            {setting}*/}
+            {/*          </Typography>*/}
+            {/*        </MenuItem>*/}
+            {/*      )*/}
+            {/*    })}*/}
+            {/*  </Menu>*/}
+            {/*</Box>*/}
           </Toolbar>
         </Container>
       </AppBar>
       <Box>
-        <WindowSeizeContext.Provider value={windowSize}>
+        <WindowSeizeContext.Provider value={{windowSize, setIsOpenOfferModal}}>
           {children}
         </WindowSeizeContext.Provider>
       </Box>

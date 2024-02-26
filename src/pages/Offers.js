@@ -4,6 +4,7 @@ import { LayoutAuxiliaryPage } from '../layouts/LayoutAuxiliaryPage';
 import {SectionSpacialOffer} from '../layouts/offers/SectionSpacialOffer';
 import {Raleway} from 'next/font/google'
 
+//стилизация текста. Присвоение класа Header это необходимо что все сомпоненты наследывали данный клас от родительского
 const raleway = Raleway({
   weight: ['400', '700'],
   style: 'normal',

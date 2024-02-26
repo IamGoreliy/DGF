@@ -9,7 +9,7 @@ import {WindowSeizeContext} from '../headerNavigation';
 import { CustH2 } from '../../styledComponent/StyledComponent';
 
 export const InvestInBusiness = () => {
-  const windowSize = useContext(WindowSeizeContext);
+  const { windowSize } = useContext(WindowSeizeContext);
   const isMobile = windowSize <= 900;
   return (
     <Box

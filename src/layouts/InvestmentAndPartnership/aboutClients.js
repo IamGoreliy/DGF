@@ -9,7 +9,7 @@ import { CustH2 } from '../../styledComponent/StyledComponent';
 import {clientsIcon} from './dataAboutClient';
 
 export const AboutClients = () => {
-  const windowSize = useContext(WindowSeizeContext);
+  const { windowSize } = useContext(WindowSeizeContext);
   const isMobile = windowSize <= 900;
   return (
     <Box>

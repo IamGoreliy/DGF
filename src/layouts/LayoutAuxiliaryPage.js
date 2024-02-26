@@ -7,7 +7,7 @@ import { useContext } from 'react';
 import { WindowSeizeContext } from './headerNavigation';
 
 export const LayoutAuxiliaryPage = ({children}) => {
-  const windowSize = useContext(WindowSeizeContext);
+  const { windowSize } = useContext(WindowSeizeContext);
   const isMobile = windowSize <= 900;
   return (
     <Box>
