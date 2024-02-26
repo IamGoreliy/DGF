@@ -10,6 +10,12 @@ export const mobileNavSwitch = (pageName) => {
       return  '/InvestmentAndPartnership';
     case 'СПЕЦІАЛЬНІ ПРОПОЗИЦІЇ' === pageName:
       return '/Offers';
+    case 'ПИТАННЯ ТА ВІДПОВІДІ' === pageName:
+      return '/FAQ';
+    case 'НАСЛІДКИ НЕСПЛАТИ БОРГУ' === pageName:
+      return '/consequences';
+    case 'ІДЕНТИФІКАЦІЯ БОРГУ' === pageName:
+      return '/identification';
     default:
       return 'нет страницы';
   }

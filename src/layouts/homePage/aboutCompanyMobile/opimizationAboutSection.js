@@ -19,41 +19,46 @@ export const OptimizationAboutSection = () => {
         marginRight: 'auto',
       }}
     >
-      <article>
-        <Box
-          sx={{
-            display: {xs: 'block', md: 'flex'},
-          }}
-        >
+      <Container
+        maxWidth={'custXl'}
+        disableGutters={widthSize <= 900}
+      >
+        <article>
           <Box
             sx={{
-              display: 'block',
-              position: 'relative',
-              height: 'auto',
-              width: {xs: '100%', md: '41%'},
+              display: {xs: 'block', md: 'flex'},
             }}
           >
-            <Image
-              src={imageUrl}
-              alt=''
-              style={{
+            <Box
+              sx={{
                 display: 'block',
-                width: '100%'
+                position: 'relative',
+                height: 'auto',
+                width: {xs: '100%', md: '41%'},
               }}
-            />
-            <MiniLog
-              style={{
-                position: 'absolute',
-                bottom: '0px',
-                left: '0px',
-                height: '15px',
-                width: '100%'
-              }}
-            />
+            >
+              <Image
+                src={imageUrl}
+                alt=''
+                style={{
+                  display: 'block',
+                  width: '100%'
+                }}
+              />
+              <MiniLog
+                style={{
+                  position: 'absolute',
+                  bottom: '0px',
+                  left: '0px',
+                  height: '15px',
+                  width: '100%'
+                }}
+              />
+            </Box>
+            <Description/>
           </Box>
-          <Description/>
-        </Box>
-      </article>
+        </article>
+      </Container>
     </Box>
   )
 }

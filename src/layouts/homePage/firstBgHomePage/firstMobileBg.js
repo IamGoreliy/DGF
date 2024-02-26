@@ -11,13 +11,13 @@ export const FirstMobileBg = () => {
         <Image
             src={mobileBg}
             alt="Mountains"
-            width='100vw'
+            // width='100vw'
             style={{
                 width: '100%',
                 height: 'auto',
                 display: 'block',
                 position: 'absolute'
-            }}  
+            }}
         />
         </Box>
     )

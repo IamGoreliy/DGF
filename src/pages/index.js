@@ -16,14 +16,17 @@ const Page = () => {
     return (
         <>
         <Context.Provider value={windowSize}>
-          <HomeLayout/>
-          <SectionInfo />
-          <AboutCompany/>
-          <ServiceSection/>
-          <SectionPartners/>
-          <SectionPay/>
-          <SectionLocation/>
-          <SectionFooter/>
+          <HomeLayout>
+            <SectionInfo />
+            <AboutCompany/>
+            <ServiceSection/>
+            <SectionPartners/>
+            <SectionPay/>
+            <SectionLocation/>
+            <SectionFooter/>
+          </HomeLayout>
+
+
         </Context.Provider>
         </>
     )

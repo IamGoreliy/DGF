@@ -22,8 +22,13 @@ export const SectionLocation = () => {
       >
         <CustH2
           color={'black'}
+          widthB={'4rem'}
+          heightB={'3px'}
+          topB={'-10px'}
+          leftB={'0px'}
+          bgcB={'#0079C5'}
         >
-          контакти
+          КОНТАКТИ
         </CustH2>
         <Grid
           container

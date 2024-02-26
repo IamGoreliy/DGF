@@ -20,12 +20,13 @@ export const SectionFooter = () => {
     <Box
       sx={{
         backgroundColor: 'black',
+        padding: 'clamp(20px,1.875vw,30px) 0 20px',
+
       }}
     >
       <Container
         maxWidth={'custXl'}
         sx={{
-          padding: 'clamp(20px,1.875vw,30px) 0 20px',
         }}
       >
         {/*🐼🐼🐼 мобильный футер 🐼🐼🐼*/}
@@ -111,12 +112,12 @@ export const SectionFooter = () => {
               <CustLi
                 mtEplusE={'10px'}
               >
-                <Link href={'/'} style={{color: 'white', textDecoration: 'none'}}>Інвестиції та партнерство</Link>
+                <Link href={'/InvestmentAndPartnership'} style={{color: 'white', textDecoration: 'none'}}>Інвестиції та партнерство</Link>
               </CustLi>
               <CustLi
                 mtEplusE={'10px'}
               >
-                <Link href={'/'} style={{color: 'white', textDecoration: 'none'}}>Спеціальні пропозиції</Link>
+                <Link href={'/Offers'} style={{color: 'white', textDecoration: 'none'}}>Спеціальні пропозиції</Link>
               </CustLi>
             </ul>
           </Box>
@@ -163,7 +164,7 @@ export const SectionFooter = () => {
         >
           <Logosvg
             style={{
-              width: '200px',
+              width: windowSize >= 1600 ? '200px' : '140px',
               height: '41px',
             }}
           />
@@ -283,7 +284,7 @@ export const SectionFooter = () => {
                   textTransform: 'uppercase',
                 }}
               >
-                <Link href={'/'}
+                <Link href={'/InvestmentAndPartnership'}
                       style={{
                         textDecoration: 'none',
                         color: colorLink,
@@ -302,7 +303,7 @@ export const SectionFooter = () => {
                   textTransform: 'uppercase',
                 }}
               >
-                <Link href={'/'}
+                <Link href={'/Offers'}
                       style={{
                         textDecoration: 'none',
                         color: colorLink,
@@ -325,7 +326,7 @@ export const SectionFooter = () => {
             <Box
               sx={{
                 display: 'flex',
-                alignItems: 'center',
+                alignItems: 'center'
               }}
             >
               <CustP
@@ -361,7 +362,7 @@ export const SectionFooter = () => {
                   height: '40px',
                   fill: '#0079C5',
                   '&:Hover': {
-                    fill: 'yellow',
+                    fill: 'yellow'
                   }
                 }}/>
             </Box>
@@ -387,6 +388,7 @@ export const SectionFooter = () => {
                 display={'flex'}
                 columnGap={'10px'}
               >
+                <a href="https://t.me/dgfnsdgfnss" target="_blank">
                 <CustSvg
                   svgurl={
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40">
@@ -405,6 +407,7 @@ export const SectionFooter = () => {
                     }
                   }}
                 />
+                </a>
                 <CustSvg
                   svgurl={
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40">
@@ -419,7 +422,7 @@ export const SectionFooter = () => {
                     height: '40px',
                     fill: '#0079C5',
                     '&:hover': {
-                      fill: 'yellow',
+                      fill: 'yellow'
                     }
                   }}
                 />

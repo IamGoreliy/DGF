@@ -89,16 +89,16 @@ export const SectionInfo = () => {
                 display: 'flex',
                 flexDirection: 'row',
                 position: 'relative',
-                marginTop: { xs: '350px', md: '0px'},
+                marginTop: { xs: '0px', md: '0px'},
                 // background: {xs: 'rgb(0,0,0)', md: 'black'},
-                background: {xs:'linear-gradient(180deg, rgba(0,0,0,0.6082808123249299) 0%, rgba(0,0,0,1) 100%)', md: 'none'},
-                height: {xs: '750px', md: '810px'}
+                background: {xs:'linear-gradient(180deg, rgba(0,7,9,0) 23%, rgba(1,1,0,1) 50%)', md: 'none'},
+                height: {xs: 'auto', md: '810px'}
 
             }}
         >
             <Box
               sx={{
-                marginTop: {xs: '10px', md: '40px'},
+                marginTop: {xs: '300px', md: '40px'},
                 paddingLeft: {xs: '15px', md: '100px'},
                 width: {xs: '400px', md: '600px'},
                 height: 'auto',

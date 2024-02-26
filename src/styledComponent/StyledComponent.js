@@ -17,7 +17,7 @@ export const CustH2 = styled(props => {
   return <h2 {...other}/>
 })(({
   color = 'white',
-  widthB = '4rem',
+  widthB = '48px',
   heightB = '3px',
   topB = '0px',
   leftB = '0px',

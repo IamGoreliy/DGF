@@ -6,7 +6,7 @@ import {tableСontents} from './sectionService/dataForSectionService';
 import {CustH2} from '../../styledComponent/StyledComponent';
 
 const styleBorderOn = '1px solid black';
-const styleBorderOff = '0px solid black';
+const styleBorderOff = '1px solid transparent';
 
 
 const CustButtonDescMob = styled.div`
@@ -83,18 +83,20 @@ export const ServiceSection = () => {
   const [isOpenDesc, setIsOpenDesc] = useState(0);
   const windowsSize = window.innerWidth;
   return (
-    <Container
-      maxWidth={'custXl'}
+    <Box
       sx={{
         padding: 'clamp(80px,7.5vw,120px) 0 clamp(80px,11.25vw,180px)'
       }}
     >
+    <Container
+      maxWidth={'custXl'}
+
+    >
       <CustH2
         color={'black'}
-        widthB={'3rem'}
+        widthB={'4rem'}
         heightB={'3px'}
-        topB={'0px'}
-        leftB={'0px'}
+        topB={'-10px'}
         bgcB={'yellow'}
       >
         Послуги
@@ -107,7 +109,7 @@ export const ServiceSection = () => {
           alignItems: {xs: 'none', md: 'start'},
           gridTemplateColumns: "repeat(4, 1fr)",
           gap: '20px',
-          padding: {xs: '20px', md: '0px'}
+          // padding: {xs: '20px', md: '0px'}
 
         }}
         gridColumn='span 3'
@@ -156,9 +158,9 @@ export const ServiceSection = () => {
                   width: {xs: ele.id === isOpenDesc ? '100%' : '100%', md: '100%'},
                   height: {xs: ele.id === isOpenDesc ? 'auto' : '0px', md: 'auto'},
                   borderTop: {xs: styleBorderOff, md: styleBorderOn},
-                  borderRight: {xs: ele.id === isOpenDesc ? styleBorderOn : styleBorderOn, md: styleBorderOn},
-                  borderBottom: {xs: ele.id === isOpenDesc ? styleBorderOn : styleBorderOn, md: styleBorderOn},
-                  borderLeft: {xs: ele.id === isOpenDesc ? styleBorderOn : styleBorderOn, md: styleBorderOn},
+                  borderRight: {xs: ele.id === isOpenDesc ? styleBorderOn : styleBorderOff, md: styleBorderOn},
+                  borderBottom: {xs: ele.id === isOpenDesc ? styleBorderOn : styleBorderOff, md: styleBorderOn},
+                  borderLeft: {xs: ele.id === isOpenDesc ? styleBorderOn : styleBorderOff, md: styleBorderOn},
                   borderRadius: '5px 5px 5px 5px',
                   padding: {xs: ele.id === isOpenDesc ? '20px' : '0px', md: '20px'},
                   transition: '1000ms height linear'
@@ -172,5 +174,6 @@ export const ServiceSection = () => {
         })}
       </Box>
     </Container>
+    </Box>
   )
 }
