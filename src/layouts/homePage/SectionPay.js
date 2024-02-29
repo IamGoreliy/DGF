@@ -12,14 +12,17 @@ import {CustTextField} from '../../styledComponent/StyledComponent';
 
 export const SectionPay = () => {
   const windowSize = useContext(Context);
-  const dataPay = editStylePayData(windowSize)
+  const dataPay = editStylePayData(windowSize);
+  const currentUrl = window.location.pathname !== '/consequences';
+
 
   return (
     <Box
+      id={'payAnchor'}
       sx={{
-        padding: 'clamp(80px,7.5vw,120px) 0 clamp(80px,11.25vw,180px)',
-        backgroundImage: `url(${payBg.src})`,
-        backgroundSize: 'cover',
+        padding: currentUrl ? 'clamp(80px,7.5vw,120px) 0 clamp(80px,11.25vw,180px)' : 'clamp(80px,7.5vw,0px) 0 clamp(80px,11.25vw,0px)',
+        backgroundImage: currentUrl && `url(${payBg.src})`,
+        backgroundSize: currentUrl && 'cover',
       }}
     >
      <Container

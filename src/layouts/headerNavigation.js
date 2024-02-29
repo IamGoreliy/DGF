@@ -18,6 +18,7 @@ import { createContext, useState } from 'react';
 import { lime, yellow } from '@mui/material/colors';
 import {createTheme, ThemeProvider} from '@mui/material';
 import { AuxiliaryHeadersMenusMob } from '../utils/auxiliaryHeadersMenusMob';
+import Link from 'next/link';
 
 const colorYellow = yellow[500];
 
@@ -30,8 +31,6 @@ const themaYellow = createTheme({
     }
   }
 })
-
-
 
 export const WindowSeizeContext = createContext();
 
@@ -115,6 +114,7 @@ export function Layout({children}) {
     setIsOpenMobNav(!isOpenMobNav);
     if(urlForLink !== 'нет страницы') {
       router.push(`${urlForLink}`);
+
     }
   };
 
@@ -179,34 +179,36 @@ export function Layout({children}) {
                           <ContactInfo>04112, м. Київ</ContactInfo>
                           <span>вул. Авіаконструктора І.Сікорського 8</span>
                       </Typography>
-                      <LocationSvg
-                        svgurl={
-                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 40">
-                            <g id="location">
-                              <path
-                                d="M15.7143 0C11.5481 0.00491496 7.55399 1.6621 4.60805 4.60804C1.66212 7.55397 0.00493168 11.5481 1.67184e-05 15.7143C-0.00497313 19.1189 1.10713 22.4311 3.16573 25.1429C3.16573 25.1429 3.5943 25.7071 3.6643 25.7886L15.7143 40L27.77 25.7814C27.8329 25.7057 28.2629 25.1429 28.2629 25.1429L28.2643 25.1386C30.3219 22.428 31.4335 19.1173 31.4286 15.7143C31.4237 11.5481 29.7665 7.55397 26.8206 4.60804C23.8746 1.6621 19.8805 0.00491496 15.7143 0ZM20.8572 22.8571L15.7143 19.5843L10.5714 22.8571L11.4286 17.0371L7.14287 13.1043L13.1429 12.38L15.7143 7.14286L18.4457 12.3814L24.2857 13.1043L20 17.0371L20.8572 22.8571Z"/>
-                            </g>
-                          </svg>
-                        }
-                        sx={{
-                          width: '31px',
-                          height: '40px',
-                          fill: '#0079C5',
-                          marginLeft: '10px',
-                          '&:hover': {
-                            fill: 'yellow'
+                      <Link href='/#locationAnchor'>
+                        <LocationSvg
+                          svgurl={
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 40">
+                              <g id="location">
+                                <path
+                                  d="M15.7143 0C11.5481 0.00491496 7.55399 1.6621 4.60805 4.60804C1.66212 7.55397 0.00493168 11.5481 1.67184e-05 15.7143C-0.00497313 19.1189 1.10713 22.4311 3.16573 25.1429C3.16573 25.1429 3.5943 25.7071 3.6643 25.7886L15.7143 40L27.77 25.7814C27.8329 25.7057 28.2629 25.1429 28.2629 25.1429L28.2643 25.1386C30.3219 22.428 31.4335 19.1173 31.4286 15.7143C31.4237 11.5481 29.7665 7.55397 26.8206 4.60804C23.8746 1.6621 19.8805 0.00491496 15.7143 0ZM20.8572 22.8571L15.7143 19.5843L10.5714 22.8571L11.4286 17.0371L7.14287 13.1043L13.1429 12.38L15.7143 7.14286L18.4457 12.3814L24.2857 13.1043L20 17.0371L20.8572 22.8571Z"/>
+                              </g>
+                            </svg>
                           }
-                        }}
-                      />
+                          sx={{
+                            width: '31px',
+                            height: '40px',
+                            fill: '#0079C5',
+                            marginLeft: '10px',
+                            '&:hover': {
+                              fill: 'yellow'
+                            }
+                          }}
+                        />
+                      </Link>
                   </Box>
               <Box
                 sx={{
                   display: 'flex'
                 }}>
                 <Typography>
-                  <a href='tel:+380673693337'>+38 (067) 369-33-37</a>
+                  +38 (067) 369-33-37
                   <br/>
-                  <a href='tel:+380931708647'>+38 (093) 170-86-47</a>
+                  +38 (093) 170-86-47
                 </Typography>
                 <a href="https://t.me/dgfnsdgfnss" target="_blank">
                   <CustSvg
@@ -369,15 +371,27 @@ export function Layout({children}) {
                     flexDirection: 'column',
                     alignItems: 'center'
                 }}>
-                  {supportPages.map(page => {
-                    return (
-                      <PopupMenuBtn
-                        key={page}
-                      >
-                        {page}
-                      </PopupMenuBtn>
-                    );
-                  })}
+                  <PopupMenuBtn
+                    onClick={() => {
+                      setAnchorElNav(null);
+                      router.push('/#payAnchor');
+                    }}
+                  >
+                    Онлайн оплата
+                  </PopupMenuBtn>
+                  <PopupMenuBtn
+                  >
+                    <a
+                      href='mailto:info@dgf.com.ua/'
+                      style={{
+                        textDecoration: "none",
+                        color: "inherit",
+                      }}
+                    >
+                      Написати листа
+                    </a>
+                  </PopupMenuBtn>
+
                 </MenuItem>
                 </Box>
               </Menu>
@@ -411,13 +425,15 @@ export function Layout({children}) {
                   }}
                 />
               </Typography>
-              <LocationSvg
-                sx={{
-                  width: '30px',
-                  height: '30px',
-                  fill: '#0079C5'
-                }}
-              />
+              <Link href='/#locationAnchor'>
+                <LocationSvg
+                  sx={{
+                    width: '30px',
+                    height: '30px',
+                    fill: '#0079C5'
+                  }}
+                />
+              </Link>
               <a href="https://t.me/dgfnsdgfnss" target="_blank">
                 <TelegranSvg
                   sx={{
@@ -441,7 +457,8 @@ export function Layout({children}) {
             <Box
               sx={{
                 flexGrow: 1,
-                display: { xs: 'none', md: 'flex'}
+                display: { xs: 'none', md: 'flex'},
+                justifyContent: 'space-between'
             }}
             >
               <Box
@@ -460,62 +477,48 @@ export function Layout({children}) {
                     py: 0,
                     cursor: 'pointer',
                     '& + &': {
-                      marginLeft: '30px',
+                      marginLeft: windowSize >= 1600 ? '30px' : '20px',
                     },
 
                 }}
                 >
-                  {/*{*/}
-                  {/*  page === 'ПОЗИЧАЛЬНИКАМ'*/}
-                  {/*    ?*/}
-                  {/*    <AuxiliaryHeadersMenusMob auxiliaryMenuButtons={subPagesBtn} pageBtn={page} handlePage={handleCloseNavMenu} />*/}
-                  {/*    :*/}
-                  {/*    <Typography*/}
-                  {/*      onClick={ () => handleCloseNavMenu(page)}*/}
-                  {/*      sx={{*/}
-                  {/*        display: 'flex',*/}
-                  {/*        alignItems: 'center',*/}
-                  {/*        width: '100%',*/}
-                  {/*        height: '100%',*/}
-                  {/*        '&: hover': {*/}
-                  {/*          color: 'yellow',*/}
-                  {/*        }*/}
-                  {/*      }}*/}
-                  {/*    >*/}
-                  {/*      {page}*/}
-                  {/*    </Typography>*/}
-                  {/*}*/}
-                  <Typography
-                    onClick={ () => handleCloseNavMenu(page)}
-                    sx={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      width: '100%',
-                      height: '100%',
-                      '&: hover': {
-                        color: 'yellow',
-                      }
-                    }}
-                  >
-                    {page}
-                  </Typography>
+                  {
+                    page === 'ПОЗИЧАЛЬНИКАМ'
+                      ?
+                      <AuxiliaryHeadersMenusMob auxiliaryMenuButtons={subPagesBtn} pageBtn={page} handlePage={handleCloseNavMenu} />
+                      :
+                      <Typography
+                        onClick={ () => handleCloseNavMenu(page)}
+                        sx={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          width: '100%',
+                          height: '100%',
+                          '&: hover': {
+                            color: 'yellow',
+                          }
+                        }}
+                      >
+                        {page}
+                      </Typography>
+                  }
+
                 </Box>
               ))}
               </Box>
               <Box
                 sx={{
                   display: { xs: 'none', md: 'flex'},
-                  marginLeft: '100px',
+                  // marginLeft: windowSize >= 1600 ? '100px' : '30px',
               }}
               >
-              {supportPages.map((page) => (
                 <ThemeProvider
                   theme={themaYellow}
-                  key={page}
                 >
                 <Button
                   variant={'contained'}
-                  onClick={handleCloseNavMenu}
+                  // onClick={handleCloseNavMenu}
+                  onClick={() => router.push('/#payAnchor')}
                   color={"info"}
                   sx={{
                     my: 2,
@@ -526,10 +529,32 @@ export function Layout({children}) {
                     }
                 }}
                 >
-                  {page}
+                  Онлайн оплата
+                </Button>
+                <Button
+                  variant={'contained'}
+                  // onClick={handleCloseNavMenu}
+                  color={"info"}
+                  sx={{
+                    my: 2,
+                    color: 'black',
+                    display: 'block',
+                    '& + & ': {
+                      marginLeft: '30px',
+                    }
+                  }}
+                >
+                  <a
+                    href='mailto:info@dgf.com.ua/'
+                    style={{
+                      textDecoration: 'none',
+                      color: "inherit"
+                    }}
+                  >
+                    Написати листа
+                  </a>
                 </Button>
                 </ThemeProvider>
-              ))}
               </Box>
             </Box>
 

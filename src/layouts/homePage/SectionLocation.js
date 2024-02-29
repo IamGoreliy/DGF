@@ -11,6 +11,7 @@ import {Context} from '../../pages';
 
 export const SectionLocation = () => {
   const windowSize = useContext(Context);
+  const currentUrl = window.location.pathname;
   return (
     <Box
       sx={{
@@ -144,6 +145,7 @@ export const SectionLocation = () => {
                 </Box>
               </Box>
               <Box
+                id={'contactCompany'}
                 sx={{
                   width: '100%',
                   minHeight: '500px',
@@ -423,7 +425,9 @@ export const SectionLocation = () => {
             </Box>
           </Grid>
         </Grid>
-        <Box>
+        { currentUrl !== '/consequences' && <Box
+          id={'locationAnchor'}
+        >
           <Box
             sx={{
               width: "100%",
@@ -442,7 +446,7 @@ export const SectionLocation = () => {
               <a href="https://www.gps.ie/">gps systems</a>
             </iframe>
           </Box>
-        </Box>
+        </Box>}
       </Container>
     </Box>
   )

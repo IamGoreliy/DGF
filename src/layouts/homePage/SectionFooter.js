@@ -227,7 +227,7 @@ export const SectionFooter = () => {
                   textTransform: 'uppercase',
                 }}
               >
-                <Link href={'/'}
+                <Link href={'/FAQ'}
                       style={{
                         textDecoration: 'none',
                         color: colorLink,

@@ -17,7 +17,7 @@ const raleway = Raleway({
 const Offers = () => {
   return (
     <Header className={raleway.className}>
-      <LayoutAuxiliaryPage>
+      <LayoutAuxiliaryPage title={'СПЕЦІАЛЬНІ ПРОПОЗИЦІЇ'}>
         <SectionSpacialOffer/>
       </LayoutAuxiliaryPage>
       <SectionFooter/>

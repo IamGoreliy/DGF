@@ -25,8 +25,6 @@ const Page = () => {
             <SectionLocation/>
             <SectionFooter/>
           </HomeLayout>
-
-
         </Context.Provider>
         </>
     )

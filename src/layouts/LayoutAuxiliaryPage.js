@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { useContext } from 'react';
 import { WindowSeizeContext } from './headerNavigation';
 
-export const LayoutAuxiliaryPage = ({children}) => {
+export const LayoutAuxiliaryPage = ({children, title = 'ІНВЕСТИЦІЇ ТА ПАРТНЕРСТВО' }) => {
   const { windowSize } = useContext(WindowSeizeContext);
   const isMobile = windowSize <= 900;
   return (
@@ -37,7 +37,7 @@ export const LayoutAuxiliaryPage = ({children}) => {
               textTransform: 'uppercase',
             }}
           >
-            ІНВЕСТИЦІЇ ТА ПАРТНЕРСТВО
+            {title}
           </Typography>
           <Image
             src={miniLogo2}
@@ -68,7 +68,7 @@ export const LayoutAuxiliaryPage = ({children}) => {
               Головна
             </Link>
             <Typography>
-              Спеціальні пропозіції
+              {title}
             </Typography>
           </Breadcrumbs>
         }

@@ -1,11 +1,11 @@
 import { Box, Container, Typography } from "@mui/material";
 import styled from "@emotion/styled";
-import Image from "next/image";
-import mobileBg from '../../../public/image/homePage/firstMobile.png';
-import pcBg from '../../../public/image/homePage/first-bg.webp';
 import { FirstMobileBg } from "./firstBgHomePage/firstMobileBg";
 import {FirstPcBg} from './firstBgHomePage/firstPcBg';
-import { yellow } from '@mui/material/colors';
+import {hrefAnchor} from '../../utils/anchorSwitch';
+import {useRouter} from 'next/router';
+
+
 
 const CustomH1 = styled.h1`
     font-famely: "Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji";
@@ -79,6 +79,7 @@ const ButtomSelect = styled(props => {
 
 const btnName = ['Залишити заявку', 'Сплатити борг'];
 export const SectionInfo = () => {
+  const router = useRouter();
     return (
         <CustomFirstSection>
         <FirstMobileBg/>
@@ -140,6 +141,7 @@ export const SectionInfo = () => {
                     return (
                       <ButtomSelect
                         key={ele}
+                        onClick={() => hrefAnchor(ele, router)}
                         width={widthBtn}
                         height={sizeWindow >= 900 ? '40px' : '65px'}
                       >

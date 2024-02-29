@@ -15,7 +15,7 @@ export const mobileNavSwitch = (pageName) => {
     case 'НАСЛІДКИ НЕСПЛАТИ БОРГУ' === pageName:
       return '/consequences';
     case 'ІДЕНТИФІКАЦІЯ БОРГУ' === pageName:
-      return '/identification';
+      return '/Identification';
     default:
       return 'нет страницы';
   }
