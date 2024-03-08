@@ -50,8 +50,13 @@ export const SideNavItem = (props) => {
               justifyContent: 'center',
               mr: 2,
               ...(active && {
-                color: 'primary.main'
-              })
+                color: 'primary.main',
+                '& > svg': {
+                  fill: '#6366F1'
+                },
+              }),
+
+
             }}
           >
             {icon}

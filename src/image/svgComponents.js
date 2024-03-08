@@ -107,3 +107,27 @@ export const PdfIcon = createSvgIcon(
   </svg>,
   'pdjIcon'
 )
+
+export const DashboardIcon = createSvgIcon(
+  <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="432" height="448"
+       viewBox="0 0 432 448">
+    <title></title>
+    <g id="icomoon-ignore">
+    </g>
+    <path fill=""
+          d="M192 222.5l136.5 136.5c-34.75 35.25-83.25 57-136.5 57-106 0-192-86-192-192s86-192 192-192v190.5zM238.75 224h193.25c0 53.25-21.75 101.75-57 136.5zM416 192h-192v-192c106 0 192 86 192 192z"></path>
+  </svg>,
+  'dashboardIcon'
+)
+
+export const OfferSettingsIcon = createSvgIcon(
+  <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="768" height="768"
+       viewBox="0 0 768 768">
+    <title>offers</title>
+    <g id="icomoon-ignore">
+    </g>
+    <path fill=""
+          d="M175.5 223.5q19.5 0 33.75-14.25t14.25-33.75-14.25-33.75-33.75-14.25-33.75 14.25-14.25 33.75 14.25 33.75 33.75 14.25zM685.5 370.5q18 18 18 45t-18 45l-225 225q-18 18-45 18t-45-18l-288-288q-18-18-18-45v-225q0-25.5 18.75-44.25t44.25-18.75h225q27 0 45 18z"></path>
+  </svg>,
+  'offersSettingsIcon'
+)

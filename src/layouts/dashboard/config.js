@@ -7,16 +7,42 @@ import UserPlusIcon from '@heroicons/react/24/solid/UserPlusIcon';
 import UsersIcon from '@heroicons/react/24/solid/UsersIcon';
 import XCircleIcon from '@heroicons/react/24/solid/XCircleIcon';
 import { SvgIcon } from '@mui/material';
+import {DashboardIcon, OfferSettingsIcon} from '../../image/svgComponents';
 
 export const items = [
   {
-    title: 'Overview',
+    title: 'Home',
     path: '/',
     icon: (
       <SvgIcon fontSize="small">
         <ChartBarIcon />
       </SvgIcon>
     )
+  },
+  {
+    title: 'All statistics',
+    path: '/dashboard',
+    icon:
+        <DashboardIcon
+          sx={{
+            fill: '#9DA4AE',
+            width: '20px',
+            height: '20px',
+          }}
+        />
+
+  },
+  {
+    title: 'Spacial offers',
+    path: '/offerSettings',
+    icon:
+      <OfferSettingsIcon
+        sx={{
+          fill: '#9DA4AE',
+          width: '20px',
+          height: '20px',
+        }}
+      />
   },
   {
     title: 'Customers',
