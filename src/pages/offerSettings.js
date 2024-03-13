@@ -1,6 +1,7 @@
 import {Layout as DashboardLayout} from '../layouts/dashboard/layout';
 import { Box, Button, Container, Typography } from '@mui/material';
 import {checkUsersFetch} from '../utils/custFetch';
+import { CreateOffer } from '../layouts/offerSettings/CreateOffer';
 
 const Page = () => {
   return (
@@ -14,14 +15,7 @@ const Page = () => {
           >
             Offers Settings
           </Typography>
-          <Button
-            variant={'outlined'}
-            onClick={async () => {
-              const a = await checkUsersFetch('testmail', 'testpass');
-            }}
-          >
-            проверка сервера
-          </Button>
+          <CreateOffer/>
         </Container>
       </Box>
     </>

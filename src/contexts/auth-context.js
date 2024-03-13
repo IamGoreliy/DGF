@@ -69,34 +69,38 @@ export const AuthProvider = (props) => {
 
 
   const initialize = async () => {
+    let statusVerification, responseData, user;
      initialized.current = window.sessionStorage.getItem('authenticated') ?? false;
     // Prevent from calling twice in development mode with React.StrictMode enabled
     if (initialized.current) {
-      let statusVerification, responseData;
       try {
         [statusVerification, responseData] = await verificationFetch(window.sessionStorage.getItem('token'));
       }catch (e) {
-      //🦄🦄🦄🦄⬇️⬇️⬇️⬇️⬇️⬇️ дописать верификицию. Заполнить данные юзера и дописать catch выводить ошибки которые он поймал ⬇️⬇️⬇️⬇️🦄🦄🦄🦄
+        console.error(e);
       }
-      console.log(statusVerification, responseData);
-      const user = {
-        id: '5e86809283e28b96d2d38537',
-        avatar: '/assets/avatars/avatar-anika-visser.png',
-        name: 'Anika Visser',
-        email: 'anika.visser@devias.io'
+
+      user = {
+        id: responseData['user_id'],
+        avatar: responseData.avatar ?? '/assets/avatars/avatar-anika-visser.png',
+        name: responseData.name,
+        email: responseData.email,
       };
 
-      dispatch({
-        type: HANDLERS.INITIALIZE,
-        payload: user
-      });
+      if (statusVerification) {
+        dispatch({
+          type: HANDLERS.INITIALIZE,
+          payload: user
+        });
 
-      router.push('/');
-    } else {
-      dispatch({
-        type: HANDLERS.INITIALIZE
-      });
+        router.push('/dashboard');
+        return;
+      }
     }
+
+    dispatch({
+      type: HANDLERS.INITIALIZE
+    });
+
 
       // initialized.current = true;
       //
@@ -143,10 +147,10 @@ export const AuthProvider = (props) => {
     }
 
     const user = {
-      id: '5e86809283e28b96d2d38537',
+      id: 'test',
       avatar: '/assets/avatars/avatar-anika-visser.png',
-      name: 'Anika Visser',
-      email: 'anika.visser@devias.io'
+      name: 'test user',
+      email: 'test@devias.io'
     };
 
     dispatch({
@@ -212,7 +216,7 @@ export const AuthProvider = (props) => {
         skip,
         signIn,
         signUp,
-        signOut
+        signOut,
       }}
     >
       {children}

@@ -27,6 +27,7 @@
     "date-fns": "2.30.0",
     "formik": "2.4.5",
     "jsonwebtoken": "^9.0.2",
+    "lodash.debounce": "^4.0.8",
     "mysql2": "^3.9.2",
     "next": "^14.0.4",
     "next-connect": "^1.0.0",
