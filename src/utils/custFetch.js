@@ -11,7 +11,7 @@ const fetchOption = (data) => {
 export const authUsersFetch = async (email, pass) => {
   const url = '/api/apiAuthUser';
   const response = await fetch(url, fetchOption({email, pass}));
-  const responseData = await response.json()
+  const responseData = await response.json();
   return [response.ok, responseData];
 }
 
@@ -20,4 +20,13 @@ export const verificationFetch = async (token) => {
   const response = await fetch(url, fetchOption({token}));
   const responseData = await response.json();
   return [response.ok, responseData];
+}
+
+export const uploadFile = async (formData) => {
+  const url = '/api/uploadFile';
+  const response = await fetch(url, {
+    method: 'POST',
+    body: formData,
+  });
+  return response.json();
 }

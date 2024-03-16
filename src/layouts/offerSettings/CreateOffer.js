@@ -5,6 +5,7 @@ import Image from 'next/image';
 import placeholderImg from '../../../public/image/placeholder/placeholder.webp';
 import {AddPhotoIcon} from '../../image/svgComponents';
 import {useState} from 'react';
+import {uploadFile} from '../../utils/custFetch';
 const debounce = require('lodash.debounce')
 
 // import { SubOfferMenu } from '../offers/subOfferMenu';
@@ -16,6 +17,34 @@ function fieldImgClick () {
 const textFieldChange = debounce((value, setStateFn) => {
   setStateFn(value);
 }, 500);
+
+
+// async function operationWithForm (event) {
+//   event.preventDefault();
+//   // const whatBtmPress = event.target.outerText;
+//   const form = event.target;
+//   // switch (whatBtmPress) {
+//   //   case 'очистить':
+//   //     // inputForm[0].value = '';
+//   //     form[1].value = '';
+//   //     form[2].value = '';
+//   //     setStateImageUrl('');
+//   //     setStateTitle('');
+//   //     setDescOffer('');
+//   //     break;
+//   //   case 'сохранить':
+//   //     const formData = new FormData(form);
+//   //     const testFormData = await uploadFile(formData);
+//   //     console.log(testFormData)
+//   //     break;
+//   //   default:
+//   //     console.log('hello');
+//   // }
+//   const formData = new FormData(form);
+//   const testFormData = await uploadFile(formData);
+//
+//
+// }
 
 
 
@@ -143,7 +172,7 @@ export const CreateOffer = () => {
               </label>
             </Box>
             <input
-              onChange={({currentTarget: {value}}) => setImageUrl(value)}
+              onChange={({target: {files}}) => setImageUrl(files)}
               id='inputImg'
               type='file'
               name='offerImage'
@@ -185,81 +214,29 @@ export const CreateOffer = () => {
               </Box>
             </Box>
           </Box>
-          <Box
-            component={'form'}
-            onClick={(e) => {
-              e.preventDefault();
-              const whatBtmPress = e.target.outerText;
-              console.log(whatBtmPress)
-            }}
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              rowGap: '20px',
-              width: '430px',
-              height: '350px',
-              border: '1px solid black',
-              padding: '20px',
-              borderRadius: '10px',
-            }}
-          >
-            <TextField
-              id="filled-basic"
-              onClick={fieldImgClick}
-              label="выбрать картинку"
-              variant="filled"
-              fullWidth
-              value={imageUrl}
-              sx={{
-                '& input': {
-                  cursor: 'pointer',
-                },
+          <Box>
+            <form
+              onSubmit={async (e) => {
+                e.preventDefault();
+                const formData = new FormData(e.target);
+                const response = await uploadFile(formData);
 
               }}
-            />
-            <TextField
-              id="filled-basic"
-              onChange={({currentTarget: {value}}) => textFieldChange(value, setTitleOffer)}
-              label="Название акционного продукта"
-              variant="filled"
-              type='text'
-              fullWidth
-              sx={{
-                '& input': {
-                  cursor: 'pointer',
-                },
-              }}
-            />
-            <TextField
-              id="filled-basic"
-              onChange={({currentTarget : {value}}) => textFieldChange(value, setDescOffer)}
-              label="Описание акционного продукта"
-              variant="filled"
-              type='text'
-              fullWidth
-              sx={{
-                '& input': {
-                  cursor: 'pointer',
-                },
-              }}
-            />
-            <Box
-              sx={{
-                display: 'flex',
-                justifyContent: 'space-evenly'
-              }}
             >
-              <Button
-                variant={'contained'}
-              >
-                сохранить
-              </Button>
-              <Button
-                variant={'contained'}
-              >
-                очистить
-              </Button>
-            </Box>
+              <label>
+                <input
+                  type='file'
+                  name='img'
+                />
+                <input
+                  type='text'
+                  name='file_name'
+                />
+              </label>
+              <button>
+                отправить
+              </button>
+            </form>
           </Box>
         </Box>
       </Container>
