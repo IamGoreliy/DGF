@@ -1,14 +1,12 @@
 import { Box, Container, Typography, TextField, Button } from '@mui/material';
-// import { offersData } from '../offers/offersData';
 import { Switch } from '../../image/svgComponents';
 import Image from 'next/image';
 import placeholderImg from '../../../public/image/placeholder/placeholder.webp';
 import {AddPhotoIcon} from '../../image/svgComponents';
 import {useState} from 'react';
 import {uploadFile} from '../../utils/custFetch';
+import { toast } from 'react-toastify';
 const debounce = require('lodash.debounce')
-
-// import { SubOfferMenu } from '../offers/subOfferMenu';
 
 function fieldImgClick () {
   window.document.getElementById('inputImg').click();
@@ -17,34 +15,6 @@ function fieldImgClick () {
 const textFieldChange = debounce((value, setStateFn) => {
   setStateFn(value);
 }, 500);
-
-
-// async function operationWithForm (event) {
-//   event.preventDefault();
-//   // const whatBtmPress = event.target.outerText;
-//   const form = event.target;
-//   // switch (whatBtmPress) {
-//   //   case 'очистить':
-//   //     // inputForm[0].value = '';
-//   //     form[1].value = '';
-//   //     form[2].value = '';
-//   //     setStateImageUrl('');
-//   //     setStateTitle('');
-//   //     setDescOffer('');
-//   //     break;
-//   //   case 'сохранить':
-//   //     const formData = new FormData(form);
-//   //     const testFormData = await uploadFile(formData);
-//   //     console.log(testFormData)
-//   //     break;
-//   //   default:
-//   //     console.log('hello');
-//   // }
-//   const formData = new FormData(form);
-//   const testFormData = await uploadFile(formData);
-//
-//
-// }
 
 
 
@@ -97,7 +67,6 @@ export const CreateOffer = () => {
                 // background: 'rgb(0,196,237)',
                 background: 'linear-gradient(180deg, rgba(0,196,237,1) 23%, rgba(255,239,0,1) 77%)',
               },
-
             }}
           >
             <Box
@@ -148,37 +117,16 @@ export const CreateOffer = () => {
                 },
               }}
             >
-              <label htmlFor="inputImg">
-                <Image
-                  src={placeholderImg}
-                  alt=""
-                  style={{
-                    display: 'block',
-                    width: '100%',
-                    height: 'auto'
-                  }}
-                />
-                <AddPhotoIcon
-                  sx={{
-                    position: 'absolute',
-                    top: '50%',
-                    left: '50%',
-                    transform: 'translate(-50%, -50%)',
-                    width: '50px',
-                    height: '50px',
-                    opacity: 0
-                  }}
-                />
-              </label>
+              <Image
+                src={placeholderImg}
+                alt=""
+                style={{
+                  display: 'block',
+                  width: '100%',
+                  height: 'auto'
+                }}
+              />
             </Box>
-            <input
-              onChange={({target: {files}}) => setImageUrl(files)}
-              id='inputImg'
-              type='file'
-              name='offerImage'
-              accept='.jpg, .jpeg, .png, .webp'
-              hidden={true}
-            />
             <Box
               sx={{
                 marginTop: '20px',
@@ -215,28 +163,89 @@ export const CreateOffer = () => {
             </Box>
           </Box>
           <Box>
-            <form
+            <Box
               onSubmit={async (e) => {
                 e.preventDefault();
-                const formData = new FormData(e.target);
-                const response = await uploadFile(formData);
-
+                const sendFormISReady = Boolean(imageUrl);
+                const form = e.target;
+                const formData = new FormData(form);
+                formData.append('token', window.sessionStorage.getItem('token'));
+                if (sendFormISReady) {
+                  setImageUrl('');
+                  form.reset();
+                  const [responseStatus, data] = await uploadFile(formData);
+                  console.log('status', responseStatus);
+                  console.log('data', data);
+                  if (responseStatus) {
+                    toast.success(data.message);
+                  } else {
+                    toast.error(data.message);
+                  }
+                }
+              }}
+              encType={'multipart/form-data'}
+              component={'form'}
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                border: '1px solid black',
+                borderRadius: '10px',
+                width: '430px',
+                gap: '20px',
+                padding: '20px'
               }}
             >
-              <label>
-                <input
-                  type='file'
-                  name='img'
-                />
-                <input
-                  type='text'
-                  name='file_name'
-                />
-              </label>
-              <button>
+              <TextField
+                // id="filled-basic"
+                onClick={() => {
+                  const inputVideo = window.document.getElementById('videoUrl');
+                  inputVideo.click();
+                }}
+                label="выбрать картинку"
+                variant="filled"
+                value={imageUrl}
+                InputProps={{
+                  readOnly: true,
+                }}
+
+              />
+              <input
+                id='videoUrl'
+                onChange={({target: {value}}) => {
+                  const nameImg = value.replace("C:\\fakepath\\", "");
+                  setImageUrl(nameImg);
+                }}
+                type={"file"}
+                name='img'
+                // required
+                hidden
+              />
+              <TextField
+                // id="filled-basic"
+                onChange={({currentTarget: {value}}) => setTitleOffer(value)}
+                label="Название продукта"
+                variant="filled"
+                type='text'
+                required
+                name='title'
+              />
+              <TextField
+                // id="filled-basic"
+                onChange={({currentTarget: {value}}) => setDescOffer(value)}
+                label="Описание продукта"
+                variant="filled"
+                type='text'
+                required
+                name='desc'
+              />
+              <Button
+                variant={'outlined'}
+                type='submit'
+                disabled={!Boolean(imageUrl)}
+              >
                 отправить
-              </button>
-            </form>
+              </Button>
+            </Box>
           </Box>
         </Box>
       </Container>

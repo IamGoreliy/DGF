@@ -42,13 +42,16 @@ router.post(async (req, res) => {
     try {
       [userInfo] = await connection.query('SELECT * FROM `users_data` WHERE `user_id` = ?', [userAuth.id]);
       userInfo = userInfo[0];
-      await connection.end();
     }catch (e) {
       throw new Error ('something wrong with data base. Please try again later');
     }
   }catch (e) {
     res.status(400).json(e.message);
     return;
+  } finally {
+    if (connection) {
+      await connection.end();
+    }
   }
   res.status(200).json({userInfo, token});
 })

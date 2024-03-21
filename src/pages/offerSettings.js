@@ -1,7 +1,8 @@
 import {Layout as DashboardLayout} from '../layouts/dashboard/layout';
 import { Box, Button, Container, Typography } from '@mui/material';
-import {checkUsersFetch} from '../utils/custFetch';
 import { CreateOffer } from '../layouts/offerSettings/CreateOffer';
+import { ToastContainer} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Page = () => {
   return (
@@ -16,6 +17,7 @@ const Page = () => {
             Offers Settings
           </Typography>
           <CreateOffer/>
+          <ToastContainer/>
         </Container>
       </Box>
     </>

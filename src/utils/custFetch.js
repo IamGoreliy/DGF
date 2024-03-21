@@ -28,5 +28,6 @@ export const uploadFile = async (formData) => {
     method: 'POST',
     body: formData,
   });
-  return response.json();
+  const responseData = await response.json();
+  return [response.ok, responseData];
 }
