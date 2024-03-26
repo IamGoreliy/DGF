@@ -22,6 +22,17 @@ export const verificationFetch = async (token) => {
   return [response.ok, responseData];
 }
 
+export const preloaderFetch = async (file) => {
+  const url = '/api/previewImg';
+  const res = await fetch(url, {
+    method: 'POST',
+    body: file
+  })
+  const responseData = await res.json();
+  console.log(responseData)
+  return [res.ok, responseData];
+}
+
 export const uploadFile = async (formData) => {
   const url = '/api/uploadFile';
   const response = await fetch(url, {

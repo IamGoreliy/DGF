@@ -1,37 +1,12 @@
 import {createRouter, expressWrapper} from 'next-connect';
 import {connectDB} from '../../lib/connectDB';
 import {JWTKEY} from '../../lib/connectDB';
+import {preloaderMiddleware, createConfig} from './utils/serverUtils';
 const jwt = require('jsonwebtoken');
-const multer = require('multer');
 const fs = require('fs');
 const router = createRouter();
 
-const filterImg = (req, file, cb) => {
-  if(
-    file.mimetype === "image/png" ||
-    file.mimetype === "image/jpg" ||
-    file.mimetype === "image/jpeg" ||
-    file.mimetype === "image/webp"
-  ){
-    cb(null, true);
-  }
-  else{
-    cb(null, false);
-  }
-}
-
-
-const upload = multer({
-  storage: multer.diskStorage({
-    destination: './public/temps',
-    filename: (req, file, cb) => cb(null, Date.now() + file.originalname),
-  }),
-  fileFilter: filterImg,
-});
-
-const uploaderMiddleware = upload.single('img');
-
-router.use(uploaderMiddleware);
+router.use(preloaderMiddleware);
 
 router.post(async (req, res) => {
   const { file } = req;
@@ -74,7 +49,7 @@ router.post(async (req, res) => {
       throw new Error ('не удалось перенести файл');
     }
 
-    currentPathFile = `./public/uploads/${file.filename}`;
+    currentPathFile = `./public/uploads /${file.filename}`;
 
     try{
       await connection.query('INSERT INTO `offers_data` (id_user, id_session, title, url_img, description) VALUES (?, ?, ?, ?, ?)', [userId, tokenUniqueId, title, currentPathFile, desc]);
@@ -98,11 +73,6 @@ router.post(async (req, res) => {
 });
 
 
-
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-}
+export const config = createConfig();
 
 export default router.handler();

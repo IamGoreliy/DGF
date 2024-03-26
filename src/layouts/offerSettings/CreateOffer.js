@@ -1,12 +1,9 @@
 import { Box, Container, Typography, TextField, Button } from '@mui/material';
 import { Switch } from '../../image/svgComponents';
-import Image from 'next/image';
-import placeholderImg from '../../../public/image/placeholder/placeholder.webp';
-import {AddPhotoIcon} from '../../image/svgComponents';
-import {useState} from 'react';
+import { useEffect, useState } from 'react';
 import {uploadFile} from '../../utils/custFetch';
 import { toast } from 'react-toastify';
-const debounce = require('lodash.debounce')
+const debounce = require('lodash.debounce');
 
 function fieldImgClick () {
   window.document.getElementById('inputImg').click();
@@ -22,7 +19,13 @@ export const CreateOffer = () => {
   const [imageUrl, setImageUrl] = useState('');
   const [titleOffer, setTitleOffer] = useState('');
   const [descOffer, setDescOffer] = useState('');
+  const [preview, setPreview] = useState('');
 
+  useEffect(() => {
+    if (preview) {
+      return () => URL.revokeObjectURL(preview);
+    }
+  }, [preview]);
 
 
   return (
@@ -117,8 +120,8 @@ export const CreateOffer = () => {
                 },
               }}
             >
-              <Image
-                src={placeholderImg}
+              <img
+                src={preview !== "" ? preview : '/image/placeholder/placeholder.webp'}
                 alt=""
                 style={{
                   display: 'block',
@@ -162,7 +165,17 @@ export const CreateOffer = () => {
               </Box>
             </Box>
           </Box>
-          <Box>
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              border: '1px solid black',
+              borderRadius: '10px',
+              width: '430px',
+              gap: '20px',
+              padding: '20px'
+            }}
+          >
             <Box
               onSubmit={async (e) => {
                 e.preventDefault();
@@ -183,22 +196,18 @@ export const CreateOffer = () => {
                   }
                 }
               }}
-              encType={'multipart/form-data'}
-              component={'form'}
               sx={{
                 display: 'flex',
                 flexDirection: 'column',
-                border: '1px solid black',
-                borderRadius: '10px',
-                width: '430px',
-                gap: '20px',
-                padding: '20px'
+                rowGap: '20px',
               }}
+              encType={'multipart/form-data'}
+              component={'form'}
             >
               <TextField
                 // id="filled-basic"
                 onClick={() => {
-                  const inputVideo = window.document.getElementById('videoUrl');
+                  const inputVideo = window.document.getElementById('inputImg');
                   inputVideo.click();
                 }}
                 label="выбрать картинку"
@@ -207,17 +216,17 @@ export const CreateOffer = () => {
                 InputProps={{
                   readOnly: true,
                 }}
-
               />
               <input
-                id='videoUrl'
-                onChange={({target: {value}}) => {
-                  const nameImg = value.replace("C:\\fakepath\\", "");
+                id='inputImg'
+                onChange={({currentTarget}) => {
+                  const file = currentTarget.files[0];
+                  const nameImg = currentTarget.value.replace("C:\\fakepath\\", "");
                   setImageUrl(nameImg);
+                  setPreview(URL.createObjectURL(file));
                 }}
                 type={"file"}
                 name='img'
-                // required
                 hidden
               />
               <TextField
