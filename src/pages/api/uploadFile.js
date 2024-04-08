@@ -12,7 +12,7 @@ router.post(async (req, res) => {
   const { file } = req;
   const {title, desc, token} = req.body;
   const { 'user-agent': userAgent } = req.headers;
-  let successRes, connection, decoded, lastUserSectionUniqueToken, currentPathFile;
+  let successRes, connection, decoded, lastUserSectionUniqueToken, currentPathFile, userData;
   try {
     if (!file) {
       throw new Error ('отсутствует файл');
@@ -49,16 +49,32 @@ router.post(async (req, res) => {
       throw new Error ('не удалось перенести файл');
     }
 
-    currentPathFile = `./public/uploads /${file.filename}`;
+    currentPathFile = `./public/uploads/${file.filename}`;
+    const filePathForDB = currentPathFile.replace('/public', '');
+
+    try {
+      [userData] = await connection.execute('SELECT * FROM `users_data` WHERE `user_id` = ?', [userId]);
+    } catch (e) {
+      throw new Error ('не удалось получить информацию о пользователе');
+    }
+
+    if (!userData.length) {
+      throw new Error ('пользователь не существует');
+    }
+
+    let {avatar, name, email} = userData[0];
+
+    avatar = avatar ?? './public/assets/avatars/avatar-omar-darboe.png';
 
     try{
-      await connection.query('INSERT INTO `offers_data` (id_user, id_session, title, url_img, description) VALUES (?, ?, ?, ?, ?)', [userId, tokenUniqueId, title, currentPathFile, desc]);
+      await connection.query('INSERT INTO `offers_data` (id_user, user_name, id_session, user_email, user_avatar, title, url_img, description) VALUES (?, ?, ?, ?, ?, ?, ?, ?)', [userId, name, tokenUniqueId, email, avatar, title, filePathForDB, desc]);
       // [successRes] = await connection.query('SELECT * FROM `offers_data` ORDER BY `date` DESC');
     }catch (e) {
       throw new Error ('создание новой записи неуспешно');
     }
     // successRes = successRes[0];
   }catch (e) {
+    console.log('лог ошибки', e.message);
     fs.access(currentPathFile, fs.constants.F_OK, (err) => {
       if (!err) {
         fs.rmSync(currentPathFile);

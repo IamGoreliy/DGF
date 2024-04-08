@@ -42,3 +42,16 @@ export const uploadFile = async (formData) => {
   const responseData = await response.json();
   return [response.ok, responseData];
 }
+
+export const getAllOffers = async () => {
+  const url = process.env.URL + '/api/getAllOffers';
+  const res = await fetch(url);
+  return await res.json();
+}
+
+export const updateData = async (signal) => {
+  const url = '/api/getAllOffers'
+  const response = await fetch(url, signal);
+  return await response.json();
+
+}

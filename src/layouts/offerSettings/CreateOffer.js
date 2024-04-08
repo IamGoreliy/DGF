@@ -15,7 +15,7 @@ const textFieldChange = debounce((value, setStateFn) => {
 
 
 
-export const CreateOffer = () => {
+export const CreateOffer = ({statusRender}) => {
   const [imageUrl, setImageUrl] = useState('');
   const [titleOffer, setTitleOffer] = useState('');
   const [descOffer, setDescOffer] = useState('');
@@ -31,8 +31,9 @@ export const CreateOffer = () => {
   return (
     <Box
       sx={{
-        marginTop: {xs: '30px', md:'70px'},
-        padding: '30px 0 clamp(80px,11.25vw,180px)',
+        // marginTop: {xs: '30px', md:'70px'},
+        // padding: '30px 0 clamp(80px,11.25vw,180px)',
+        padding: '40px 5px'
       }}
     >
       <Container
@@ -150,7 +151,8 @@ export const CreateOffer = () => {
               >
                 {titleOffer === '' ? 'Название акционной программы' : titleOffer}
               </Typography>
-              <Box
+              <Typography
+                variant={'p'}
                 sx={{
                   marginTop: '20px',
                   fontFamily: 'Raleway',
@@ -162,14 +164,14 @@ export const CreateOffer = () => {
                 }}
               >
                 {descOffer === '' ? 'описание акионной прогрммы (условия)' : descOffer}
-              </Box>
+              </Typography>
             </Box>
           </Box>
           <Box
             sx={{
               display: 'flex',
               flexDirection: 'column',
-              border: '1px solid black',
+              border: '1px solid #D9D9D9',
               borderRadius: '10px',
               width: '430px',
               gap: '20px',
@@ -187,10 +189,9 @@ export const CreateOffer = () => {
                   setImageUrl('');
                   form.reset();
                   const [responseStatus, data] = await uploadFile(formData);
-                  console.log('status', responseStatus);
-                  console.log('data', data);
                   if (responseStatus) {
                     toast.success(data.message);
+                    statusRender({});
                   } else {
                     toast.error(data.message);
                   }
