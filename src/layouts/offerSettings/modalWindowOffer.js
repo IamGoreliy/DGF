@@ -18,53 +18,54 @@ export const ModalCreateOffer = ({isOpenModal, setIsOpenModal, data, statusRende
           width: '100%',
           height: '100%',
           backgroundColor: 'rgba(255, 255, 255, 0.7)',
-          backdropFilter: 'blur(6px)'
+          backdropFilter: 'blur(6px)',
         }}
       >
-      <Box
-        sx={{
-          position: 'absolute',
-          top: '50%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)',
-          width: '60%',
-          // height: '60%',
-          border: '1px solid #D9D9D9',
-          borderRadius: '20px',
-          backgroundColor: 'white',
-          display: 'flex',
-          flexDirection: 'row',
-          justifyContent: 'center',
-          // alignItems: 'center',
-          overflow: 'auto',
-        }}
-      >
-        <Button
-          variant={'outlined'}
-          onClick={() => setIsOpenModal({
-            ...isOpenModal,
-            isOpen: !isOpenModal.isOpen,
-            whichModalIsOpen: isOpenModal.whichModalIsOpen === ''
-              ? 'createOffer'
-              : ''
-          })}
+        <Box
           sx={{
             position: 'absolute',
-            top: '10px',
-            right: '10px',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-35%, -50%)',
+            // width: '60%',
+            // height: '60%',
+            border: '1px solid #D9D9D9',
+            borderRadius: '20px',
+            backgroundColor: 'white',
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'center',
+            // alignItems: 'center',
+            overflow: 'auto',
+            padding: '60px 20px 20px'
           }}
         >
-          X
-        </Button>
-        {
-          isOpenModal.whichModalIsOpen === 'createOffer'
-          ? <CreateOffer statusRender={statusRender}/>
-          : <IdOffer.Provider value={isOpenModal.idOffers}>
-              <PreviewOffer data={data}/>
-            </IdOffer.Provider>
-        }
-        <ToastContainer/>
-      </Box>
+          <Button
+            variant={'outlined'}
+            onClick={() => setIsOpenModal({
+              ...isOpenModal,
+              isOpen: !isOpenModal.isOpen,
+              whichModalIsOpen: isOpenModal.whichModalIsOpen === ''
+                ? 'createOffer'
+                : ''
+            })}
+            sx={{
+              position: 'absolute',
+              top: '10px',
+              right: '10px',
+            }}
+          >
+            X
+          </Button>
+          {
+            isOpenModal.whichModalIsOpen === 'createOffer'
+            ? <CreateOffer statusRender={statusRender}/>
+            : <IdOffer.Provider value={isOpenModal.idOffers}>
+                <PreviewOffer data={data}/>
+              </IdOffer.Provider>
+          }
+          <ToastContainer/>
+        </Box>
       </Box>
     </>
   )

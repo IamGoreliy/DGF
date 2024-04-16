@@ -19,7 +19,10 @@ router.post(async (req, res) => {
   res.status(200).json({filePath: file.filename});
 })
 
-export const config = createConfig();
+const config = createConfig();
+export {
+  config
+}
 
 
 

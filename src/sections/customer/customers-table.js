@@ -17,14 +17,13 @@ import {
 import { Scrollbar } from 'src/components/scrollbar';
 import { getInitials } from 'src/utils/get-initials';
 import {useRouter} from 'next/router';
+import { CustomTablePagination } from '../../components/CustomTablePagination';
+import { useState } from 'react';
 
-const createQueryString = (id, router) => {
-  const queryParams = new URLSearchParams(router.query);
-  queryParams.set('id', id);
-  const queryString = queryParams.toString();
-  router.push(`?${queryString}`);
+
+const counterEntries = (initialState, currentNumOfEntries) => {
+
 }
-
 export const CustomersTable = (props) => {
   const {
     count = 0,
@@ -32,18 +31,19 @@ export const CustomersTable = (props) => {
     onDeselectAll,
     onDeselectOne,
     onPageChange = () => {},
-    onRowsPerPageChange,
+    changeRowPerPage,
     onSelectAll,
     onSelectOne,
     page = 0,
     rowsPerPage = 0,
     selected = [],
     openModal = {},
+    buttonPageNav = () => {},
+    data,
   } = props;
   const {isOpenModal, setIsOpenModal} = openModal;
   const selectedSome = (selected.length > 0) && (selected.length < items.length);
   const selectedAll = (items.length > 0) && (selected.length === items.length);
-  const router = useRouter();
 
 
   return (
@@ -169,14 +169,12 @@ export const CustomersTable = (props) => {
             </Table>
           </Box>
         </Scrollbar>
-        <TablePagination
-          component="div"
-          count={count}
-          onPageChange={onPageChange}
-          onRowsPerPageChange={onRowsPerPageChange}
-          page={page}
+        <CustomTablePagination
           rowsPerPage={rowsPerPage}
-          rowsPerPageOptions={[5, 10, 25]}
+          data={data}
+          allEntries={count}
+          buttonNav={buttonPageNav}
+          changeRowPerPage={changeRowPerPage}
         />
       </Card>
     </>

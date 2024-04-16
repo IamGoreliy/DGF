@@ -12,7 +12,10 @@ export const FirstPcBg = () => {
       right: '0px'
 
     }}>
-      <Image src={bgPc} alt='pc bg'/>
+      <Image
+        src={bgPc}
+        alt='pc bg'
+      />
     </Box>
   )
 }

@@ -254,7 +254,7 @@ export const SectionControlAndSurveillance = () => {
                 }}
               >
                 <CustSpan>
-                  ТОВ "ДІДЖИ ФІНАНС" має діючу безстрокову ліцензію на&nbsp;
+                  ТОВ &quot;ДІДЖИ ФІНАНС&quot; має діючу безстрокову ліцензію на&nbsp;
                   <Link
                     href={'/'}
                     style={{

@@ -88,7 +88,9 @@ router.post(async (req, res) => {
   res.status(200).json({message: 'продукт успешно создан'});
 });
 
-
-export const config = createConfig();
+const config = createConfig();
+export {
+  config
+}
 
 export default router.handler();

@@ -43,15 +43,24 @@ export const uploadFile = async (formData) => {
   return [response.ok, responseData];
 }
 
-export const getAllOffers = async () => {
-  const url = process.env.URL + '/api/getAllOffers';
+export const getAllOffers = async (rowsPerPage, offset) => {
+  const url = process.env.URL + `/api/getAllOffers?page=${rowsPerPage}&offset=${offset}`;
   const res = await fetch(url);
   return await res.json();
 }
 
-export const updateData = async (signal) => {
-  const url = '/api/getAllOffers'
-  const response = await fetch(url, signal);
+export const updateData = async (signal = '', rowsPerPage, preLoadingData) => {
+  const url = `/api/getAllOffers?page=${rowsPerPage}&offset=${preLoadingData}`;
+  let response;
+  if (signal) {
+     response = await fetch(url);
+  } else {
+     response = await fetch(url, signal);
+  }
   return await response.json();
-
+}
+export const updateDataNew = async (rowsPerPage, preLoadingData) => {
+  const url = `/api/getAllOffers?page=${rowsPerPage}&offset=${preLoadingData}`;
+  const response = await fetch(url);
+  return await response.json();
 }
