@@ -29,5 +29,4 @@ export const createConfig = () => {
       bodyParser: false,
     },
   }
-
 }

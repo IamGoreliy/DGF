@@ -1,14 +1,12 @@
 import {createRouter} from 'next-connect';
 import {connectDB} from '../../lib/connectDB';
-const multer = require('multer');
+
 
 
 const router = createRouter();
 
 router.get(async (req, res) => {
   const {page: rowsPerPage, offset } = await req.query;
-
-  console.log(rowsPerPage);
   let connection, offerData, totalRecords;
   try {
     try {

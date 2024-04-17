@@ -1,6 +1,5 @@
-import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import Head from 'next/head';
-import { subDays, subHours } from 'date-fns';
 import ArrowDownOnSquareIcon from '@heroicons/react/24/solid/ArrowDownOnSquareIcon';
 import ArrowUpOnSquareIcon from '@heroicons/react/24/solid/ArrowUpOnSquareIcon';
 import PlusIcon from '@heroicons/react/24/solid/PlusIcon';
@@ -9,21 +8,11 @@ import { useSelection } from 'src/hooks/use-selection';
 import { Layout as DashboardLayout } from 'src/layouts/dashboard/layout';
 import { CustomersTable } from 'src/sections/customer/customers-table';
 import { CustomersSearch } from 'src/sections/customer/customers-search';
-import { applyPagination } from 'src/utils/apply-pagination';
 import {createPortal} from 'react-dom';
 import { ModalCreateOffer } from '../layouts/offerSettings/modalWindowOffer';
-import { getAllOffers, updateData, updateDataNew } from '../utils/custFetch';
-import {useSearchParams} from 'next/navigation';
-import {useRouter} from 'next/router';
+import { fetchSearchOffers, getAllOffers, updateData } from '../utils/custFetch';
 
-const useCustomers = (data, page, rowsPerPage) => {
-  return useMemo(
-    () => {
-      return applyPagination(data, page, rowsPerPage);
-    },
-    [data, page, rowsPerPage]
-  );
-};
+
 
 const useCustomerIds = (customers) => {
   return useMemo(
@@ -41,17 +30,16 @@ const modalInitialState = {
 };
 
 const Page = ({data}) => {
-  const [testDataRen, setTestDataRen] = useState(data)
-  const [dataRender, setDataRender] = useState(testDataRen.offerData);
-  const [totalEntries, setTotalEntries] = useState(testDataRen.totalRecords);
-  const [page, setPage] = useState(0);
+  const [dataRender, setDataRender] = useState(data)
+  const [offers, setOffers] = useState(dataRender.offerData);
+  const [totalOffers, setTotalOffers] = useState(dataRender.totalRecords);
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  const customers = useCustomers(dataRender, page, rowsPerPage);
-  const customersIds = useCustomerIds(customers);
+  const customersIds = useCustomerIds(offers);
   const customersSelection = useSelection(customersIds);
   const [isOpenModal, setIsOpenModal] = useState(modalInitialState);
   const [preLoadingData, setPreLoadingData] = useState(0);
   const [dataIsChange, setDataIsChange] = useState({});
+  const [reload, setReload] = useState(true);
   const firstRender = useRef(false);
 
   useEffect(() => {
@@ -61,42 +49,35 @@ const Page = ({data}) => {
   useEffect( ()  => {
     const abortController = new AbortController;
     const signal = abortController.signal;
-    if (firstRender.current) {
+    if (firstRender.current && reload) {
       updateData(signal, rowsPerPage, preLoadingData)
         .then(data => {
-          setTestDataRen(data);
+          setDataRender(data);
         })
         .catch(res => console.log(res))
-
       return () => {
         abortController.abort();
       };
     }
     firstRender.current = true;
 
-  }, [dataIsChange, rowsPerPage, preLoadingData]);
+  },
+    [dataIsChange, rowsPerPage, preLoadingData, reload]
+  );
 
   useEffect(() => {
-    setDataRender(testDataRen.offerData);
-    setTotalEntries(testDataRen.totalRecords);
-  }, [testDataRen])
+    setOffers(dataRender.offerData);
+    setTotalOffers(dataRender.totalRecords);
+  }, [dataRender])
 
   const filterOfferById = useCallback(() => {
     let offer = null;
     if (isOpenModal.idOffers) {
-      offer = dataRender.find(ele => ele.id === isOpenModal.idOffers);
+      offer = offers.find(ele => ele.id === isOpenModal.idOffers);
     }
     return offer;
   },
     [isOpenModal]
-  );
-
-  const handlePageChange = useCallback(
-    (event, value) => {
-      setPreLoadingData(preLoadingData + rowsPerPage);
-      setPage(0);
-    },
-    []
   );
 
   const handlePageNav = useCallback(
@@ -112,6 +93,17 @@ const Page = ({data}) => {
     },
     [preLoadingData, rowsPerPage]
   );
+
+  const searchOffers = async (searchValue, rows, preLoading) => {
+    let res;
+    if (searchValue) {
+      setReload(false)
+      res = await fetchSearchOffers(searchValue, rows, preLoading);
+      setDataRender(res);
+    } else {
+      setReload(true);
+    }
+  }
 
 
   return (
@@ -186,22 +178,24 @@ const Page = ({data}) => {
                 </Button>
               </div>
             </Stack>
-            <CustomersSearch />
+            <CustomersSearch
+              searcher={searchOffers}
+              rowsPerPage={rowsPerPage}
+              preLoader={preLoadingData}
+            />
             <CustomersTable
-              count={totalEntries}
-              items={customers}
+              count={totalOffers}
+              items={offers}
               onDeselectAll={customersSelection.handleDeselectAll}
               onDeselectOne={customersSelection.handleDeselectOne}
-              onPageChange={handlePageChange}
               changeRowPerPage={setRowsPerPage}
               onSelectAll={customersSelection.handleSelectAll}
               onSelectOne={customersSelection.handleSelectOne}
-              page={page}
               rowsPerPage={rowsPerPage}
               selected={customersSelection.selected}
               openModal={{isOpenModal, setIsOpenModal}}
               buttonPageNav={handlePageNav}
-              data={testDataRen}
+              data={dataRender}
             />
           </Stack>
         </Container>

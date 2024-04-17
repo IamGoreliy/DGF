@@ -30,11 +30,9 @@ export const CustomersTable = (props) => {
     items = [],
     onDeselectAll,
     onDeselectOne,
-    onPageChange = () => {},
     changeRowPerPage,
     onSelectAll,
     onSelectOne,
-    page = 0,
     rowsPerPage = 0,
     selected = [],
     openModal = {},
@@ -73,12 +71,6 @@ export const CustomersTable = (props) => {
                   <TableCell>
                     Email
                   </TableCell>
-                  {/*<TableCell>*/}
-                  {/*  Location*/}
-                  {/*</TableCell>*/}
-                  {/*<TableCell>*/}
-                  {/*  Phone*/}
-                  {/*</TableCell>*/}
                   <TableCell>
                     дата создания продукта
                   </TableCell>
@@ -93,7 +85,6 @@ export const CustomersTable = (props) => {
               <TableBody>
                 {items.map((customer) => {
                   const isSelected = selected.includes(customer.id);
-                  // const createdAt = format(customer.createdAt, 'dd/MM/yyyy');
                   const {id, id_user: userId, user_name: userName, user_email: userEmail, user_avatar: userAvatar, title, date} = customer
 
                   return (
@@ -134,12 +125,6 @@ export const CustomersTable = (props) => {
                       <TableCell>
                         {userEmail}
                       </TableCell>
-                      {/*<TableCell>*/}
-                      {/*  {customer.address.city}, {customer.address.state}, {customer.address.country}*/}
-                      {/*</TableCell>*/}
-                      {/*<TableCell>*/}
-                      {/*  {customer.phone}*/}
-                      {/*</TableCell>*/}
                       <TableCell>
                         {date}
                       </TableCell>
