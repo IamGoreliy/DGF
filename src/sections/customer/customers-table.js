@@ -38,6 +38,7 @@ export const CustomersTable = (props) => {
     openModal = {},
     buttonPageNav = () => {},
     data,
+    deleteOffers = () => {},
   } = props;
   const {isOpenModal, setIsOpenModal} = openModal;
   const selectedSome = (selected.length > 0) && (selected.length < items.length);
@@ -160,6 +161,8 @@ export const CustomersTable = (props) => {
           allEntries={count}
           buttonNav={buttonPageNav}
           changeRowPerPage={changeRowPerPage}
+          deleteOffers={deleteOffers}
+          selectedOffers={selected}
         />
       </Card>
     </>

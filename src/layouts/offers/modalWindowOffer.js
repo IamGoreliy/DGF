@@ -1,9 +1,11 @@
 import {Box, Typography, Button, TextField, MenuItem, Checkbox} from '@mui/material';
-import {offersData} from './offersData';
-import { useState } from 'react';
+// import {offersData} from './offersData';
+import { useState, useContext } from 'react';
+import {Data} from '../../pages/Offers';
 
 export const ModalWindowOffer = ({switcherModal, idOffer}) => {
   const [agree, setAgree] = useState(false);
+  const offersData = useContext(Data);
   return (
     <Box
       onClick={(e) => {

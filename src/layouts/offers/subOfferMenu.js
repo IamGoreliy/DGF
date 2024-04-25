@@ -15,6 +15,7 @@ export const SubOfferMenu = ({switcherModal}) => {
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-evenly'
+
       }}
     >
       <Button

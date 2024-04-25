@@ -32,18 +32,18 @@ export const items = [
         />
 
   },
-  {
-    title: 'Spacial offers',
-    path: '/offerSettings',
-    icon:
-      <OfferSettingsIcon
-        sx={{
-          fill: '#9DA4AE',
-          width: '20px',
-          height: '20px',
-        }}
-      />
-  },
+  // {
+  //   title: 'Spacial offers',
+  //   path: '/offerSettings',
+  //   icon:
+  //     <OfferSettingsIcon
+  //       sx={{
+  //         fill: '#9DA4AE',
+  //         width: '20px',
+  //         height: '20px',
+  //       }}
+  //     />
+  // },
   {
     title: 'Customers',
     path: '/customers',
@@ -89,24 +89,24 @@ export const items = [
       </SvgIcon>
     )
   },
-  {
-    title: 'Login',
-    path: '/auth/login',
-    icon: (
-      <SvgIcon fontSize="small">
-        <LockClosedIcon />
-      </SvgIcon>
-    )
-  },
-  {
-    title: 'Register',
-    path: '/auth/register',
-    icon: (
-      <SvgIcon fontSize="small">
-        <UserPlusIcon />
-      </SvgIcon>
-    )
-  },
+  // {
+  //   title: 'Login',
+  //   path: '/auth/login',
+  //   icon: (
+  //     <SvgIcon fontSize="small">
+  //       <LockClosedIcon />
+  //     </SvgIcon>
+  //   )
+  // },
+  // {
+  //   title: 'Register',
+  //   path: '/auth/register',
+  //   icon: (
+  //     <SvgIcon fontSize="small">
+  //       <UserPlusIcon />
+  //     </SvgIcon>
+  //   )
+  // },
   {
     title: 'Error',
     path: '/404',

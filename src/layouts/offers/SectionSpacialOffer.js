@@ -1,11 +1,13 @@
 import {Box, Container, Typography, Grid} from '@mui/material';
-import { offersData } from './offersData';
+// import { offersData } from './offersData';
 import Image from 'next/image';
 import { Switch } from '../../image/svgComponents';
 import { useState, useContext, useEffect } from 'react';
 import { SubOfferMenu } from './subOfferMenu';
 import { ModalWindowOffer } from './modalWindowOffer';
 import {WindowSeizeContext} from '../headerNavigation';
+import { Data } from '../../pages/Offers';
+
 
 const openSubMenu = (id, menuState, fnChangeMenu) => {
   if (menuState === id) {
@@ -16,6 +18,7 @@ const openSubMenu = (id, menuState, fnChangeMenu) => {
 }
 
 export const SectionSpacialOffer = () => {
+  const offersData = useContext(Data);
   const {setIsOpenOfferModal: homeNoScrollFn} = useContext(WindowSeizeContext)
   const [whatOfferOpen, setWhatOfferOpen] = useState(null);
   const [isOpenModalWindow, setIsOpenModalWindow] = useState(false);
@@ -42,7 +45,7 @@ export const SectionSpacialOffer = () => {
             // gap={4}
           >
             {offersData?.map(offer => {
-              const {id, title, image, desc} = offer;
+              const {id, title, url_img: urlImg, description} = offer;
               return (
                 <Grid
                   key={id}
@@ -120,9 +123,11 @@ export const SectionSpacialOffer = () => {
                         position: 'relative',
                       }}
                     >
-                    <Image
-                      src={image}
+                    <img
+                      src={urlImg}
                       alt=''
+                      // width={'100%'}
+                      // height={'auto'}
                       style={{
                         display: "block",
                         width: '100%',
@@ -134,6 +139,8 @@ export const SectionSpacialOffer = () => {
                       sx={{
                         marginTop: '20px',
                         position: 'relative',
+                        width: '100%',
+                        minHeight: '45%',
                       }}
                     >
                       {whatOfferOpen === id && <SubOfferMenu switcherModal={setIsOpenModalWindow}/>}
@@ -161,7 +168,7 @@ export const SectionSpacialOffer = () => {
                           color: '#373737',
                         }}
                       >
-                        {desc}
+                        {description}
                       </Box>
                     </Box>
                   </Box>
@@ -178,3 +185,4 @@ export const SectionSpacialOffer = () => {
     </>
   )
 }
+

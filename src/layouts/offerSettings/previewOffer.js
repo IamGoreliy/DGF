@@ -1,8 +1,5 @@
 import {Box, Container, Typography} from '@mui/material';
 
-import {useContext} from 'react';
-// import testImg from '../../../../material-kit-react'
-
 export const PreviewOffer = ({data}) => {
   const {url_img: urlImg, title, description} = data;
   return (

@@ -10,8 +10,10 @@ import { CustomersTable } from 'src/sections/customer/customers-table';
 import { CustomersSearch } from 'src/sections/customer/customers-search';
 import {createPortal} from 'react-dom';
 import { ModalCreateOffer } from '../layouts/offerSettings/modalWindowOffer';
-import { fetchSearchOffers, getAllOffers, updateData } from '../utils/custFetch';
-
+import { deleteOffers, fetchSearchOffers, getAllOffers, updateData } from '../utils/custFetch';
+import {ToastContainer, toast} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useRouter } from 'next/router';
 
 
 const useCustomerIds = (customers) => {
@@ -41,6 +43,8 @@ const Page = ({data}) => {
   const [dataIsChange, setDataIsChange] = useState({});
   const [reload, setReload] = useState(true);
   const firstRender = useRef(false);
+  const router = useRouter();
+
 
   useEffect(() => {
     setPreLoadingData(0);
@@ -97,12 +101,37 @@ const Page = ({data}) => {
   const searchOffers = async (searchValue, rows, preLoading) => {
     let res;
     if (searchValue) {
-      setReload(false)
-      res = await fetchSearchOffers(searchValue, rows, preLoading);
-      setDataRender(res);
+      setReload(false);
+      try {
+        res = await fetchSearchOffers(searchValue, rows, preLoading);
+        setDataRender(res);
+      } catch (e) {
+        console.error(e.message);
+      }
     } else {
       setReload(true);
     }
+  }
+
+  const selectedDelete = async (id) => {
+    const userJWT = window.sessionStorage.getItem('token');
+    try {
+      const { statusReq, responseData } = await deleteOffers(id, userJWT);
+      if (statusReq) {
+        toast.success(responseData);
+        setDataIsChange({});
+      } else {
+        if (responseData === 'авторизация выполнена неуспешно' || 'проверка не пройдена') {
+          window.sessionStorage.removeItem('token');
+          window.sessionStorage.removeItem('authenticated');
+          router.push('auth/login');
+
+        }
+      }
+    }catch (e) {
+      console.error(e.message);
+    }
+
   }
 
 
@@ -196,6 +225,7 @@ const Page = ({data}) => {
               openModal={{isOpenModal, setIsOpenModal}}
               buttonPageNav={handlePageNav}
               data={dataRender}
+              deleteOffers={selectedDelete}
             />
           </Stack>
         </Container>
@@ -214,6 +244,7 @@ const Page = ({data}) => {
 Page.getLayout = (page) => (
   <DashboardLayout>
     {page}
+  <ToastContainer/>
   </DashboardLayout>
 );
 export default Page;

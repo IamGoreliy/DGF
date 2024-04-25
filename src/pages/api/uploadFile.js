@@ -40,6 +40,8 @@ router.post(async (req, res) => {
 
     lastUserSectionUniqueToken = lastUserSectionUniqueToken.reduce((acc, ele) => ele['token_unique_id'], '');
 
+    console.log(lastUserSectionUniqueToken, tokenUniqueId)
+
     if (!lastUserSectionUniqueToken || lastUserSectionUniqueToken !== tokenUniqueId) {
       throw new Error ('неудалось пройти проверку');
     }

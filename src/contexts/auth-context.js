@@ -2,6 +2,7 @@ import { createContext, useContext, useEffect, useReducer, useRef } from 'react'
 import PropTypes from 'prop-types';
 import { authUsersFetch, verificationFetch } from '../utils/custFetch';
 import { useRouter } from 'next/navigation';
+import {useRouter as useRouterPathName} from 'next/router';
 
 const HANDLERS = {
   INITIALIZE: 'INITIALIZE',
@@ -64,8 +65,9 @@ export const AuthContext = createContext({ undefined });
 export const AuthProvider = (props) => {
   const { children } = props;
   const [state, dispatch] = useReducer(reducer, initialState);
-  const router = useRouter()
+  const router = useRouter();
   const initialized = useRef(false);
+  const searchPathName = useRouterPathName();
 
 
   const initialize = async () => {
@@ -76,7 +78,7 @@ export const AuthProvider = (props) => {
       try {
         [statusVerification, responseData] = await verificationFetch(window.sessionStorage.getItem('token'));
       }catch (e) {
-        console.error(e);
+        // console.error(e.message);
       }
 
       user = {
@@ -91,8 +93,11 @@ export const AuthProvider = (props) => {
           type: HANDLERS.INITIALIZE,
           payload: user
         });
-
-        router.push('/dashboard');
+        const test = window.history;
+        const pathname = searchPathName.pathname;
+        if (pathname === '/auth/login') {
+          router.back();
+        }
         return;
       }
     }

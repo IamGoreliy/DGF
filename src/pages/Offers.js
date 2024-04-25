@@ -3,6 +3,8 @@ import {SectionFooter} from '../layouts/homePage/SectionFooter';
 import { LayoutAuxiliaryPage } from '../layouts/LayoutAuxiliaryPage';
 import {SectionSpacialOffer} from '../layouts/offers/SectionSpacialOffer';
 import {Raleway} from 'next/font/google'
+import { offerForPageOffer } from '../utils/custFetch';
+import {createContext} from 'react';
 
 //стилизация текста. Присвоение класа Header это необходимо что все сомпоненты наследывали данный клас от родительского
 const raleway = Raleway({
@@ -12,13 +14,16 @@ const raleway = Raleway({
   display: 'swap',
 })
 
+export const Data = createContext([]);
 
 
-const Offers = () => {
+const Offers = ({data}) => {
   return (
     <Header className={raleway.className}>
       <LayoutAuxiliaryPage title={'СПЕЦІАЛЬНІ ПРОПОЗИЦІЇ'}>
-        <SectionSpacialOffer/>
+        <Data.Provider value={data}>
+          <SectionSpacialOffer />
+        </Data.Provider>
       </LayoutAuxiliaryPage>
       <SectionFooter/>
     </Header>
@@ -26,3 +31,12 @@ const Offers = () => {
 }
 
 export default Offers;
+
+export async function getServerSideProps () {
+  const data = await offerForPageOffer();
+  return {
+    props: {
+      data
+    }
+  }
+}

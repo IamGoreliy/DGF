@@ -3,6 +3,7 @@ import { Switch } from '../../image/svgComponents';
 import { useEffect, useState } from 'react';
 import {uploadFile} from '../../utils/custFetch';
 import { toast } from 'react-toastify';
+import { useRouter } from 'next/router';
 const debounce = require('lodash.debounce');
 
 function fieldImgClick () {
@@ -15,11 +16,13 @@ const textFieldChange = debounce((value, setStateFn) => {
 
 
 
+
 export const CreateOffer = ({statusRender}) => {
   const [imageUrl, setImageUrl] = useState('');
   const [titleOffer, setTitleOffer] = useState('');
   const [descOffer, setDescOffer] = useState('');
   const [preview, setPreview] = useState('');
+  const router = useRouter();
 
   useEffect(() => {
     if (preview) {
@@ -194,6 +197,13 @@ export const CreateOffer = ({statusRender}) => {
                     statusRender({});
                   } else {
                     toast.error(data.message);
+                    if(data.message === 'неудалось подключится к базе данных' || 'токет получин с другого компьютра') {
+                      window.sessionStorage.removeItem('token');
+                      window.sessionStorage.removeItem('authenticated');
+                      setTimeout(() => {
+                        router.push('auth/login');
+                      }, 400);
+                    }
                   }
                 }
               }}

@@ -100,7 +100,7 @@ const Page = () => (
             lg={4}
           >
             <OverviewTraffic
-              chartSeries={[63, 15, 22]}
+              chartSeries={[40, 40, 20]}
               labels={['Desktop', 'Tablet', 'Phone']}
               sx={{ height: '100%' }}
             />

@@ -9,6 +9,8 @@ import { useNProgress } from 'src/hooks/use-nprogress';
 import { createTheme } from 'src/theme';
 import { createEmotionCache } from 'src/utils/create-emotion-cache';
 import 'simplebar-react/dist/simplebar.min.css';
+import { useEffect, useState } from 'react';
+import deviceCheck  from '../utils/deviceСhecker';
 
 const clientSideEmotionCache = createEmotionCache();
 
@@ -16,6 +18,17 @@ const SplashScreen = () => null;
 
 const App = (props) => {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
+  const [userAg, setuserAg] = useState(null);
+
+  function isMobileDevice() {
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+  }
+
+  useEffect(() => {
+    deviceCheck();
+  }, []);
+
+  console.log(userAg);
 
   useNProgress();
 

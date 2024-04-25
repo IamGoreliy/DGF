@@ -10,18 +10,16 @@ const handleChange = ({target: {value}}, setSelectValue, changeRows, fnStartNum)
 
 const handleForPaginationPlus = (startNum, currentComingRec, fnStart) => {
   fnStart(startNum + currentComingRec);
-
 }
 
 const handleForPaginationMinus = (startNum, rowPerPage, fnStart) => {
   fnStart(startNum - rowPerPage);
 }
 
-export const CustomTablePagination = ({ rowsPerPage, data, allEntries, buttonNav, changeRowPerPage}) => {
+export const CustomTablePagination = ({ rowsPerPage, data, allEntries, buttonNav, changeRowPerPage, deleteOffers, selectedOffers}) => {
   const [selectValue, setSelectValue] = useState(rowsPerPage);
   const [startNumOfRec, setStartNumOfRec] = useState(1);
   const [totalComingRec, setTotalComingRec] = useState(null);
-
 
   useEffect(() => {
     if (data.hasOwnProperty(['currentOffers'])){
@@ -43,7 +41,21 @@ export const CustomTablePagination = ({ rowsPerPage, data, allEntries, buttonNav
       >
         <Container
           maxWidth={'custXl'}
+          sx={{
+            display: 'flex',
+            justifyContent: 'space-between'
+          }}
         >
+          <Box>
+            <Button
+              onClick={() => deleteOffers(selectedOffers)}
+              variant={'outlined'}
+              color={'error'}
+              disabled={!selectedOffers.length}
+            >
+              удалить
+            </Button>
+          </Box>
           <Box
             sx={{
               display: 'flex',
@@ -112,7 +124,7 @@ export const CustomTablePagination = ({ rowsPerPage, data, allEntries, buttonNav
                   minWidth: '20px',
                   padding: '10px 15px',
                 }}
-                disabled={startNumOfRec >= allEntries || totalComingRec >= allEntries}
+                disabled={startNumOfRec + totalComingRec > allEntries}
               >
                 <ButtonArrowForPagination
                   sx={{

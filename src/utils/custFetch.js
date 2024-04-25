@@ -27,9 +27,13 @@ export const authUsersFetch = async (email, pass) => {
 
 export const verificationFetch = async (token) => {
   const url = '/api/apiVerificationUser';
-  const response = await fetch(url, fetchOptionSpred({token}));
-  const responseData = await response.json();
-  return [response.ok, responseData];
+  try {
+    const response = await fetch(url, fetchOptionSpred({token}));
+    const responseData = await response.json();
+    return [response.ok, responseData];
+  } catch (e) {
+    console.log(e.message)
+  }
 }
 
 export const preloaderFetch = async (file) => {
@@ -69,8 +73,30 @@ export const updateData = async (signal = '', rowsPerPage, preLoadingData) => {
   }
   return await response.json();
 }
+
 export const fetchSearchOffers = async (value, rowsPerPage, preLoadingData) => {
   const url = `/api/searchOffers`;
   const response = await fetch(url, fetchOptionSpred({value, rowsPerPage, preLoadingData}));
   return await response.json();
 }
+
+export const deleteOffers = async (id, jwt) => {
+  const url = 'api/deleteOffers';
+  const response = await fetch(url, fetchOptionSpred({id, jwt}));
+  const statusReq = response.ok;
+  const responseData = await response.json();
+  return {statusReq, responseData};
+}
+
+export const offerForPageOffer = async () => {
+  const url = process.env.URL + '/api/offerdataForPageOffer';
+  const res = await fetch(url);
+  return await res.json();
+}
+
+export const createCookies = async (device) => {
+  const url = '/api/createCookies';
+  const res = await fetch(url, fetchOptionSpred({device}));
+  return res.ok;
+}
+
