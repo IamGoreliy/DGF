@@ -97,6 +97,13 @@ export const offerForPageOffer = async () => {
 export const createCookies = async (device) => {
   const url = '/api/createCookies';
   const res = await fetch(url, fetchOptionSpred({device}));
-  return res.ok;
+  const resParse = await res.json();
+  return {status: res.ok, message: resParse.message};
+}
+
+export const getDeviceStatistic = async () => {
+  const url = process.env.URL + '/api/deviceStats';
+  const res = await fetch(url);
+  return await res.json();
 }
 

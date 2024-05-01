@@ -13,6 +13,7 @@ import {
   useTheme
 } from '@mui/material';
 import { Chart } from 'src/components/chart';
+import { getDeviceStatistic } from '../../utils/custFetch';
 
 const useChartOptions = (labels) => {
   const theme = useTheme();
@@ -81,8 +82,9 @@ const iconMap = {
 };
 
 export const OverviewTraffic = (props) => {
-  const { chartSeries, labels, sx } = props;
+  const { chartSeries, labels, sx,} = props;
   const chartOptions = useChartOptions(labels);
+
 
   return (
     <Card sx={sx}>
@@ -111,7 +113,7 @@ export const OverviewTraffic = (props) => {
                 sx={{
                   display: 'flex',
                   flexDirection: 'column',
-                  alignItems: 'center'
+                  alignItems: 'center',
                 }}
               >
                 {iconMap[label]}
@@ -135,6 +137,9 @@ export const OverviewTraffic = (props) => {
     </Card>
   );
 };
+
+
+
 
 OverviewTraffic.propTypes = {
   chartSeries: PropTypes.array.isRequired,

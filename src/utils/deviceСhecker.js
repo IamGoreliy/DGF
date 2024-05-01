@@ -24,12 +24,14 @@ async function deviceCheck () {
   }
   try {
     const infoSession = await createCookies(whatDeviceUse);
-    if (!infoSession) {
+    if (!infoSession.status && infoSession.message === 'reload') {
       await deviceCheck();
+    }
+    if (infoSession.message !== 'reload') {
+      throw new Error (infoSession.message);
     }
   } catch (e) {
     console.log(e.message);
-    await deviceCheck();
   }
 }
 

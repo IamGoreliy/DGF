@@ -9,7 +9,6 @@ const handlerSetCookies = (req, res, next) => {
   const cookiesString = req.headers.cookie;
   const cookies = cookie.parse(cookiesString || '');
   const deviceId = cookies.deviceId;
-
   if (deviceId) {
     req.deviceId = deviceId;
   } else {
@@ -21,8 +20,29 @@ const handlerSetCookies = (req, res, next) => {
     }))
     req.deviceId = newDeviceId;
   }
+
   next();
 }
+
+
+
+
+// const {device: whatDeviceUser} = req.body;
+// const userAgent = req.headers['user-agent'];
+// try {
+//   try {
+//     connection = await connectDB();
+//   } catch (e) {
+//     throw new Error('не удалось создать соединение с базой данных');
+//   }
+//   try {
+//     await connection.query('INSERT INTO `list_of_site_visits` (`id_device_being_visited`, `user_agent`, `what_device_user`) VALUES (?, ?, ?)', [newDeviceId, userAgent, whatDeviceUser]);
+//   } catch (e) {
+//     throw new Error ('не удалось произвести запись устройства');
+//   }
+// } catch (e) {
+//   req.errorCreateCookies = e.message;
+// }
 
 route.use(handlerSetCookies);
 
@@ -41,7 +61,9 @@ route.post(async (req, res) => {
         throw new Error('не удалось создать соединение с базой данных');
       }
       try {
+
         [deviceCookie] = await connection.query('SELECT `id_device_being_visited` FROM `list_of_site_visits` WHERE `id_device_being_visited` = ?', [deviceId]);
+        console.log(deviceCookie)
       } catch (e) {
         throw new Error ('не удалось подключить сессию');
       }
