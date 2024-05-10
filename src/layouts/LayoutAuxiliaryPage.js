@@ -21,7 +21,7 @@ export const LayoutAuxiliaryPage = ({children, title = 'ІНВЕСТИЦІЇ Т�
             padding: '20px clamp(15px,3.125vw,50px) 20px calc(15px + clamp(25px,3.125vw,50px))',
             backgroundColor: colorSite.wrapperBoxControl,
             color: 'white',
-            width: {xs: '100%', md: 'fit-content'},
+            width: {xs: '100wv', md: 'fit-content'},
 
           }}
         >

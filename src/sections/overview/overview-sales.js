@@ -13,7 +13,8 @@ import {
 import { alpha, useTheme } from '@mui/material/styles';
 import { Chart } from 'src/components/chart';
 
-const useChartOptions = () => {
+
+const useChartOptions = (dayInMonth, test) => {
   const theme = useTheme();
 
   return {
@@ -51,13 +52,13 @@ const useChartOptions = () => {
     },
     plotOptions: {
       bar: {
-        columnWidth: '40px'
+        columnWidth: '10px'
       }
     },
     stroke: {
       colors: ['transparent'],
       show: true,
-      width: 2
+      width: 0
     },
     theme: {
       mode: theme.palette.mode
@@ -71,20 +72,7 @@ const useChartOptions = () => {
         color: theme.palette.divider,
         show: true
       },
-      categories: [
-        'Jan',
-        'Feb',
-        'Mar',
-        'Apr',
-        'May',
-        'Jun',
-        'Jul',
-        'Aug',
-        'Sep',
-        'Oct',
-        'Nov',
-        'Dec'
-      ],
+      categories: dayInMonth,
       labels: {
         offsetY: 5,
         style: {
@@ -94,7 +82,9 @@ const useChartOptions = () => {
     },
     yaxis: {
       labels: {
-        formatter: (value) => (value > 0 ? `${value}K` : `${value}`),
+        formatter: (value, index) => {
+          return value > 0 ? value : value
+        },
         offsetX: -10,
         style: {
           colors: theme.palette.text.secondary
@@ -105,8 +95,8 @@ const useChartOptions = () => {
 };
 
 export const OverviewSales = (props) => {
-  const { chartSeries, sx } = props;
-  const chartOptions = useChartOptions();
+  const { chartSeries, sx, curDayInMonth, curStatsOfferPercent } = props;
+  const chartOptions = useChartOptions(curDayInMonth, curStatsOfferPercent);
 
   return (
     <Card sx={sx}>

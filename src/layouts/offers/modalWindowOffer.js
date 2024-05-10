@@ -1,11 +1,33 @@
 import {Box, Typography, Button, TextField, MenuItem, Checkbox} from '@mui/material';
-// import {offersData} from './offersData';
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import {Data} from '../../pages/Offers';
+import { clickForSubmitForm, sendForm } from '../../utils/sendForm';
+import { toast } from 'react-toastify';
+
+const clearForm = (switcherModal) => {
+  const form = window.document.getElementById('formOffer');
+  switcherModal(false);
+  form.reset();
+}
+
 
 export const ModalWindowOffer = ({switcherModal, idOffer}) => {
   const [agree, setAgree] = useState(false);
+  const [resSendForm, setResSendForm] = useState({});
   const offersData = useContext(Data);
+
+
+  useEffect(() => {
+    if (resSendForm.message) {
+      if (resSendForm.message === 'заявка успешно отправлена') {
+        toast.success(resSendForm.message);
+        clearForm(switcherModal);
+      } else {
+        toast.error('заявка не создана повторите операцию позже');
+      }
+    }
+  }, [resSendForm]);
+
   return (
     <Box
       onClick={(e) => {
@@ -25,7 +47,8 @@ export const ModalWindowOffer = ({switcherModal, idOffer}) => {
         height: '100vh',
         top: '0px',
         left: '0px',
-        zIndex: '2'
+        zIndex: '2',
+        overflow: 'scroll'
       }}
 
     >
@@ -109,6 +132,7 @@ export const ModalWindowOffer = ({switcherModal, idOffer}) => {
             <Button
               disabled={!agree}
               variant={'contained'}
+              onClick={() => clickForSubmitForm()}
               sx={{
                 position: 'absolute',
                 bottom: '10px',
@@ -120,6 +144,22 @@ export const ModalWindowOffer = ({switcherModal, idOffer}) => {
             </Button>
           </Box>
           <Box
+            id={'formOffer'}
+            encType={'multipart/form-data'}
+            onSubmit={async (e) => {
+              e.preventDefault();
+              const form = e.target;
+              const formData = new FormData(form);
+              const offerTitle = offersData.reduce((acc, ele) => {
+                if (ele.id === idOffer) {
+                  acc = ele.title;
+                }
+                return acc;
+              } , '');
+              formData.append('nameOffer', offerTitle);
+              await sendForm(formData, setResSendForm);
+            }}
+            component={'form'}
             sx={{
               width: {xs: '100%', md: '50%'},
               display: 'flex',
@@ -133,6 +173,8 @@ export const ModalWindowOffer = ({switcherModal, idOffer}) => {
               select
               defaultValue={idOffer}
               helperText="Оберіть назву програми"
+              required
+              name={'idOffer'}
             >
               {offersData.map(offer => {
                 const {id, title} = offer;
@@ -150,6 +192,8 @@ export const ModalWindowOffer = ({switcherModal, idOffer}) => {
               id="filled-basic"
               label="Ваше прізвище, ім’я та по батькові"
               variant="filled"
+              required
+              name={'userName'}
               sx={{
                 marginTop: '15px'
               }}
@@ -159,6 +203,8 @@ export const ModalWindowOffer = ({switcherModal, idOffer}) => {
               label="Ваш номер телефону"
               variant="filled"
               type={"number"}
+              required
+              name={'userPhone'}
               sx={{
                 marginTop: '15px'
               }}
@@ -167,10 +213,21 @@ export const ModalWindowOffer = ({switcherModal, idOffer}) => {
               id="filled-basic"
               label="Ваш e-mail"
               variant="filled"
+              required
+              name={'userMail'}
               sx={{
                 marginTop: '15px'
               }}
             />
+            <Button
+              id={'btnSubForm'}
+              type={"submit"}
+              sx={{
+                scale: 0,
+              }}
+            >
+
+            </Button>
           </Box>
         </Box>
       </Box>

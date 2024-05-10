@@ -9,6 +9,7 @@ import {WindowSeizeContext} from '../headerNavigation';
 import { Data } from '../../pages/Offers';
 
 
+
 const openSubMenu = (id, menuState, fnChangeMenu) => {
   if (menuState === id) {
     fnChangeMenu(null);
@@ -33,6 +34,7 @@ export const SectionSpacialOffer = () => {
         sx={{
           marginTop: {xs: '30px', md:'70px'},
           padding: '30px 0 clamp(80px,11.25vw,180px)',
+          width: '100vw',
         }}
       >
         <Container

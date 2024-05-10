@@ -107,3 +107,11 @@ export const getDeviceStatistic = async () => {
   return await res.json();
 }
 
+export const sendFormOffer = async (data) => {
+  const url = '/api/userFromOffer';
+  const res = await fetch(url, {
+    method: 'POST',
+    body: data,
+  });
+  return await res.json();
+}

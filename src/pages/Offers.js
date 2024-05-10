@@ -5,6 +5,10 @@ import {SectionSpacialOffer} from '../layouts/offers/SectionSpacialOffer';
 import {Raleway} from 'next/font/google'
 import { offerForPageOffer } from '../utils/custFetch';
 import {createContext} from 'react';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+
 
 //стилизация текста. Присвоение класа Header это необходимо что все сомпоненты наследывали данный клас от родительского
 const raleway = Raleway({
@@ -26,6 +30,10 @@ const Offers = ({data}) => {
         </Data.Provider>
       </LayoutAuxiliaryPage>
       <SectionFooter/>
+      <ToastContainer
+        position="top-left"
+        autoClose={2000}
+      />
     </Header>
   )
 }

@@ -30,18 +30,37 @@ const filterDevice = (data) => {
     tablet: 0,
     phone: 0
   });
-   listDevice.desktop = listDevice.desktop / data.length * 100;
-   listDevice.tablet = listDevice.tablet / data.length * 100;
-   listDevice.phone = listDevice.phone / data.length * 100;
-   return Object.entries(listDevice).map(ele => ele[1]);
-}
+   const listDevicesPercentage = {};
+   listDevicesPercentage.desktop = Math.round(listDevice.desktop / data.length * 100);
+   listDevicesPercentage.tablet = Math.round(listDevice.tablet / data.length * 100);
+   listDevicesPercentage.phone = Math.round(listDevice.phone / data.length * 100);
+   const devicePercent = Object.entries(listDevicesPercentage).map(ele => ele[1]);
+   const quantityDevice = Object.entries(listDevice).map(ele => ele[1]);
+   return {devicePercent, quantityDevice};
+};
 
-const Page = ({data}) => {
-  const [statsWhatDevice, setStatsWhatDevice] = useState([]);
+const Page = ({
+  data: {
+    deviceData,
+    arrQuantityCurMonth,
+    arrStatsCurMonth,
+    arrStatsCurMonthPercent,
+    arrQuantityLastMonth,
+    arrStatsLastMonth,
+    arrStatsLastMonthPercent,
+    userStatReqOffersCurMonth
+  }
+}) => {
+  const [statsWhatDevicePercent, setStatsWhatDevicePercent] = useState([]);
+  const [totalNumDev, setTotalNumDev] = useState([]);
+
+  console.log('deviceData', )
 
   useEffect(() => {
-    setStatsWhatDevice(filterDevice(data));
-  }, [data]);
+    const {devicePercent, quantityDevice} = filterDevice(deviceData);
+    setStatsWhatDevicePercent(devicePercent);
+    setTotalNumDev(quantityDevice);
+  }, [deviceData]);
 
   return (
     <>
@@ -114,13 +133,15 @@ const Page = ({data}) => {
                 chartSeries={[
                   {
                     name: 'This year',
-                    data: [18, 16, 5, 8, 3, 14, 14, 16, 17, 19, 18, 20]
+                    data: arrStatsCurMonth,
                   },
                   {
                     name: 'Last year',
-                    data: [12, 11, 4, 6, 2, 9, 9, 10, 11, 12, 13, 13]
+                    data: arrStatsLastMonth,
                   }
                 ]}
+                curDayInMonth={arrQuantityCurMonth}
+                curStatsOfferPercent={arrStatsCurMonthPercent}
                 sx={{ height: '100%' }}
               />
             </Grid>
@@ -130,8 +151,9 @@ const Page = ({data}) => {
               lg={4}
             >
               <OverviewTraffic
-                chartSeries={statsWhatDevice}
+                chartSeries={statsWhatDevicePercent}
                 labels={['Desktop', 'Tablet', 'Phone']}
+                quantity={totalNumDev}
                 sx={{ height: '100%' }}
               />
             </Grid>
@@ -244,6 +266,7 @@ const Page = ({data}) => {
                     status: 'delivered'
                   }
                 ]}
+                ordersNew={userStatReqOffersCurMonth}
                 sx={{ height: '100%' }}
               />
             </Grid>

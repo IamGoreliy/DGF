@@ -82,8 +82,9 @@ const iconMap = {
 };
 
 export const OverviewTraffic = (props) => {
-  const { chartSeries, labels, sx,} = props;
+  const { chartSeries, labels, sx, quantity} = props;
   const chartOptions = useChartOptions(labels);
+
 
 
   return (
@@ -93,7 +94,7 @@ export const OverviewTraffic = (props) => {
         <Chart
           height={300}
           options={chartOptions}
-          series={chartSeries}
+          series={quantity}
           type="donut"
           width="100%"
         />
