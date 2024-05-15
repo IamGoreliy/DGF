@@ -36,7 +36,6 @@ export const OverviewLatestOrders = (props) => {
       <Scrollbar sx={{ flexGrow: 1, maxHeight: 430 }}>
         <Box sx={{
           minWidth: 800,
-
         }}>
           <Table>
             <TableHead>
@@ -54,37 +53,16 @@ export const OverviewLatestOrders = (props) => {
                   Mail
                 </TableCell>
                 <TableCell>
-                  Date
+                  Date request from client
+                </TableCell>
+                <TableCell>
+                  Date processing request
+                </TableCell>
+                <TableCell>
+                  Processed
                 </TableCell>
               </TableRow>
             </TableHead>
-            {/*<TableBody>*/}
-            {/*  {orders.map((order) => {*/}
-            {/*    const createdAt = format(order.createdAt, 'dd/MM/yyyy');*/}
-
-            {/*    return (*/}
-            {/*      <TableRow*/}
-            {/*        hover*/}
-            {/*        key={order.id}*/}
-            {/*      >*/}
-            {/*        <TableCell>*/}
-            {/*          {order.ref}*/}
-            {/*        </TableCell>*/}
-            {/*        <TableCell>*/}
-            {/*          {order.customer.name}*/}
-            {/*        </TableCell>*/}
-            {/*        <TableCell>*/}
-            {/*          {createdAt}*/}
-            {/*        </TableCell>*/}
-            {/*        <TableCell>*/}
-            {/*          <SeverityPill color={statusMap[order.status]}>*/}
-            {/*            {order.status}*/}
-            {/*          </SeverityPill>*/}
-            {/*        </TableCell>*/}
-            {/*      </TableRow>*/}
-            {/*    );*/}
-            {/*  })}*/}
-            {/*</TableBody>*/}
             <ParseOrders
               orders={ordersNew}
               isTornOnAllViewOrder={isTurnOnViewAll}
@@ -96,14 +74,14 @@ export const OverviewLatestOrders = (props) => {
       <CardActions sx={{ justifyContent: 'flex-end' }}>
         <Button
           onClick={() => setIsTurnOnViewAll(!isTurnOnViewAll)}
-          color="inherit"
+          // color="inherit"
           endIcon={(
             <SvgIcon fontSize="small">
               <ArrowRightIcon />
             </SvgIcon>
           )}
           size="small"
-          variant="text"
+          variant={isTurnOnViewAll ? 'contained' :"text"}
         >
           View all
         </Button>

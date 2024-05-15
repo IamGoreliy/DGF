@@ -25,7 +25,7 @@ router.get(async (req, res) => {
     }
     try {
       [deviceData] = await connection.query('SELECT * FROM `list_of_site_visits`');
-      [userStatReqOffersCurMonth] = await connection.query('SELECT * FROM `user_interest_offer` WHERE `application_date` BETWEEN ? AND ?', [startDayCurMonth, lastDayCurMonth]);
+      [userStatReqOffersCurMonth] = await connection.query('SELECT * FROM `user_interest_offer` WHERE `application_date` BETWEEN ? AND ? ORDER BY `application_date` DESC', [startDayCurMonth, lastDayCurMonth]);
       [userStatReqOffersLastMonth] = await connection.query('SELECT * FROM `user_interest_offer` WHERE `application_date` BETWEEN ? AND ?', [startDayLastMonth, lastDayLastMonth]);
     } catch (e) {
       throw new Error('не удалось получить ответ от сервера');
@@ -40,12 +40,15 @@ router.get(async (req, res) => {
     }
   }
 
+  userStatReqOffersCurMonth = userStatReqOffersCurMonth.reduce((acc, ele) => {
+    ele['application_date'] = moment(ele['application_date']).format('YYYY-MM-DD');
+    ele['date_set_message'] = ele['date_set_message'] ? moment(ele['date_set_message']).format('YYYY-MM-DD') : '---- -- --';
+    acc.push(ele);
+    return acc;
+  }, []);
+
   const [arrQuantityCurMonth, arrStatsCurMonthPercent , arrStatsCurMonth] = counterDayInMonth(+numDayCurMonth, currentMonth, userStatReqOffersCurMonth);
   const [arrQuantityLastMonth, arrStatsLastMonthPercent, arrStatsLastMonth] = counterDayInMonth(+numDayLastMonth, lastMonth, userStatReqOffersLastMonth);
-
-  // const maxNumCurMonth = Math.max(...arrStatsCurMonth);
-  console.log(arrStatsCurMonthPercent)
-
 
 
   res.status(200).json({deviceData, arrQuantityCurMonth, arrStatsCurMonth, arrStatsCurMonthPercent, arrQuantityLastMonth, arrStatsLastMonth, arrStatsLastMonthPercent, userStatReqOffersCurMonth});

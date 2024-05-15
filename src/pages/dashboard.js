@@ -11,9 +11,14 @@ import { OverviewTotalCustomers } from 'src/sections/overview/overview-total-cus
 import { OverviewTotalProfit } from 'src/sections/overview/overview-total-profit';
 import { OverviewTraffic } from 'src/sections/overview/overview-traffic';
 import { getDeviceStatistic } from '../utils/custFetch';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, createContext } from 'react';
+import { createPortal } from 'react-dom';
+import {CreateOfferMessage} from '../components/createOfferMessage';
+
 
 const now = new Date();
+
+export const ToggleModalMessage = createContext([]);
 
 const filterDevice = (data) => {
    const listDevice = data.reduce((acc, ele) => {
@@ -53,6 +58,8 @@ const Page = ({
 }) => {
   const [statsWhatDevicePercent, setStatsWhatDevicePercent] = useState([]);
   const [totalNumDev, setTotalNumDev] = useState([]);
+  const [modalMessage, setModalMessage] = useState(false);
+  const [idOffer, setIdOffer] = useState(0);
 
   console.log('deviceData', )
 
@@ -203,76 +210,22 @@ const Page = ({
               md={12}
               lg={8}
             >
-              <OverviewLatestOrders
-                orders={[
-                  {
-                    id: 'f69f88012978187a6c12897f',
-                    ref: 'DEV1049',
-                    amount: 30.5,
-                    customer: {
-                      name: 'Ekaterina Tankova'
-                    },
-                    createdAt: 1555016400000,
-                    status: 'pending'
-                  },
-                  {
-                    id: '9eaa1c7dd4433f413c308ce2',
-                    ref: 'DEV1048',
-                    amount: 25.1,
-                    customer: {
-                      name: 'Cao Yu'
-                    },
-                    createdAt: 1555016400000,
-                    status: 'delivered'
-                  },
-                  {
-                    id: '01a5230c811bd04996ce7c13',
-                    ref: 'DEV1047',
-                    amount: 10.99,
-                    customer: {
-                      name: 'Alexa Richardson'
-                    },
-                    createdAt: 1554930000000,
-                    status: 'refunded'
-                  },
-                  {
-                    id: '1f4e1bd0a87cea23cdb83d18',
-                    ref: 'DEV1046',
-                    amount: 96.43,
-                    customer: {
-                      name: 'Anje Keizer'
-                    },
-                    createdAt: 1554757200000,
-                    status: 'pending'
-                  },
-                  {
-                    id: '9f974f239d29ede969367103',
-                    ref: 'DEV1045',
-                    amount: 32.54,
-                    customer: {
-                      name: 'Clarke Gillebert'
-                    },
-                    createdAt: 1554670800000,
-                    status: 'delivered'
-                  },
-                  {
-                    id: 'ffc83c1560ec2f66a1c05596',
-                    ref: 'DEV1044',
-                    amount: 16.76,
-                    customer: {
-                      name: 'Adam Denisov'
-                    },
-                    createdAt: 1554670800000,
-                    status: 'delivered'
-                  }
-                ]}
-                ordersNew={userStatReqOffersCurMonth}
-                sx={{ height: '100%' }}
-              />
+              <ToggleModalMessage.Provider value={[modalMessage, setModalMessage, setIdOffer]}>
+                <OverviewLatestOrders
+                  ordersNew={userStatReqOffersCurMonth}
+                  sx={{ height: '100%' }}
+                />
+              </ToggleModalMessage.Provider>
             </Grid>
           </Grid>
         </Container>
       </Box>
+      {modalMessage && createPortal(
+        <CreateOfferMessage
+          fnToggleModal={[modalMessage, setModalMessage]}
+          fnSetOfferId={[idOffer, setIdOffer]}
+          data={userStatReqOffersCurMonth.find(ele => ele.id === idOffer)}
+        />, window.document.body)}
     </>
   );
 }

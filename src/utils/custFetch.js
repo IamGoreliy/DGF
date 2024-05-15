@@ -115,3 +115,12 @@ export const sendFormOffer = async (data) => {
   });
   return await res.json();
 }
+
+export const recordMessageFromAdminPanel = async (data) => {
+  const url = '/api/createMessageOfferPage';
+  const res = await fetch(url, {
+    method: 'POST',
+    body: data,
+  });
+  return await res.json();
+}
