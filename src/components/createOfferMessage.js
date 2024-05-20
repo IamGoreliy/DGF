@@ -2,6 +2,11 @@ import { Box, Button, Container, TextField } from '@mui/material';
 import {ToggleModalMessage} from '../pages/dashboard';
 import {recordMessageFromAdminPanel} from '../utils/custFetch';
 import { useState } from 'react';
+const debounce = require('lodash.debounce');
+
+// const changeValueInput = debounce((eventValue, setChangeInput) => {
+//   setChangeInput(eventValue);
+// }, 300)
 
 export const CreateOfferMessage = ({fnToggleModal, fnSetOfferId, data}) => {
   const [modalMessage, setModalMessage] = fnToggleModal;
@@ -79,6 +84,7 @@ export const CreateOfferMessage = ({fnToggleModal, fnSetOfferId, data}) => {
                 multiline
                 variant="filled"
                 name={'message'}
+                onChange={({target: { value }}) => setInputValue(value)}
                 sx={{
                   width: '100%'
                 }}

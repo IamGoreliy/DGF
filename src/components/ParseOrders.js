@@ -13,13 +13,14 @@ const isViewAllOffers = (orders, modalMessage, setModalMessage, setIdOffer) => {
       application_date: offerDate,
       message,
       date_set_message: dateAdminMessage,
-      name_admin: adminName
+      name_admin: adminName,
+      offer_has_been_processed: offerHasBeenProcessed,
     } = ele;
     return (
       <TableRow
         key={id}
         sx={{
-          backgroundColor: message !== null ? 'rgba(113, 225, 113, 0.4)' : 'rgba(252, 74, 74, 0.4)',
+          backgroundColor: offerHasBeenProcessed ? 'rgba(113, 225, 113, 0.4)' : 'rgba(252, 74, 74, 0.4)',
         }}
       >
         <TableCell>

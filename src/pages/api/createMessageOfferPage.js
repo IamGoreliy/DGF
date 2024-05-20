@@ -45,7 +45,7 @@ router.post(async (req, res) => {
       throw new Error ('не удалось верифицировать пользователя');
     }
     currentData = moment().format('YYYY-MM-DD');
-    await connected.execute('UPDATE `user_interest_offer` SET `message` = ?, `date_set_message` = ?, `name_admin` = ? WHERE `id` = ? ', [message, currentData, adminName, idOffer]);
+    await connected.execute('UPDATE `user_interest_offer` SET `message` = ?, `date_set_message` = ?, `name_admin` = ?, `offer_has_been_processed` = true WHERE `id` = ? ', [message, currentData, adminName, idOffer]);
   } catch (e) {
     console.log(e.message);
     res.status(400).json({message: e.message});
