@@ -19,6 +19,7 @@ router.post(async (req, res) => {
       throw new Error('не удалось создать подключение');
     }
     try {
+      console.log(idOffer, nameOffer, userName, userPhone, userMail)
       await connection.execute('INSERT INTO `user_interest_offer` (`id_offer`, `offer_name`, `user_initials`, `user_phone`, `user_mail`) VALUES (?, ?, ?, ?, ?)', [idOffer, nameOffer, userName, userPhone, userMail]);
     }catch (e) {
       throw new Error('не удалось провести запись в базу данных');

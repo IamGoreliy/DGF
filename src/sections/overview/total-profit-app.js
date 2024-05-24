@@ -1,16 +1,26 @@
 import PropTypes from 'prop-types';
 import CurrencyDollarIcon from '@heroicons/react/24/solid/CurrencyDollarIcon';
-import { Avatar, Card, CardContent, Stack, SvgIcon, Typography, Select, MenuItem, Box } from '@mui/material';
-import { useState } from 'react';
+import {
+  Avatar,
+  Card,
+  CardContent,
+  Stack,
+  SvgIcon,
+  Typography,
+  Button,
+  Box
+} from '@mui/material';
+import { useEffect, useState } from 'react';
+import { CustomDatePicker } from '../../components/CustomDatePicker';
 
-const handleChange = (e, setState) => {
-  const value = e.target.value;
-  setState(value);
-}
+
+
 
 export const TotalProfitApplication = (props) => {
-  const [selectValue, setSelectValue] = useState('')
-  const { value, sx } = props;
+  const { value, sx, totalDayCurMonth, selectDateFn } = props;
+  const [selectDate, setSelectDate] = useState('');
+  const [deleteData, setDeleteData] = useState(false);
+
 
   return (
     <Card sx={sx}>
@@ -46,45 +56,27 @@ export const TotalProfitApplication = (props) => {
         </Stack>
         <Stack
           sx={{
-            paddingTop: '20px'
+            mt: 4,
           }}
         >
-          <Select
-            labelId="demo-simple-select-standard-label"
-            id="demo-simple-select-standard"
-            value={selectValue}
-            onChange={(e) => handleChange(e, setSelectValue)}
-            label="Age"
+          <Box
             sx={{
-              height: '50px'
+              display: 'flex',
+              columnGap: '10px'
             }}
           >
-            <Box
-              sx={{
-                height: '150px',
-                overflow: 'auto',
-              }}
+            <CustomDatePicker
+              selectDate={selectDateFn}
+              clearDate={deleteData}
+            />
+            <Button
+              onClick={() => setDeleteData(!deleteData)}
+              title='current month'
+              variant={'contained'}
             >
-              <MenuItem value="">
-                <em>None</em>
-              </MenuItem>
-              <MenuItem value={10}>Ten</MenuItem>
-              <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem>
-              <MenuItem value={10}>Ten</MenuItem>
-              <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem>
-              <MenuItem value={10}>Ten</MenuItem>
-              <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem>
-              <MenuItem value={10}>Ten</MenuItem>
-              <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem>
-              <MenuItem value={10}>Ten</MenuItem>
-              <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem>
-            </Box>
-          </Select>
+              All
+            </Button>
+          </Box>
         </Stack>
       </CardContent>
     </Card>

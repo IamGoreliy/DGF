@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import ListBulletIcon from '@heroicons/react/24/solid/ListBulletIcon';
 import {
   Avatar,
-  Box,
+  Box, Button,
   Card,
   CardContent,
   LinearProgress,
@@ -10,9 +10,11 @@ import {
   SvgIcon,
   Typography
 } from '@mui/material';
+import {CustomSelect} from '../../components/CustomSelect';
 
 export const TasksProgress = (props) => {
-  const { value, sx } = props;
+  const { value, sx, selectMonth } = props;
+
 
   return (
     <Card sx={sx}>
@@ -47,12 +49,28 @@ export const TasksProgress = (props) => {
             </SvgIcon>
           </Avatar>
         </Stack>
-        <Box sx={{ mt: 3 }}>
-          <LinearProgress
-            value={value}
-            variant="determinate"
-          />
-        </Box>
+        <Stack>
+          <Box
+            sx={{
+              mt: 2,
+              display: 'flex',
+              columnGap: '20px',
+              alignItems: 'center'
+            }}
+          >
+            <LinearProgress
+              value={value}
+              variant="determinate"
+              sx={{
+                // width: 'auto'
+                flexBasis: 'calc(100% / 0.3)'
+              }}
+            />
+            <CustomSelect
+              selectDateFn={selectMonth}
+            />
+          </Box>
+        </Stack>
       </CardContent>
     </Card>
   );

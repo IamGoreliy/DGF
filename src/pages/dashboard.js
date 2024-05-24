@@ -11,9 +11,10 @@ import { Processed } from 'src/sections/overview/processed';
 import { TotalProfitApplication } from 'src/sections/overview/total-profit-app';
 import { OverviewTraffic } from 'src/sections/overview/overview-traffic';
 import { getDeviceStatistic } from '../utils/custFetch';
-import { useEffect, useState, createContext } from 'react';
+import { useEffect, useState, createContext, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import {CreateOfferMessage} from '../components/createOfferMessage';
+const moment = require('moment');
 
 
 const now = new Date();
@@ -68,6 +69,12 @@ const Page = ({
   const [idOffer, setIdOffer] = useState(0);
   const [unprocessed, setUnprocessed] = useState([]);
   const [processed, setProcessed] = useState([]);
+  const [orders, setOrders] = useState([]);
+  const [whatDateRender, setWhatDateRender] = useState(null);
+  const [whatMonthRender, setWhatMonthRender] = useState(moment().format('YYYY-MM'));
+  const firstRender = useRef(false);
+
+  
 
   useEffect(() => {
     const {devicePercent, quantityDevice} = filterDevice(deviceData);
@@ -78,12 +85,20 @@ const Page = ({
     setProcessed(processedApplications);
   }, [deviceData, userStatReqOffersCurMonth]);
 
+  useEffect(() => {
+    if (whatDateRender) {
+      const filterOrdersForDate = userStatReqOffersCurMonth.filter(ele => ele['application_date'] === whatDateRender);
+      setOrders(filterOrdersForDate);
+    } else {
+      setOrders(userStatReqOffersCurMonth);
+    }
+  }, [userStatReqOffersCurMonth, whatDateRender]);
 
   return (
     <>
       <Head>
         <title>
-          Overview | Devias Kit
+          ACP | DGFinance SAG
         </title>
       </Head>
       <Box
@@ -105,17 +120,19 @@ const Page = ({
               <OverviewSales
                 chartSeries={[
                   {
-                    name: 'This year',
+                    name: 'This Month',
                     data: arrStatsCurMonth,
                   },
                   {
-                    name: 'Last year',
+                    name: 'Last Month',
                     data: arrStatsLastMonth,
                   }
                 ]}
                 curDayInMonth={arrQuantityCurMonth}
                 curStatsOfferPercent={arrStatsCurMonthPercent}
-                sx={{ height: '100%' }}
+                sx={{
+                  height: '100%'
+                }}
               />
             </Grid>
             <Grid
@@ -162,6 +179,8 @@ const Page = ({
               <TotalProfitApplication
                 sx={{ height: '100%' }}
                 value={`${userStatReqOffersCurMonth.length}`}
+                totalDayCurMonth={arrQuantityCurMonth}
+                selectDateFn={setWhatDateRender}
               />
             </Grid>
             <Grid
@@ -171,7 +190,8 @@ const Page = ({
             >
               <TasksProgress
                 sx={{ height: '100%' }}
-                value={Math.round(processed.length / unprocessed.length * 100)}
+                value={Math.round(processed.length / userStatReqOffersCurMonth.length * 100)}
+                selectMonth={setWhatMonthRender}
               />
             </Grid>
             <Grid
@@ -222,7 +242,7 @@ const Page = ({
             >
               <ToggleModalMessage.Provider value={[modalMessage, setModalMessage, setIdOffer]}>
                 <OverviewLatestOrders
-                  ordersNew={userStatReqOffersCurMonth}
+                  ordersNew={orders}
                   sx={{ height: '100%' }}
                 />
               </ToggleModalMessage.Provider>

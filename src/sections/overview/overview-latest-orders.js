@@ -27,7 +27,7 @@ const statusMap = {
 };
 
 export const OverviewLatestOrders = (props) => {
-  const { orders = [], ordersNew = [], sx } = props;
+  const { ordersNew = [], sx } = props;
   const [isTurnOnViewAll, setIsTurnOnViewAll] = useState(false);
 
   return (

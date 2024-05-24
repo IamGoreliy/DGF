@@ -71,9 +71,9 @@ export const ParseOrders = (props) => {
 
   useEffect(() => {
     const arr = [];
-    if (!isTornOnAllViewOrder) {
+    if (!isTornOnAllViewOrder && orders.length > 0) {
       let startPos = 0;
-      while (startPos < 5) {
+      while (startPos < orders.length && startPos < 5 ) {
         arr.push(orders[startPos]);
         startPos += 1;
       }
@@ -82,12 +82,12 @@ export const ParseOrders = (props) => {
       setOrderRender([...orders]);
     }
 
-  }, [isTornOnAllViewOrder]);
+  }, [isTornOnAllViewOrder, orders]);
 
   return (
     <>
       <TableBody>
-        {isViewAllOffers(ordersRender, modalMessage, setModalMessage, setIdOffer)}
+        { isViewAllOffers(ordersRender, modalMessage, setModalMessage, setIdOffer)}
       </TableBody>
     </>
   )

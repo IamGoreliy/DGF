@@ -116,13 +116,20 @@ export const OverviewSales = (props) => {
         )}
         title="Sales"
       />
-      <CardContent>
+      <CardContent
+
+      >
         <Chart
           height={350}
           options={chartOptions}
           series={chartSeries}
           type="bar"
-          width="100%"
+          sx={{
+            width: {xs: '850px', md: '100%'},
+            'MuiCardContent-root': {
+              overflow: {xs: 'auto', md: 'none'}
+            },
+          }}
         />
       </CardContent>
       <Divider />
