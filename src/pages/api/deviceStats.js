@@ -5,17 +5,17 @@ const counterDayInMonth = require('./utils/counterDayInMonth');
 
 const router = createRouter();
 
-router.get(async (req, res) => {
+router.post(async (req, res) => {
+  const { monthName } = req.body;
   let connection, deviceData, userStatReqOffersCurMonth, userStatReqOffersLastMonth;
-  const currentMonth = moment().format('YYYYMM');
-  const lastMonth = moment().subtract('1', 'month').format('YYYYMM');
+  const currentMonth = moment(monthName &&`${monthName}-01`).format('YYYYMM');
+  const lastMonth = moment(monthName && `${monthName}-01`).subtract('1', 'month').format('YYYYMM');
   const numDayCurMonth = moment(currentMonth, 'YYYYMM').daysInMonth();
   const numDayLastMonth = moment(lastMonth, 'YYYYMM').daysInMonth();
   const startDayCurMonth = currentMonth + '01';
   const lastDayCurMonth = currentMonth + numDayCurMonth;
   const startDayLastMonth = lastMonth + '01';
   const lastDayLastMonth = lastMonth + numDayLastMonth;
-
 
   try {
     try {

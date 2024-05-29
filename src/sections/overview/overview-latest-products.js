@@ -16,18 +16,67 @@ import {
   ListItemText,
   SvgIcon
 } from '@mui/material';
+import { useEffect, useState } from 'react';
+import { latestProduct } from '../../utils/custFetch';
+
+const sortedTest = (arr, initialState = []) => {
+  let startPosNum = 0;
+  let indexDelete;
+  const result = initialState;
+  arr.forEach((ele, index) => {
+    if (startPosNum < ele.q) {
+      startPosNum = ele.q;
+      indexDelete = index;
+    }
+  })
+  result.push(arr[indexDelete]);
+  arr.splice(indexDelete, 1);
+  if (arr.length > 0) {
+    sortedTest(arr, result);
+  }
+  return result;
+}
+
+const packer = (arrIdProduct) => {
+  const sortedByQuantity = arrIdProduct.reduce((acc, id) => {
+    if (!acc.hasOwnProperty(id)) {
+      acc[id] = 1;
+    } else {
+      acc[id] += 1;
+    }
+    return acc;
+  }, {});
+  const sortedByQuantityInArray = [];
+  Object.entries(sortedByQuantity).forEach((ele, index) => {
+    sortedByQuantityInArray.push({q: ele[1], id: ele[0]});
+  });
+  return sortedTest(sortedByQuantityInArray);
+}
 
 export const OverviewLatestProducts = (props) => {
   const { products = [], sx } = props;
+  const [productsInfo, setProductsInfo] = useState([]);
+  const [sorted, setSorted] = useState([])
+  const [errorMessage, setErrorMessage] = useState('');
+
+  useEffect(() => {
+    if (products.length) {
+      const resultSorted = packer(products);
+      setSorted(resultSorted);
+      latestProduct(resultSorted)
+        .then(({ data }) => setProductsInfo(data))
+        .catch(error => setErrorMessage(error));
+    }
+  }, [products]);
+
 
   return (
     <Card sx={sx}>
       <CardHeader title="Latest Products" />
       <List>
-        {products.map((product, index) => {
+        {productsInfo.length && sorted.map((product, index) => {
           const hasDivider = index < products.length - 1;
-          const ago = formatDistanceToNow(product.updatedAt);
-
+          const quantity = product.q;
           return (
             <ListItem
               divider={hasDivider}
@@ -35,11 +84,11 @@ export const OverviewLatestProducts = (props) => {
             >
               <ListItemAvatar>
                 {
-                  product.image
+                  productsInfo[index]['url_img']
                     ? (
                       <Box
                         component="img"
-                        src={product.image}
+                        src={productsInfo[index]['url_img']}
                         sx={{
                           borderRadius: 1,
                           height: 48,
@@ -60,9 +109,9 @@ export const OverviewLatestProducts = (props) => {
                 }
               </ListItemAvatar>
               <ListItemText
-                primary={product.name}
+                primary={productsInfo[index].title}
                 primaryTypographyProps={{ variant: 'subtitle1' }}
-                secondary={`Updated ${ago} ago`}
+                secondary={`Total ordered ${quantity}`}
                 secondaryTypographyProps={{ variant: 'body2' }}
               />
               <IconButton edge="end">
@@ -97,3 +146,56 @@ OverviewLatestProducts.propTypes = {
   products: PropTypes.array,
   sx: PropTypes.object
 };
+
+
+//<List>
+//         {products.map((product, index) => {
+//           const hasDivider = index < products.length - 1;
+//           const ago = formatDistanceToNow(product.updatedAt);
+//
+//           return (
+//             <ListItem
+//               divider={hasDivider}
+//               key={product.id}
+//             >
+//               <ListItemAvatar>
+//                 {
+//                   product.image
+//                     ? (
+//                       <Box
+//                         component="img"
+//                         src={product.image}
+//                         sx={{
+//                           borderRadius: 1,
+//                           height: 48,
+//                           width: 48
+//                         }}
+//                       />
+//                     )
+//                     : (
+//                       <Box
+//                         sx={{
+//                           borderRadius: 1,
+//                           backgroundColor: 'neutral.200',
+//                           height: 48,
+//                           width: 48
+//                         }}
+//                       />
+//                     )
+//                 }
+//               </ListItemAvatar>
+//               <ListItemText
+//                 primary={product.name}
+//                 primaryTypographyProps={{ variant: 'subtitle1' }}
+//                 secondary={`Updated ${ago} ago`}
+//                 secondaryTypographyProps={{ variant: 'body2' }}
+//               />
+//               <IconButton edge="end">
+//                 <SvgIcon>
+//                   <EllipsisVerticalIcon />
+//                 </SvgIcon>
+//               </IconButton>
+//             </ListItem>
+//           );
+//         })}
+//       </List>

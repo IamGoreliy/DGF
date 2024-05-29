@@ -35,10 +35,9 @@ export const CustomSelect = ({selectDateFn}) => {
   const [selectValue, setSelectValue] = useState(currentMonth);
 
 
-
-  useEffect(() => {
-    selectDateFn(selectValue);
-  }, [selectValue]);
+  // useEffect(() => {
+  //   selectDateFn(selectValue);
+  // }, [selectValue]);
 
   return (
     <>
@@ -57,7 +56,11 @@ export const CustomSelect = ({selectDateFn}) => {
             // onOpen={handleOpen}
             value={selectValue}
             label="Month"
-            onChange={(e) => setSelectValue(e.target.value)}
+            onChange={(e) => {
+              const selectValue = e.target.value;
+              setSelectValue(selectValue);
+              selectDateFn(selectValue);
+            }}
             MenuProps={{
               MenuListProps: {
                 style: {

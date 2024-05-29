@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import { subDays, subHours } from 'date-fns';
-import { Box, Container, Unstable_Grid2 as Grid } from '@mui/material';
+import { Box, Button, Container, Unstable_Grid2 as Grid } from '@mui/material';
 import { Layout as DashboardLayout } from 'src/layouts/dashboard/layout';
 import { Unprocessed } from 'src/sections/overview/unprocessed';
 import { OverviewLatestOrders } from 'src/sections/overview/overview-latest-orders';
@@ -11,13 +11,11 @@ import { Processed } from 'src/sections/overview/processed';
 import { TotalProfitApplication } from 'src/sections/overview/total-profit-app';
 import { OverviewTraffic } from 'src/sections/overview/overview-traffic';
 import { getDeviceStatistic } from '../utils/custFetch';
-import { useEffect, useState, createContext, useRef } from 'react';
+import { useEffect, useState, createContext, useRef, useCallback } from 'react';
 import { createPortal } from 'react-dom';
 import {CreateOfferMessage} from '../components/createOfferMessage';
 const moment = require('moment');
 
-
-const now = new Date();
 
 export const ToggleModalMessage = createContext([]);
 
@@ -48,51 +46,69 @@ const filterDevice = (data) => {
 const offersHandler = (offers) => {
   const unprocessedApplications = offers.filter(ele => !ele['offer_has_been_processed']);
   const processedApplications = offers.filter(ele => ele['offer_has_been_processed']);
-  return {unprocessedApplications, processedApplications};
+  const idOffers = offers.map(ele => ele['id_offer']);
+  return {unprocessedApplications, processedApplications, idOffers};
 }
 
-const Page = ({
-  data: {
-    deviceData,
-    arrQuantityCurMonth,
-    arrStatsCurMonth,
-    arrStatsCurMonthPercent,
-    arrQuantityLastMonth,
-    arrStatsLastMonth,
-    arrStatsLastMonthPercent,
-    userStatReqOffersCurMonth
-  }
-}) => {
+const Page = ({ data }) => {
+  const [dataPage, setDataPage] = useState(data);
   const [statsWhatDevicePercent, setStatsWhatDevicePercent] = useState([]);
   const [totalNumDev, setTotalNumDev] = useState([]);
   const [modalMessage, setModalMessage] = useState(false);
   const [idOffer, setIdOffer] = useState(0);
   const [unprocessed, setUnprocessed] = useState([]);
   const [processed, setProcessed] = useState([]);
+  const [idOffersLatestProducts, setIdOffersLatestProducts] = useState([]);
   const [orders, setOrders] = useState([]);
   const [whatDateRender, setWhatDateRender] = useState(null);
-  const [whatMonthRender, setWhatMonthRender] = useState(moment().format('YYYY-MM'));
-  const firstRender = useRef(false);
+  const [unprocessedBtn, setUnprocessedBtn] = useState(false);
+  const [processedBtn, setProcessedBtn] = useState(false);
 
-  
 
   useEffect(() => {
-    const {devicePercent, quantityDevice} = filterDevice(deviceData);
+    const {devicePercent, quantityDevice} = filterDevice(dataPage.deviceData);
     setStatsWhatDevicePercent(devicePercent);
     setTotalNumDev(quantityDevice);
-    const {unprocessedApplications, processedApplications} = offersHandler(userStatReqOffersCurMonth);
+    const {unprocessedApplications, processedApplications, idOffers} = offersHandler(dataPage.userStatReqOffersCurMonth);
     setUnprocessed(unprocessedApplications);
     setProcessed(processedApplications);
-  }, [deviceData, userStatReqOffersCurMonth]);
+    setIdOffersLatestProducts(idOffers);
+  }, [dataPage.deviceData, dataPage.userStatReqOffersCurMonth]);
 
   useEffect(() => {
+    let filterOrdersForDate = dataPage.userStatReqOffersCurMonth;
     if (whatDateRender) {
-      const filterOrdersForDate = userStatReqOffersCurMonth.filter(ele => ele['application_date'] === whatDateRender);
-      setOrders(filterOrdersForDate);
-    } else {
-      setOrders(userStatReqOffersCurMonth);
+      filterOrdersForDate = dataPage.userStatReqOffersCurMonth.filter(ele => ele['application_date'] === whatDateRender);
     }
-  }, [userStatReqOffersCurMonth, whatDateRender]);
+    if (unprocessedBtn) {
+      filterOrdersForDate = filterOrdersForDate.filter(ele => ele['offer_has_been_processed'] === 0);
+    }
+    if (processedBtn) {
+      filterOrdersForDate = filterOrdersForDate.filter(ele => ele['offer_has_been_processed'] === 1);
+    }
+      setOrders(filterOrdersForDate);
+
+  }, [dataPage.userStatReqOffersCurMonth, whatDateRender, unprocessedBtn, processedBtn]);
+
+  const getStatisticNewMonth = useCallback((selectedMonth) => {
+    getDeviceStatistic(selectedMonth)
+      .then(data => setDataPage(data))
+      .catch()
+  }, []);
+
+  const toggleProcessedBtn = useCallback((unprocessedBtn, processedBtn) => {
+    if (unprocessedBtn) {
+      setUnprocessedBtn(false);
+    }
+    setProcessedBtn(!processedBtn);
+  }, [])
+
+  const toggleUnProcessedBtn = useCallback((unprocessedBtn, processedBtn) => {
+    if (processedBtn) {
+      setProcessedBtn(false);
+    }
+    setUnprocessedBtn(!unprocessedBtn);
+  }, [])
 
   return (
     <>
@@ -121,15 +137,15 @@ const Page = ({
                 chartSeries={[
                   {
                     name: 'This Month',
-                    data: arrStatsCurMonth,
+                    data: dataPage.arrStatsCurMonth,
                   },
                   {
                     name: 'Last Month',
-                    data: arrStatsLastMonth,
+                    data: dataPage.arrStatsLastMonth,
                   }
                 ]}
-                curDayInMonth={arrQuantityCurMonth}
-                curStatsOfferPercent={arrStatsCurMonthPercent}
+                curDayInMonth={dataPage.arrQuantityCurMonth}
+                curStatsOfferPercent={dataPage.arrStatsCurMonthPercent}
                 sx={{
                   height: '100%'
                 }}
@@ -152,24 +168,34 @@ const Page = ({
               sm={6}
               lg={3}
             >
-              <Unprocessed
-                difference={12}
-                positive
-                sx={{ height: '100%' }}
-                value={unprocessed.length}
-              />
+              <Button
+                variant={unprocessedBtn ? 'outlined' : 'text'}
+                onClick={() => toggleUnProcessedBtn(unprocessedBtn, processedBtn)}
+              >
+                <Unprocessed
+                  difference={12}
+                  positive
+                  sx={{ height: '100%' }}
+                  value={unprocessed.length}
+                />
+              </Button>
             </Grid>
             <Grid
               xs={12}
               sm={6}
               lg={3}
             >
-              <Processed
-                difference={16}
-                positive={false}
-                sx={{ height: '100%' }}
-                value={`${processed.length}`}
-              />
+              <Button
+                variant={processedBtn ? 'outlined' : 'text'}
+                onClick={() => toggleProcessedBtn(unprocessedBtn, processedBtn)}
+              >
+                <Processed
+                  difference={16}
+                  positive={false}
+                  sx={{ height: '100%' }}
+                  value={`${processed.length}`}
+                />
+              </Button>
             </Grid>
             <Grid
               xs={12}
@@ -178,8 +204,8 @@ const Page = ({
             >
               <TotalProfitApplication
                 sx={{ height: '100%' }}
-                value={`${userStatReqOffersCurMonth.length}`}
-                totalDayCurMonth={arrQuantityCurMonth}
+                value={`${dataPage.userStatReqOffersCurMonth.length}` ?? '0'}
+                totalDayCurMonth={dataPage.arrQuantityCurMonth}
                 selectDateFn={setWhatDateRender}
               />
             </Grid>
@@ -190,8 +216,8 @@ const Page = ({
             >
               <TasksProgress
                 sx={{ height: '100%' }}
-                value={Math.round(processed.length / userStatReqOffersCurMonth.length * 100)}
-                selectMonth={setWhatMonthRender}
+                value={Math.round(processed.length / dataPage.userStatReqOffersCurMonth.length * 100) }
+                selectMonth={getStatisticNewMonth}
               />
             </Grid>
             <Grid
@@ -200,38 +226,7 @@ const Page = ({
               lg={4}
             >
               <OverviewLatestProducts
-                products={[
-                  {
-                    id: '5ece2c077e39da27658aa8a9',
-                    image: '/assets/products/product-1.png',
-                    name: 'Healthcare Erbology',
-                    updatedAt: subHours(now, 6).getTime()
-                  },
-                  {
-                    id: '5ece2c0d16f70bff2cf86cd8',
-                    image: '/assets/products/product-2.png',
-                    name: 'Makeup Lancome Rouge',
-                    updatedAt: subDays(subHours(now, 8), 2).getTime()
-                  },
-                  {
-                    id: 'b393ce1b09c1254c3a92c827',
-                    image: '/assets/products/product-5.png',
-                    name: 'Skincare Soja CO',
-                    updatedAt: subDays(subHours(now, 1), 1).getTime()
-                  },
-                  {
-                    id: 'a6ede15670da63f49f752c89',
-                    image: '/assets/products/product-6.png',
-                    name: 'Makeup Lipstick',
-                    updatedAt: subDays(subHours(now, 3), 3).getTime()
-                  },
-                  {
-                    id: 'bcad5524fe3a2f8f8620ceda',
-                    image: '/assets/products/product-7.png',
-                    name: 'Healthcare Ritual',
-                    updatedAt: subDays(subHours(now, 5), 6).getTime()
-                  }
-                ]}
+                products={idOffersLatestProducts}
                 sx={{ height: '100%' }}
               />
             </Grid>
@@ -254,7 +249,7 @@ const Page = ({
         <CreateOfferMessage
           fnToggleModal={[modalMessage, setModalMessage]}
           fnSetOfferId={[idOffer, setIdOffer]}
-          data={userStatReqOffersCurMonth.find(ele => ele.id === idOffer)}
+          data={dataPage.userStatReqOffersCurMonth.find(ele => ele.id === idOffer)}
         />, window.document.body)}
     </>
   );

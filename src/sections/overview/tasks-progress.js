@@ -15,7 +15,6 @@ import {CustomSelect} from '../../components/CustomSelect';
 export const TasksProgress = (props) => {
   const { value, sx, selectMonth } = props;
 
-
   return (
     <Card sx={sx}>
       <CardContent>
@@ -34,7 +33,7 @@ export const TasksProgress = (props) => {
               application processing progress
             </Typography>
             <Typography variant="h4">
-              {value}%
+              {isNaN(value) ? 0 : value}%
             </Typography>
           </Stack>
           <Avatar
@@ -59,7 +58,7 @@ export const TasksProgress = (props) => {
             }}
           >
             <LinearProgress
-              value={value}
+              value={isNaN(value) ? 0 : value}
               variant="determinate"
               sx={{
                 // width: 'auto'

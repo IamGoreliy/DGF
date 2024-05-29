@@ -94,6 +94,12 @@ export const offerForPageOffer = async () => {
   return await res.json();
 }
 
+export const latestProduct = async (id) => {
+  const url = '/api/latestProductCreater';
+  const res = await fetch(url, fetchOptionSpred({id}));
+  return await res.json();
+}
+
 export const createCookies = async (device) => {
   const url = '/api/createCookies';
   const res = await fetch(url, fetchOptionSpred({device}));
@@ -101,9 +107,17 @@ export const createCookies = async (device) => {
   return {status: res.ok, message: resParse.message};
 }
 
-export const getDeviceStatistic = async () => {
-  const url = process.env.URL + '/api/deviceStats';
-  const res = await fetch(url);
+export const getDeviceStatistic = async (monthName = '') => {
+  let url, res;
+  if (!monthName) {
+    url = process.env.URL + '/api/deviceStats';
+    res = await fetch(url, {
+      method: 'POST',
+    });
+  } else {
+    url = '/api/deviceStats';
+    res = await fetch(url, fetchOptionSpred({monthName}));
+  }
   return await res.json();
 }
 
