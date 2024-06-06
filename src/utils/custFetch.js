@@ -138,3 +138,9 @@ export const recordMessageFromAdminPanel = async (data) => {
   });
   return await res.json();
 }
+
+export const createPageFetch = async (data) => {
+  const url = '/api/createPage';
+  const res = await fetch(url, fetchOptionSpred({ data }));
+  return await res.json();
+}

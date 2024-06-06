@@ -18,7 +18,7 @@ const preloader = multer({
     destination: './public/temps',
     filename: (req, file, cb) => cb(null, Date.now() + file.originalname)
   }),
-  fileFilter: filterImg,
+  // fileFilter: filterImg,
 })
 
 export const preloaderMiddleware = preloader.single('img');

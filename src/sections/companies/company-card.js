@@ -4,42 +4,30 @@ import ClockIcon from '@heroicons/react/24/solid/ClockIcon';
 import { Avatar, Box, Card, CardContent, Divider, Stack, SvgIcon, Typography } from '@mui/material';
 
 export const CompanyCard = (props) => {
-  const { company } = props;
+  const { urlPage } = props;
 
   return (
     <Card
       sx={{
         display: 'flex',
         flexDirection: 'column',
-        height: '100%'
+        height: '300px'
       }}
     >
-      <CardContent>
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'center',
-            pb: 3
-          }}
-        >
-          <Avatar
-            src={company.logo}
-            variant="square"
-          />
-        </Box>
-        <Typography
-          align="center"
-          gutterBottom
-          variant="h5"
-        >
-          {company.title}
-        </Typography>
-        <Typography
-          align="center"
-          variant="body1"
-        >
-          {company.description}
-        </Typography>
+      <CardContent
+        sx={{
+          position: 'relative',
+          padding: 0,
+          height: '100%'
+        }}
+      >
+          <iframe
+            src={urlPage}
+            title="description"
+            width={'100%'}
+            height={'100%'}
+          >
+          </iframe>
       </CardContent>
       <Box sx={{ flexGrow: 1 }} />
       <Divider />
@@ -61,31 +49,18 @@ export const CompanyCard = (props) => {
           >
             <ClockIcon />
           </SvgIcon>
-          <Typography
-            color="text.secondary"
-            display="inline"
-            variant="body2"
-          >
-            Updated 2hr ago
-          </Typography>
         </Stack>
         <Stack
           alignItems="center"
           direction="row"
           spacing={1}
         >
-          <SvgIcon
-            color="action"
-            fontSize="small"
-          >
-            <ArrowDownOnSquareIcon />
-          </SvgIcon>
           <Typography
             color="text.secondary"
             display="inline"
             variant="body2"
           >
-            {company.downloads} Downloads
+            посмотреть страницу
           </Typography>
         </Stack>
       </Stack>
