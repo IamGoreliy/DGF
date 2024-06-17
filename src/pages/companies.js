@@ -53,6 +53,10 @@ const sitePages = [
 
 const Page = () => {
   const [openWindowCreatePage, setOpenWindowCreatePage] = useState(false);
+  const [testComponent, setTestComponent] = useState(``);
+
+  // console.log('testComp', testComponent)
+
   return (
     <>
       <Head>
@@ -135,18 +139,18 @@ const Page = () => {
               container
               spacing={3}
             >
-              {sitePages.map((page) => (
-                <Grid
-                  xs={12}
-                  md={6}
-                  lg={4}
-                  key={page.id}
-                >
-                  <CompanyCard
-                    urlPage={page.url}
-                  />
-                </Grid>
-              ))}
+              {/*{sitePages.map((page) => (*/}
+              {/*  <Grid*/}
+              {/*    xs={12}false*/}
+              {/*    md={6}*/}
+              {/*    lg={4}*/}
+              {/*    key={page.id}*/}
+              {/*  >*/}
+              {/*    <CompanyCard*/}
+              {/*      urlPage={page.url}*/}
+              {/*    />*/}
+              {/*  </Grid>*/}
+              {/*))}*/}
             </Grid>
             <Box
               sx={{
@@ -162,8 +166,17 @@ const Page = () => {
           </Stack>
         </Container>
       </Box>
-      {openWindowCreatePage && createPortal(<ModalWindowCreatePage closeModal={{openWindowCreatePage, setOpenWindowCreatePage}}/>, window.document.querySelector('.MuiBox-root'))}
-      {openWindowCreatePage && createPortal(<ModalSelectComponent/>, window.document.querySelector('.MuiPaper-root'))}
+      {openWindowCreatePage && createPortal(
+        <ModalWindowCreatePage
+          closeModal={{openWindowCreatePage, setOpenWindowCreatePage}}
+          testComponent={testComponent}
+        />, window.document.body)
+      }
+      {openWindowCreatePage && createPortal(
+        <ModalSelectComponent
+          getComponent={setTestComponent}
+        />, window.document.querySelector('.MuiPaper-root'))
+      }
     </>
   );
 }
@@ -226,3 +239,11 @@ export default Page;
 //     downloads: '835'
 //   }
 // ];
+
+
+// {openWindowCreatePage && createPortal(
+//   <ModalWindowCreatePage
+//     closeModal={{openWindowCreatePage, setOpenWindowCreatePage}}
+//     testComponent={testComponent}
+//   />, window.document.querySelector('.MuiBox-root'))
+// }

@@ -2,21 +2,22 @@ import { Box, Button, Container } from '@mui/material';
 import {Layout as Header} from '../layouts/headerNavigation';
 import {LayoutAuxiliaryPage} from '../layouts/LayoutAuxiliaryPage';
 import {SectionFooter} from '../layouts/homePage/SectionFooter';
-import ComponentConstructor from './СomponentСonstructor';
+import TestCreateConstructComponent from './testCreateConstructComponent';
 
-const ModalWindowCreatePage = ({closeModal}) => {
-  const {openWindowCreatePage, setOpenWindowCreatePage} = closeModal;
+
+const ModalWindowCreatePage = ({closeModal, testComponent}) => {
+  const {openWindowCreatePage, setOpenWindowCreatePage, } = closeModal;
   return (
     <>
       <Box
-        width={'100%'}
+        width={'90%'}
         height={'100vh'}
         sx={{
           position: 'absolute',
           top: 0,
-          left: 0,
+          right: 0,
           backgroundColor: 'green',
-          zIndex: -1
+          zIndex: 3
       }}
       >
         <Container
@@ -45,7 +46,7 @@ const ModalWindowCreatePage = ({closeModal}) => {
           >
             <Header>
               <LayoutAuxiliaryPage>
-                <ComponentConstructor/>
+                {testComponent}
               </LayoutAuxiliaryPage>
             </Header>
             <SectionFooter/>
