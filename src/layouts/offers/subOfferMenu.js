@@ -1,5 +1,5 @@
 import {Box, Button} from '@mui/material';
-import { PdfIcon } from '../../image/svgComponents';
+import { PdfIcon } from '../../styledComponent/svgComponents';
 
 export const SubOfferMenu = ({switcherModal}) => {
   return (

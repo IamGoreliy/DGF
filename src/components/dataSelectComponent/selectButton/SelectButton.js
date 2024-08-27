@@ -7,7 +7,6 @@ import TestCreateConstructComponent from '../../testCreateConstructComponent';
 
 
 const fnAddingElements = (element, initialState, setState) => {
-  console.log(element.id)
   if (element.id !== 'elementConstruct') {
     return;
   }
@@ -22,12 +21,14 @@ const fnAddingElements = (element, initialState, setState) => {
   const {children} = elementReactProps;
 
   const getStyle = window.getComputedStyle(element);
-  console.log('red', getStyle.color, 'borderColor', getStyle.borderColor)
   const styleComponent = {
     color: getStyle.color,
-    borderColor: getStyle.borderColor
+    borderColor: getStyle.borderColor,
+    backgroundColor: getStyle.backgroundColor,
+    width: getStyle.width,
+    height: getStyle.height,
+    borderRadius: getStyle.borderRadius,
   }
-
 
   const variantElement = dataElemets
     .find(ele => ele.nameElement
@@ -45,39 +46,39 @@ const fnAddingElements = (element, initialState, setState) => {
   }
 }
 
-export const fnComponentConstruct = (data, TestCom) => {
-  const setImports = new Set(data.map(item => item.importComponent));
-  const imports = Array.from(setImports).join('\n');
-  const elements = data.map(ele => ele.htmlElement);
+// export const fnComponentConstruct = (data) => {
+//   const setImports = new Set(data.map(item => item.importComponent));
+//   const imports = Array.from(setImports).join('\n');
+//   const elements = data.map(ele => ele.htmlElement);
+//
+//
+//   const Component =
+//     <TestCreateConstructComponent>
+//       <h1
+//         style={{ textAlign: 'center', color: 'red' }}
+//       >
+//         hello
+//       </h1>
+//       {elements && elements.map((element, index) => (
+//         <Fragment key={index}>
+//           {element}
+//         </Fragment>
+//       ))}
+//     </TestCreateConstructComponent>
+//   return Component;
+// }
 
-
-  const Component =
-    <TestCreateConstructComponent>
-      <h1
-        style={{ textAlign: 'center', color: 'red' }}
-      >
-        hello
-      </h1>
-      {elements && elements.map((element, index) => (
-        <Fragment key={index}>
-          {element}
-        </Fragment>
-      ))}
-    </TestCreateConstructComponent>
-  return Component;
-}
-
-export const SelectButton = ({getComponent}) => {
+export const SelectButton = ({getComponent, stateElement}) => {
   const [openComponent, setOpenComponent] = useState(false);
-  const [arrElement, setArrElement] = useState([]);
+  const {arrElement, setArrElement} = stateElement;
 
 
-  useEffect(() => {
-    if (arrElement) {
-      const componentJSX = fnComponentConstruct(arrElement);
-      getComponent(componentJSX);
-    }
-  }, [arrElement]);
+  // useEffect(() => {
+  //   if (arrElement.length) {
+  //     const componentJSX = fnComponentConstruct(arrElement);
+  //     getComponent(componentJSX);
+  //   }
+  // }, [arrElement]);
 
   return (
     <Box
@@ -97,7 +98,7 @@ export const SelectButton = ({getComponent}) => {
         <button
           onClick={() => setOpenComponent(!openComponent)}
           style={{
-            width: '50px',
+            // width: '50px',
           }}
         >
           +

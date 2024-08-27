@@ -21,9 +21,11 @@ export const SectionInfoSettlementOfOverdueDebt = () => {
       }}
     >
       <Container
-        maxWidth={'custXl'}
+        maxWidth={'1620px'}
         disableGutters={windowSize <= 900}
-
+        sx={{
+          maxWidth: '1620px',
+        }}
       >
         <Box
           sx={{
@@ -133,15 +135,17 @@ export const SectionInfoSettlementOfOverdueDebt = () => {
           </Box>
           <Box
             sx={{
+              width: '100%',
               position: 'relative',
             }}
           >
             <Image
-              src={windowSize >= 900 ? sectionImgPc : sectionImageMob}
+              src={'/image/aboutCompany/threeImage.webp'}
               alt=''
+              width={450}
+              height={676}
               style={{
-                height: windowSize >= 900 ? '610px' : 'auto',
-                width: windowSize >= 900 ? '' : '100%',
+                width: '100%',
               }}
             />
             <Image

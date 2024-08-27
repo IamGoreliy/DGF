@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import aboutPc from '../../../../public/image/homePage/index-about.webp';
 import aboutMobile from '../../../../public/image/homePage/index-about-mobile.webp';
-import { MiniLog } from '../../../image/svgComponents';
+import { MiniLog } from '../../../styledComponent/svgComponents';
 import { DescriptionServiceSectiom as Description } from './DescriptionServiceSectiom';
 import { Box, Container } from '@mui/material';
 
@@ -26,7 +26,7 @@ export const OptimizationAboutSection = () => {
         <article>
           <Box
             sx={{
-              display: {xs: 'block', md: 'flex'},
+              display: {xs: 'block', lg: 'flex'},
             }}
           >
             <Box
@@ -34,15 +34,18 @@ export const OptimizationAboutSection = () => {
                 display: 'block',
                 position: 'relative',
                 height: 'auto',
-                width: {xs: '100%', md: '41%'},
+                width: {xs: '100%', lg: '41%'},
               }}
             >
               <Image
-                src={imageUrl}
+                src={'/image/homePage/index-about.webp'}
                 alt=''
+                width={665}
+                height={625}
                 style={{
                   display: 'block',
-                  width: '100%'
+                  width: '100%',
+                  height: '100%'
                 }}
               />
               <MiniLog

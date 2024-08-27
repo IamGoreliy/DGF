@@ -1,5 +1,5 @@
 import { Box, Container, Typography, TextField, Button } from '@mui/material';
-import { Switch } from '../../image/svgComponents';
+import { Switch } from '../../styledComponent/svgComponents';
 import { useEffect, useState } from 'react';
 import {uploadFile} from '../../utils/custFetch';
 import { toast } from 'react-toastify';

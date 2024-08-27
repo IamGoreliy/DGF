@@ -1,7 +1,7 @@
 import {useState} from 'react';
 import { Box, Container } from '@mui/material';
 import styled from '@emotion/styled';
-import { ArrowTop } from '../../image/svgComponents';
+import { ArrowTop } from '../../styledComponent/svgComponents';
 import {tableСontents} from './sectionService/dataForSectionService';
 import {CustH2} from '../../styledComponent/StyledComponent';
 
@@ -103,7 +103,7 @@ export const ServiceSection = () => {
       </CustH2>
       <Box
         sx={{
-          display: {xs: 'block', md: 'grid'},
+          display: {xs: 'block', lg: 'grid'},
           width: '100%',
           justifyContent: {xs: 'none', md: 'center'},
           alignItems: {xs: 'none', md: 'start'},
@@ -153,7 +153,7 @@ export const ServiceSection = () => {
               </Box>
               <Box
                 sx={{
-                  display: {xs: ele.id === isOpenDesc ? 'block' : 'block', md: ''},
+                  display: {xs: ele.id === isOpenDesc ? 'block' : 'block', md: 'block'},
                   overflow: 'hidden',
                   width: {xs: ele.id === isOpenDesc ? '100%' : '100%', md: '100%'},
                   height: {xs: ele.id === isOpenDesc ? 'auto' : '0px', md: 'auto'},

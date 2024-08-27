@@ -7,7 +7,7 @@ import UserPlusIcon from '@heroicons/react/24/solid/UserPlusIcon';
 import UsersIcon from '@heroicons/react/24/solid/UsersIcon';
 import XCircleIcon from '@heroicons/react/24/solid/XCircleIcon';
 import { SvgIcon } from '@mui/material';
-import {DashboardIcon, OfferSettingsIcon} from '../../image/svgComponents';
+import {DashboardIcon, OfferSettingsIcon} from '../../styledComponent/svgComponents';
 
 export const items = [
   {

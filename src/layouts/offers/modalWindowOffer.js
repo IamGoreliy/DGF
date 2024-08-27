@@ -164,6 +164,7 @@ export const ModalWindowOffer = ({switcherModal, idOffer}) => {
               width: {xs: '100%', md: '50%'},
               display: 'flex',
               flexDirection: 'column',
+              mt: '20px',
             }}
           >
             <TextField

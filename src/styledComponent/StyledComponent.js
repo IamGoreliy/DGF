@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import {TextField} from '@mui/material';
-import {TelegranSvg} from '../image/svgComponents';
+import {TelegranSvg} from './svgComponents';
 import {createSvgIcon} from '@mui/material';
 
 export const CustDiv = styled(props => {

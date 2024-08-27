@@ -29,7 +29,7 @@ export const DescriptionServiceSectiom = () => {
     <Box
       sx={{
         backgroundColor: '#0C1A36',
-        width: {xs: '100%', md:'59%'},
+        width: {xs: '100%', lg:'59%'},
         padding: {xs: '60px 20px', md:'80px'},
       }}
     >

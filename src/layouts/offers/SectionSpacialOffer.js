@@ -1,7 +1,7 @@
 import {Box, Container, Typography, Grid} from '@mui/material';
 // import { offersData } from './offersData';
 import Image from 'next/image';
-import { Switch } from '../../image/svgComponents';
+import { Switch } from '../../styledComponent/svgComponents';
 import { useState, useContext, useEffect } from 'react';
 import { SubOfferMenu } from './subOfferMenu';
 import { ModalWindowOffer } from './modalWindowOffer';
@@ -34,17 +34,21 @@ export const SectionSpacialOffer = () => {
         sx={{
           marginTop: {xs: '30px', md:'70px'},
           padding: '30px 0 clamp(80px,11.25vw,180px)',
-          width: '100vw',
+          width: '100%',
         }}
       >
         <Container
-          maxWidth={'custXl'}
+          maxWidth={'1620px'}
+          sx={{
+            maxWidth: '1620px',
+          }}
         >
           <Grid
             container
-            spacing={0}
+            // spacing={0}
             rowGap={4}
             // gap={4}
+
           >
             {offersData?.map(offer => {
               const {id, title, url_img: urlImg, description} = offer;
@@ -52,8 +56,15 @@ export const SectionSpacialOffer = () => {
                 <Grid
                   key={id}
                   item
-                  md={4}
                   xs={12}
+                  md={6}
+                  lg={4}
+                  // xl={3}
+                  sx={{
+                    display: 'flex',
+                    justifyContent: 'center'
+                  }}
+
                 >
                   <Box
                     sx={{
@@ -128,12 +139,12 @@ export const SectionSpacialOffer = () => {
                     <img
                       src={urlImg}
                       alt=''
-                      // width={'100%'}
-                      // height={'auto'}
+                      // width={360}
+                      // height={339}
                       style={{
                         display: "block",
                         width: '100%',
-                        height: 'auto',
+                        height: '194px',
                       }}
                     />
                     </Box>

@@ -53,9 +53,7 @@ const sitePages = [
 
 const Page = () => {
   const [openWindowCreatePage, setOpenWindowCreatePage] = useState(false);
-  const [testComponent, setTestComponent] = useState(``);
-
-  // console.log('testComp', testComponent)
+  const [madeComponent, setMadeComponent] = useState(``);
 
   return (
     <>
@@ -169,14 +167,14 @@ const Page = () => {
       {openWindowCreatePage && createPortal(
         <ModalWindowCreatePage
           closeModal={{openWindowCreatePage, setOpenWindowCreatePage}}
-          testComponent={testComponent}
+          testComponent={madeComponent}
         />, window.document.body)
       }
-      {openWindowCreatePage && createPortal(
-        <ModalSelectComponent
-          getComponent={setTestComponent}
-        />, window.document.querySelector('.MuiPaper-root'))
-      }
+      {/*{openWindowCreatePage && createPortal(*/}
+      {/*  <ModalSelectComponent*/}
+      {/*    getComponent={setMadeComponent}*/}
+      {/*  />, window.document.querySelector('.MuiPaper-root'))*/}
+      {/*}*/}
     </>
   );
 }

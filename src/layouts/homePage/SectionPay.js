@@ -47,11 +47,11 @@ export const SectionPay = () => {
          <Grid
            item
            xs={1}
-           md={2}
+           lg={1}
          >
           <Box
             sx={{
-              display: {xs: 'block', md:'flex'}
+              display: {xs: 'block', lg:'flex'}
             }}
           >
             <Box

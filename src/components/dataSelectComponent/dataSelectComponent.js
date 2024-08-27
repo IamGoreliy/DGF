@@ -3,7 +3,7 @@ const dataSelectComponent = {
     variant: ['outlined', 'text', 'contained'],
   },
   card: {
-    variant: [],
+    variant: ['standard'],
   }
 }
 

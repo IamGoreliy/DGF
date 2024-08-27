@@ -1,8 +1,12 @@
-import { Box, Button, Container } from '@mui/material';
-import { Logosvg } from '../styledComponent/svgComponents';
+import { Box, Button, Container, ThemeProvider } from '@mui/material';
+import IconButton from '@mui/material/IconButton';
+import { LocationSvg, Logosvg, MenuSvg, TelegranSvg, ViberSvg } from '../styledComponent/svgComponents';
 import Menu from '@mui/material/Menu';
 import Typography from '@mui/material/Typography';
+import MenuItem from '@mui/material/MenuItem';
+import { AuxiliaryHeadersMenusMob } from '../utils/auxiliaryHeadersMenusMob';
 import Link from 'next/link';
+import Toolbar from '@mui/material/Toolbar';
 import * as React from 'react';
 import {
   IconLocation,
@@ -129,7 +133,7 @@ const animationOpenMenu = (state) => {
 
 
 
-export const Layout = ({children}) => {
+export const NewHeaderNav = ({children}) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [subMobileMenu, setSubMobileMenu] = useState(false);
   const [isOpenOfferModal, setIsOpenOfferModal] = useState(false);
@@ -198,13 +202,13 @@ export const Layout = ({children}) => {
                 />
               </Box>
               <Box
-                component={'ul'}
-                sx={{
-                  listStyle: 'none',
-                  padding: 0,
-                  display: 'flex',
-                  columnGap: '20px',
-                }}
+                  component={'ul'}
+                  sx={{
+                    listStyle: 'none',
+                    padding: 0,
+                    display: 'flex',
+                    columnGap: '20px',
+                  }}
               >
                 {svgHeaderIcon.map((ele, index) => {
                   return (
@@ -247,31 +251,31 @@ export const Layout = ({children}) => {
 
                 }}
               >
-                {mobNavLink.map(ele => {
-                  const {id, name, link} = ele;
-                  return (
-                    <Box
-                      key={id}
-                      component={'li'}
-                    >
-                      { name === 'ПОЗИЧАЛЬНИКАМ'
-                        ? <RenderSubMenuMobileNav
-                          nameElement={name}
-                          stateSubMenu={subMobileMenu}
-                          setStateSubMenu={setSubMobileMenu}
-                        />
-                        : <Link
-                          href={link}
-                          style={{
-                            textDecoration: "none",
-                            color: 'white',
-                          }}
-                        >
-                          {name}
-                        </Link>}
-                    </Box>
-                  )
-                })}
+              {mobNavLink.map(ele => {
+                const {id, name, link} = ele;
+                return (
+                  <Box
+                    key={id}
+                    component={'li'}
+                  >
+                    { name === 'ПОЗИЧАЛЬНИКАМ'
+                      ? <RenderSubMenuMobileNav
+                        nameElement={name}
+                        stateSubMenu={subMobileMenu}
+                        setStateSubMenu={setSubMobileMenu}
+                      />
+                      : <Link
+                        href={link}
+                        style={{
+                          textDecoration: "none",
+                          color: 'white',
+                        }}
+                      >
+                        {name}
+                    </Link>}
+                  </Box>
+                )
+              })}
               </Box>
             </Box>
           </Box>
@@ -281,179 +285,179 @@ export const Layout = ({children}) => {
               display: {xs: 'none', md: 'block'},
             }}
           >
-            <Box
-              sx={{
-                display: 'flex',
-                justifyContent: 'space-between',
-              }}
-            >
-              <Box>
-                <Logosvg
-                  sx={{
-                    width: '200px',
-                    height: '50px',
-                  }}
-                />
-              </Box>
               <Box
                 sx={{
                   display: 'flex',
-                  columnGap: '30px',
+                  justifyContent: 'space-between',
                 }}
               >
-                <Box
-                  sx={{
-                    display: 'flex',
-                    columnGap: '10px',
-                  }}
-                >
-                  <Typography
+                <Box>
+                  <Logosvg
                     sx={{
-                      color: 'white',
-                      textAlign: 'end',
-                    }}
-                  >
-                    04112, м. Київ <br/> вул. Авіаконструктора І.Сікорського 8
-                  </Typography>
-                  <IconLocation
-                    sx={{
-                      fill: '#0079C5',
-                      width: '40px',
-                      height: '40px',
+                      width: '200px',
+                      height: '50px',
                     }}
                   />
                 </Box>
                 <Box
                   sx={{
                     display: 'flex',
+                    columnGap: '30px',
                   }}
                 >
-                  <Box>
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      columnGap: '10px',
+                    }}
+                  >
                     <Typography
                       sx={{
                         color: 'white',
-
+                        textAlign: 'end',
                       }}
                     >
-                      +38 (067) 369-33-37
+                      04112, м. Київ <br/> вул. Авіаконструктора І.Сікорського 8
                     </Typography>
-                    <Typography
+                    <IconLocation
                       sx={{
-                        color: 'white',
+                        fill: '#0079C5',
+                        width: '40px',
+                        height: '40px',
                       }}
-                    >
-                      +38 (093) 170-86-47
-                    </Typography>
+                    />
                   </Box>
                   <Box
                     sx={{
                       display: 'flex',
-                      ml: '10px',
-                      columnGap: '10px'
                     }}
                   >
-                    <IconTelegram
+                    <Box>
+                      <Typography
+                        sx={{
+                          color: 'white',
+
+                        }}
+                      >
+                        +38 (067) 369-33-37
+                      </Typography>
+                      <Typography
+                        sx={{
+                          color: 'white',
+                        }}
+                      >
+                        +38 (093) 170-86-47
+                      </Typography>
+                    </Box>
+                    <Box
                       sx={{
-                        fill: '#0079C5',
-                        width: '40px',
-                        height: '40px',
+                        display: 'flex',
+                        ml: '10px',
+                        columnGap: '10px'
                       }}
-                    />
-                    <IconViber
-                      sx={{
-                        fill: '#0079C5',
-                        width: '40px',
-                        height: '40px',
-                      }}
-                    />
+                    >
+                      <IconTelegram
+                        sx={{
+                          fill: '#0079C5',
+                          width: '40px',
+                          height: '40px',
+                        }}
+                      />
+                      <IconViber
+                        sx={{
+                          fill: '#0079C5',
+                          width: '40px',
+                          height: '40px',
+                        }}
+                      />
+                    </Box>
                   </Box>
                 </Box>
               </Box>
-            </Box>
-            <Box
-              sx={{
-                display: 'flex',
-                justifyContent: 'space-between',
-              }}
-            >
-              <Box
-                component={'ul'}
-                sx={{
-                  listStyle: 'none',
-                  padding: 0,
-                  display: 'flex',
-                  columnGap: '20px',
-                  alignItems: 'center',
-                }}
-              >
-                {pcNavLink.map(ele => {
-                  const {id, name, link} = ele;
-                  return (
-                    <Box
-                      key={id}
-                      component={'li'}
-                      sx={{
-                        cursor: 'pointer',
-                      }}
-                    >
-                      {name === 'ПОЗИЧАЛЬНИКАМ'
-                        ? <RenderSubMenuPc
-                          subMenuState={subMobileMenu}
-                          changeStateSubMenu={setSubMobileMenu}
-                        />
-                        : <Link
-                          href={link}
-                          style={{
-                            display: 'block',
-                            fontSize: '1em',
-                            textDecoration: "none",
-                            color: 'white',
-                          }}
-                        >
-                          {name}
-                        </Link>
-
-                      }
-                    </Box>
-                  )
-                })}
-              </Box>
               <Box
                 sx={{
                   display: 'flex',
-                  alignItems: 'center',
-                  columnGap: '10px',
-                  ml: '10px',
+                  justifyContent: 'space-between',
                 }}
               >
-                <Button
+                 <Box
+                  component={'ul'}
                   sx={{
-                    backgroundColor: '#ffeb3b',
-                    height: '40px',
-                    color: 'black',
-                    '&:hover': {
-                      backgroundColor: 'rgb(178, 164, 41)',
+                    listStyle: 'none',
+                    padding: 0,
+                    display: 'flex',
+                    columnGap: '20px',
+                    alignItems: 'center',
+                  }}
+                 >
+                   {pcNavLink.map(ele => {
+                     const {id, name, link} = ele;
+                     return (
+                       <Box
+                        key={id}
+                        component={'li'}
+                        sx={{
+                          cursor: 'pointer',
+                        }}
+                       >
+                         {name === 'ПОЗИЧАЛЬНИКАМ'
+                           ? <RenderSubMenuPc
+                             subMenuState={subMobileMenu}
+                             changeStateSubMenu={setSubMobileMenu}
+                             />
+                           : <Link
+                                 href={link}
+                                 style={{
+                                   display: 'block',
+                                   fontSize: '1em',
+                                   textDecoration: "none",
+                                   color: 'white',
+                                 }}
+                              >
+                               {name}
+                              </Link>
 
-                    },
+                         }
+                       </Box>
+                     )
+                   })}
+                 </Box>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    columnGap: '10px',
+                    ml: '10px',
                   }}
                 >
-                  Онлайн Оплата
-                </Button>
-                <Button
-                  sx={{
-                    backgroundColor: '#ffeb3b',
-                    height: '40px',
-                    color: 'black',
-                    '&:hover': {
-                      backgroundColor: 'rgb(178, 164, 41)',
+                  <Button
+                    sx={{
+                      backgroundColor: '#ffeb3b',
+                      height: '40px',
+                      color: 'black',
+                      '&:hover': {
+                        backgroundColor: 'rgb(178, 164, 41)',
 
-                    },
-                  }}
-                >
-                  Написати листа
-                </Button>
+                      },
+                    }}
+                  >
+                    Онлайн Оплата
+                  </Button>
+                  <Button
+                    sx={{
+                      backgroundColor: '#ffeb3b',
+                      height: '40px',
+                      color: 'black',
+                      '&:hover': {
+                        backgroundColor: 'rgb(178, 164, 41)',
+
+                      },
+                    }}
+                  >
+                    Написати листа
+                  </Button>
+                </Box>
               </Box>
-            </Box>
           </Box>
           {/*🐶🐶🐶КНОПКА МЕНЮ ДЕШБОРДА 🐶🐶🐶*/}
 

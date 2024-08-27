@@ -97,7 +97,7 @@ export const AboutClients = () => {
           <Box
             sx={{
               width: '100%',
-              overflow: {xs: 'scroll', md: 'auto'}
+              overflow: 'auto',
             }}
           >
             <Grid
@@ -114,7 +114,8 @@ export const AboutClients = () => {
                     key={id}
                     item
                     xs={2}
-                    md={2}
+                    md={4}
+                    lg={4}
 
                   >
                     <Box

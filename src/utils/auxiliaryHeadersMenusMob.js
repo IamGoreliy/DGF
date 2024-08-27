@@ -28,8 +28,9 @@ export const AuxiliaryHeadersMenusMob = ({auxiliaryMenuButtons, pageBtn, handleP
         sx={{
           display: 'flex',
           alignItems: 'center',
-          width: '100%',
-          height: '100%',
+          // width: '100%',
+          // height: '100%',
+          fontSize: '0.8rem',
           '&: hover': {
             color: 'yellow',
           }

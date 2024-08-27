@@ -1,13 +1,13 @@
 import { Box, Container, Grid } from '@mui/material';
 import {useContext} from 'react';
 import {Context} from '../../pages';
-import {Logosvg} from '../../image/svgComponents';
+import {Logosvg} from '../../styledComponent/svgComponents';
 import { CustSpan, CustP, CustLi, CustSvg } from '../../styledComponent/StyledComponent';
 import Link from 'next/link';
 import Image from 'next/image';
 import visaIcon from '../../../public/image/homePage/visa.png';
 import masterCardIcon from '../../../public/image/homePage/mastercard.png';
-import {LocationSvg, TelegranSvg, ViberSvg} from '../../image/svgComponents';
+import {LocationSvg, TelegranSvg, ViberSvg} from '../../styledComponent/svgComponents';
 import { CustTelegram } from '../../styledComponent/StyledComponent';
 
 
@@ -32,12 +32,12 @@ export const SectionFooter = () => {
         {/*🐼🐼🐼 мобильный футер 🐼🐼🐼*/}
         <Box
           sx={{
-            display: {xs: 'block', md: 'none'},
+            display: {xs: 'block', lg: 'none'},
           }}
         >
           <Box
             sx={{
-              display: {xs: 'flex', md: 'none'},
+              display: {xs: 'flex', lg: 'none'},
               justifyContent: 'space-between',
               padding: 'clamp(20px,1.875vw,30px) 0 20px',
             }}
@@ -151,7 +151,7 @@ export const SectionFooter = () => {
       {/*  🐼🐼🐼 пк версия футера*/}
       <Box
         sx={{
-          display: {xs: 'none', md: 'block'},
+          display: {xs: 'none', lg: 'block'},
           // maxWidth: '700px'
         }}
       >
@@ -174,7 +174,7 @@ export const SectionFooter = () => {
                 color: 'white',
                 listStyle: 'none',
                 display: 'flex',
-                width: '700px',
+                // width: '700px',
                 flexWrap: 'wrap',
                 gap: '20px'
               }}
@@ -184,7 +184,7 @@ export const SectionFooter = () => {
                   fontFamily: 'Raleway, sans-serif',
                   fontStyle: 'normal',
                   fontWeight: '600',
-                  fontSize: '15px',
+                  fontSize: '0.8rem',
                   lineHeight: '18px',
                   textTransform: 'uppercase',
                 }}
@@ -203,7 +203,7 @@ export const SectionFooter = () => {
                   fontFamily: 'Raleway, sans-serif',
                   fontStyle: 'normal',
                   fontWeight: '600',
-                  fontSize: '15px',
+                  fontSize: '0.8rem',
                   lineHeight: '18px',
                   textTransform: 'uppercase',
                 }}
@@ -222,7 +222,7 @@ export const SectionFooter = () => {
                   fontFamily: 'Raleway, sans-serif',
                   fontStyle: 'normal',
                   fontWeight: '600',
-                  fontSize: '15px',
+                  fontSize: '0.8rem',
                   lineHeight: '18px',
                   textTransform: 'uppercase',
                 }}
@@ -241,7 +241,7 @@ export const SectionFooter = () => {
                   fontFamily: 'Raleway, sans-serif',
                   fontStyle: 'normal',
                   fontWeight: '600',
-                  fontSize: '15px',
+                  fontSize: '0.8rem',
                   lineHeight: '18px',
                   textTransform: 'uppercase',
                 }}
@@ -260,7 +260,7 @@ export const SectionFooter = () => {
                   fontFamily: 'Raleway, sans-serif',
                   fontStyle: 'normal',
                   fontWeight: '600',
-                  fontSize: '15px',
+                  fontSize: '0.8rem',
                   lineHeight: '18px',
                   textTransform: 'uppercase',
                 }}
@@ -279,7 +279,7 @@ export const SectionFooter = () => {
                   fontFamily: 'Raleway, sans-serif',
                   fontStyle: 'normal',
                   fontWeight: '600',
-                  fontSize: '15px',
+                  fontSize: '0.8rem',
                   lineHeight: '18px',
                   textTransform: 'uppercase',
                 }}
@@ -298,7 +298,7 @@ export const SectionFooter = () => {
                   fontFamily: 'Raleway, sans-serif',
                   fontStyle: 'normal',
                   fontWeight: '600',
-                  fontSize: '15px',
+                  fontSize: '0.8rem',
                   lineHeight: '18px',
                   textTransform: 'uppercase',
                 }}
@@ -385,8 +385,10 @@ export const SectionFooter = () => {
                 </CustSpan>
               </CustP>
               <Box
-                display={'flex'}
-                columnGap={'10px'}
+                sx={{
+                  display: 'flex',
+                  columnGap: '10px'
+                }}
               >
                 <a href="https://t.me/dgfnsdgfnss" target="_blank">
                 <CustSvg

@@ -30,14 +30,18 @@ export const InvestInBusiness = () => {
           <Box
             sx={{
               position: 'relative',
-              maxWidth: {xs: '100%', md: '665px'},
+              width: {xs: '100%', md: '665px'},
+              flexBasis: '30%'
             }}
           >
             <Image
               src={isMobile ? investMob : investPc}
               alt=''
+              width={665}
+              height={625}
               style={{
-                width: isMobile ? '100%' : 'auto',
+                width: '100%',
+                height: '100%',
               }}
             />
             <Image
@@ -55,6 +59,7 @@ export const InvestInBusiness = () => {
             sx={{
               padding: '80px clamp(20px,5vw,80px)',
               color: 'white',
+              flexBasis: '70%'
             }}
           >
             <CustH2

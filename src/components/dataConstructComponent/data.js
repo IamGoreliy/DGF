@@ -1,8 +1,10 @@
-import { Button } from '@mui/material';
+import { Button, Card } from '@mui/material';
+import { TamplateStandartCard } from '../dataSelectComponent/selectCard/TamplatestandartCard';
 
 
 const moveElement = (event) => {
-  const element = event.target;
+  const element = event.currentTarget;
+  console.log(element)
   element.style.position = 'absolute';
 
   function moveAt (event, element) {
@@ -14,17 +16,16 @@ const moveElement = (event) => {
 
   moveAt(event, element);
 
-  const testCon = document.getElementById('testConteiner')
+  const testCon = document.getElementById('testConteiner');
+  
 
   testCon.onmousemove = function (event) {
     moveAt(event, element);
   }
-  //
   element.onmouseup = function () {
     testCon.onmousemove = null;
     element.onmouseup = null;
   }
-
 }
 
 export const dataElemets = [
@@ -70,7 +71,18 @@ export const dataElemets = [
   },
   {
     nameElement: 'card',
-    variant: []
+    variant: [
+      {
+        variantName: 'standard',
+        htmlElement: <Card
+          onMouseDown={(e) => moveElement(e)}
+          sx={{
+            maxWidth: 345
+          }}>
+          <TamplateStandartCard/>
+        </Card>
+      }
+    ]
   }
 ]
 

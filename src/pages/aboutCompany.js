@@ -3,6 +3,7 @@ import {SectionControlAndSurveillance} from '../layouts/aboutCompany/SectionCont
 import { SectionFAQ } from '../layouts/aboutCompany/SectionFAQ';
 import { SectionFooter } from '../layouts/homePage/SectionFooter';
 import { SectionInfoSettlementOfOverdueDebt } from '../layouts/aboutCompany/SectionInfoSettlementOfOverdueDebt';
+import { NewHeaderNav } from '../layouts/NewHeaderNav';
 
 const Page = () => {
   return (
@@ -13,7 +14,6 @@ const Page = () => {
         <SectionInfoSettlementOfOverdueDebt/>
         <SectionFooter/>
       </HeaderLayout>
-
     </>
   )
 }

@@ -1,7 +1,8 @@
 import { Box, Button, Slider } from '@mui/material';
 import { useState, useReducer } from 'react';
 import { ColorSliderSchama } from '../../colorSliderSchama';
-import { borderRadius, height } from '@mui/system';
+import {useContext} from 'react';
+import {OptionWindowCreatePage} from '../../modalWindowCreatePage';
 
 const initialState = {
   textButton: '',
@@ -32,84 +33,87 @@ export const RenderDataSelectComponentButton = ({ data }) => {
   const [optionElement, setOptionElement] = useState('');
   const [state, dispatch] = useReducer(reducer, initialState);
   const [colorOption, setColorOption] = useState('');
+  const {isOpenAdditionalComponentOptions, setIsOpenAdditionalComponentOptions} = useContext(OptionWindowCreatePage);
 
 
   return (
     <Box>
       {data && data.map(variantButton => {
         return (
-            <Box
-              key={`${variantButton}`}
+          <Box
+            key={`${variantButton}`}
+          >
+            <Button
+              id={'elementConstruct'}
+              variant={variantButton}
+              sx={{
+                color: optionElement === variantButton ? state.color : 'auto',
+                borderColor: optionElement === variantButton ? state.borderColor : 'auto',
+                '&:hover': {
+                  borderColor: state.borderColor,
+                  backgroundColor: state.backgroundColor,
+                },
+                backgroundColor: optionElement === variantButton && state.backgroundColor,
+                width: optionElement === variantButton ? state.width : 'auto',
+                height: optionElement === variantButton ? state.height : 'auto',
+                borderRadius: optionElement === variantButton ? state.borderRadius : 'auto',
+              }}
             >
-              <Button
-                id={'elementConstruct'}
-                variant={variantButton}
-                sx={{
-                  color: optionElement === variantButton ? state.color : 'auto',
-                  borderColor: optionElement === variantButton ? state.borderColor : 'auto',
-                  '&:hover': {
-                    borderColor: state.borderColor,
-                  },
-                  backgroundColor: optionElement === variantButton && state.backgroundColor,
-                  width: optionElement === variantButton ? state.width : 'auto',
-                  height: optionElement === variantButton ? state.height : 'auto',
-                  borderRadius: optionElement === variantButton ? state.borderRadius : 'auto',
-                }}
-              >
-                {optionElement === variantButton ? state.textButton : 'text'}
-              </Button>
-              <button
-                onClick={() => {
-                  if (optionElement === '') {
-                    setOptionElement(variantButton)
-                  } else {
-                    setOptionElement('');
-                  }
-                }}
-              >
-                add option
-              </button>
-              <Box
-                sx={{
-                  width: '100%',
-                  height: optionElement === variantButton ? '230px' : '0px',
-                  border: '1px solid black',
-                  overflow: 'auto',
-                }}
-              >
-                {keysInitialState.length && keysInitialState.map(ele => {
-                  return (
-                    <Box
-                      key={ele}
-                    >
-                      <label>
-                        <input
-                          onChange={({ target: { value } }) => controlElementProperty(ele, dispatch, value)}
-                          value={state['ele']}
-                          type={"text"}
-                          placeholder={ele}
-                        />
-                        {ele.toLowerCase().includes('color') &&
-                          <button
-                            onClick={() => {
-                              if(!colorOption){
-                                setColorOption(ele);
-                              } else {
-                                setColorOption('');
-                              }
-                            }}
-                          >
-                            +
-                          </button>
-                        }
-                      </label>
-                      {ele.toLowerCase().includes('color') && colorOption === ele && <ColorSliderSchama changeValueInput={{dispatch, ele}}/>}
-                    </Box>
-                  )
-                })}
-
-              </Box>
+              {optionElement === variantButton ? state.textButton : 'text'}
+            </Button>
+            <button
+              onClick={() => {
+                if (isOpenAdditionalComponentOptions === '') {
+                  // setOptionElement(variantButton);
+                  setIsOpenAdditionalComponentOptions(variantButton);
+                } else {
+                  // setOptionElement('');
+                  setIsOpenAdditionalComponentOptions('');
+                }
+              }}
+            >
+              add option
+            </button>
+            <Box
+              sx={{
+                width: '100%',
+                height: optionElement === variantButton ? '230px' : '0px',
+                border: '1px solid black',
+                overflow: 'auto',
+              }}
+            >
+              {keysInitialState.length && keysInitialState.map(ele => {
+                return (
+                  <Box
+                    key={ele}
+                  >
+                    <label>
+                      <input
+                        onChange={({ target: { value } }) => controlElementProperty(ele, dispatch, value)}
+                        value={state['ele']}
+                        type={"text"}
+                        placeholder={ele}
+                      />
+                      {ele.toLowerCase().includes('color') &&
+                        <button
+                          onClick={() => {
+                            if(!colorOption){
+                              setColorOption(ele);
+                            } else {
+                              setColorOption('');
+                            }
+                          }}
+                        >
+                          +
+                        </button>
+                      }
+                    </label>
+                    {/*{ele.toLowerCase().includes('color') && colorOption === ele && <ColorSliderSchama changeValueInput={{dispatch, ele}}/>}*/}
+                  </Box>
+                )
+              })}
             </Box>
+          </Box>
         )
       })}
     </Box>

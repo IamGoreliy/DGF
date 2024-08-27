@@ -15,6 +15,7 @@ export const FirstSection = () => {
         <Box
           sx={{
             display: 'flex',
+            flexDirection: {xs: 'column', md: 'row'},
             flexWrap: 'wrap',
             gap: '20px',
           }}
@@ -33,6 +34,7 @@ export const FirstSection = () => {
                   '&:nth-child(1n + 4)': {
                     height: {xs: 'auto', md: '420px'}
                   },
+                  overflow: 'auto',
 
                 }}
 

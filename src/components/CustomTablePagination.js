@@ -1,6 +1,6 @@
 import { Box, Button, Container, Typography, Select, MenuItem } from '@mui/material';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import {ArrowTop as ButtonArrowForPagination} from '../image/svgComponents';
+import {ArrowTop as ButtonArrowForPagination} from '../styledComponent/svgComponents';
 
 const handleChange = ({target: {value}}, setSelectValue, changeRows, fnStartNum) => {
   setSelectValue(value);

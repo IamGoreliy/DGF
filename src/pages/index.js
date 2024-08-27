@@ -7,6 +7,7 @@ import {SectionPay} from '../layouts/homePage/SectionPay';
 import {SectionLocation} from '../layouts/homePage/SectionLocation';
 import {SectionFooter} from '../layouts/homePage/SectionFooter';
 import {createContext} from 'react';
+import { NewHeaderNav } from '../layouts/NewHeaderNav';
 
 
 export const Context = createContext();
@@ -16,6 +17,7 @@ const Page = () => {
     return (
         <>
         <Context.Provider value={windowSize}>
+          {/*<NewHeaderNav>*/}
           <HomeLayout>
             <SectionInfo />
             <AboutCompany/>
@@ -25,6 +27,7 @@ const Page = () => {
             <SectionLocation/>
             <SectionFooter/>
           </HomeLayout>
+          {/*</NewHeaderNav>*/}
         </Context.Provider>
         </>
     )

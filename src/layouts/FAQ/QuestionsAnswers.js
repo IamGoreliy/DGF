@@ -1,6 +1,6 @@
 import {Box, Container, Typography} from '@mui/material';
 import { QuestionsAnswersData } from './QuestionsAnswersData';
-import {ArrowTop} from '../../image/svgComponents';
+import {ArrowTop} from '../../styledComponent/svgComponents';
 import { useReducer, useContext } from 'react';
 import {WindowSeizeContext} from '../headerNavigation';
 

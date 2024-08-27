@@ -5,7 +5,7 @@ import {WindowSeizeContext} from '../headerNavigation';
 import { colorSite } from '../../styledComponent/colorSite';
 import { fonts } from '../../styledComponent/fonts';
 import {FAQData} from './sectionFAQData/FAQData';
-import {ArrowTop} from '../../image/svgComponents';
+import {ArrowTop} from '../../styledComponent/svgComponents';
 
 const openQuestion = (questId, stateFAQ, setFAQ) => {
   if (questId !== stateFAQ) {
